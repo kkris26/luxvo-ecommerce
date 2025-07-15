@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@plugin '../hero.js';
+/* Note: You may need to change the path to fit your project structure */
+
+.bg-default {
+  background-color: black;
+}
+.text-default-foreground {
+  color: white;
+}
+.rounded-small,
+.rounded-medium,
+.rounded-large {
+  border-radius: 0;
+}
+
+* {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
