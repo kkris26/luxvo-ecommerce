@@ -3,11 +3,12 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
-  Button,
   useDisclosure,
 } from "@heroui/react";
 import SideMenu from "./SideMenu";
+import { GoPerson } from "react-icons/go";
+
+import { TbMenu } from "react-icons/tb";
 
 export const AcmeLogo = () => {
   return (
@@ -28,9 +29,7 @@ export default function NavbarHeader() {
     <Navbar>
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
+          <TbMenu className="cursor-pointer text-2xl" />
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="center">
@@ -41,7 +40,7 @@ export default function NavbarHeader() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button onPress={onOpen}>Sign Up</Button>
+          <GoPerson className="cursor-pointer text-xl" onClick={onOpen} />
         </NavbarItem>
         <SideMenu isOpen={isOpen} onOpenChange={onOpenChange} />
       </NavbarContent>
