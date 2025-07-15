@@ -1,14 +1,20 @@
 import {
+  addToast,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   useDisclosure,
 } from "@heroui/react";
-import SideMenu from "./SideMenu";
 import { GoPerson } from "react-icons/go";
-
 import { TbMenu } from "react-icons/tb";
+
+import { useEffect, useRef, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+
+import RightSideBar from "../SideBar/RightSideBar";
+import { auth } from "../../configs/auth";
+import UserProfile from "./UserProfile";
 
 export const AcmeLogo = () => {
   return (
@@ -25,6 +31,34 @@ export const AcmeLogo = () => {
 
 export default function NavbarHeader() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [userLogin, setUserLogin] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserLogin(user);
+      } else {
+      }
+    });
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUserLogin(null);
+        addToast({
+          title: "Logout",
+          description: "Log Out Successfully",
+          timeout: 3000,
+          size: "sm",
+          color: "success",
+          shouldShowTimeoutProgress: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Navbar>
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
@@ -40,9 +74,13 @@ export default function NavbarHeader() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <GoPerson className="cursor-pointer text-xl" onClick={onOpen} />
+          {userLogin ? (
+            <UserProfile logOut={handleLogout} user={userLogin} />
+          ) : (
+            <GoPerson className="cursor-pointer text-xl" onClick={onOpen} />
+          )}
         </NavbarItem>
-        <SideMenu isOpen={isOpen} onOpenChange={onOpenChange} />
+        <RightSideBar isOpen={isOpen} onOpenChange={onOpenChange} />
       </NavbarContent>
     </Navbar>
   );

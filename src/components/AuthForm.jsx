@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Checkbox, Button } from "@heroui/react";
+import { Form, Input, Checkbox, Button, addToast } from "@heroui/react";
 import { auth } from "../configs/auth";
 import {
   createUserWithEmailAndPassword,
@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
-export default function AuthForm() {
+export default function AuthForm({ close }) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isSignUp, setIsSignUp] = useState(false);
@@ -48,6 +48,16 @@ export default function AuthForm() {
           data.password
         );
         console.log(userRegister);
+        addToast({
+          title: "Sign Up",
+          description: "Sign Up Successfully",
+          timeout: 3000,
+          shouldShowTimeoutProgress: true,
+          color: "success",
+        });
+        setTimeout(() => {
+          close();
+        }, 300);
       } catch (error) {
         const errorCode = error.code;
         console.log(errorCode);
@@ -72,9 +82,20 @@ export default function AuthForm() {
           data.email,
           data.password
         );
+        addToast({
+          title: "Sign In",
+          description: "Sign In Successfully",
+          timeout: 3000,
+          shouldShowTimeoutProgress: true,
+          color: "success",
+        });
+        setTimeout(() => {
+          close();
+        }, 300);
         console.log(userRegister);
       } catch (error) {
         const errorCode = error.code;
+        console.log(error);
         let message;
 
         switch (errorCode) {
@@ -91,7 +112,6 @@ export default function AuthForm() {
     }
     isSignUp && handleRegister();
     !isSignUp && handleLogin();
-    console.log(data);
   };
 
   return (

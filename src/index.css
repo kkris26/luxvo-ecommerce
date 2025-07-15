@@ -2,10 +2,12 @@
 @plugin '../hero.js';
 /* Note: You may need to change the path to fit your project structure */
 
-.bg-default, .bg-primary {
+.bg-default,
+.bg-primary {
   background-color: black;
 }
-.text-default-foreground, .text-primary-foreground {
+.text-default-foreground,
+.text-primary-foreground {
   color: white;
 }
 .rounded-small,

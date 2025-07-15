@@ -1,4 +1,4 @@
-import NavbarHeader from "./components/NavbarHeader";
+import NavbarHeader from "./components/Navbar/NavbarHeader";
 
 const App = () => {
   return (

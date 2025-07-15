@@ -1,7 +1,12 @@
-import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
-import AuthForm from "./AuthForm";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerBody,
 
-export default function SideMenu({ isOpen, onOpenChange }) {
+} from "@heroui/react";
+import AuthForm from "../AuthForm";
+
+export default function RightSideBar({ isOpen, onOpenChange }) {
   return (
     <>
       <Drawer
@@ -19,11 +24,11 @@ export default function SideMenu({ isOpen, onOpenChange }) {
         onOpenChange={onOpenChange}
       >
         <DrawerContent>
-          {() => (
+          {(onCLose) => (
             <>
               <DrawerBody>
                 <div className="flex flex-col gap-8 justify-center items-center h-full">
-                  <AuthForm />
+                  <AuthForm close={onCLose} />
                 </div>
               </DrawerBody>
             </>
