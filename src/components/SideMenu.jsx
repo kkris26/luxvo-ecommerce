@@ -33,7 +33,7 @@ export default function SideMenu({ isOpen, onOpenChange }) {
           {(onClose) => (
             <>
               <DrawerHeader className="flex flex-col gap-1">
-                Drawer Title
+               Sign Up
               </DrawerHeader>
               <DrawerBody>
                 <p>
