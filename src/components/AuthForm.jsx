@@ -25,8 +25,6 @@ export default function AuthForm({ close }) {
         return setErrors({
           password: "Password needs at least 1 uppercase letter",
         });
-      } else if ((password.match(/[^a-z]/gi) || []).length < 1) {
-        return setErrors({ password: "Password needs at least 1 symbol" });
       } else {
         setErrors({ password: null });
       }

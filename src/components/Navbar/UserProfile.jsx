@@ -35,7 +35,7 @@ export const PlusIcon = (props) => {
   );
 };
 
-export default function UserProfile({ logOut, user }) {
+export default function UserProfile({ user, setModalOpen }) {
   return (
     <Dropdown
       //
@@ -127,7 +127,7 @@ export default function UserProfile({ logOut, user }) {
         <DropdownSection aria-label="Help & Feedback">
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
           <DropdownItem
-            onPress={logOut}
+            onPress={() => setModalOpen(true)}
             key="logout"
             color="danger"
             className="text-danger-400"

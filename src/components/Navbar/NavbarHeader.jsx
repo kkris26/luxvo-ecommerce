@@ -1,5 +1,6 @@
 import {
   addToast,
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -9,12 +10,13 @@ import {
 import { GoPerson } from "react-icons/go";
 import { TbMenu } from "react-icons/tb";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 import RightSideBar from "../SideBar/RightSideBar";
 import { auth } from "../../configs/auth";
 import UserProfile from "./UserProfile";
+import PopupModal from "../Modal/PopupModal";
 
 export const AcmeLogo = () => {
   return (
@@ -30,8 +32,10 @@ export const AcmeLogo = () => {
 };
 
 export default function NavbarHeader() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [userLogin, setUserLogin] = useState(null);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -59,6 +63,8 @@ export default function NavbarHeader() {
         console.log(error);
       });
   };
+
+  console.log(isModalOpen);
   return (
     <Navbar>
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
@@ -75,12 +81,25 @@ export default function NavbarHeader() {
       <NavbarContent justify="end">
         <NavbarItem>
           {userLogin ? (
-            <UserProfile logOut={handleLogout} user={userLogin} />
+            <>
+              <UserProfile
+                user={userLogin}
+                setModalOpen={setModalOpen}
+              />
+            </>
           ) : (
-            <GoPerson className="cursor-pointer text-xl" onClick={onOpen} />
+            <GoPerson
+              className="cursor-pointer text-xl"
+              onClick={() => setSidebarOpen(true)}
+            />
           )}
         </NavbarItem>
-        <RightSideBar isOpen={isOpen} onOpenChange={onOpenChange} />
+        <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
+        <PopupModal
+          logOut={handleLogout}
+          isOpen={isModalOpen}
+          onOpenChange={setModalOpen}
+        />
       </NavbarContent>
     </Navbar>
   );

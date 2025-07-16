@@ -1,15 +1,16 @@
 @import "tailwindcss";
 @plugin '../hero.js';
-/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
+.text-default-foreground,
+.text-primary-foreground {
+    color: white;
+}
 .bg-default,
 .bg-primary {
   background-color: black;
 }
-.text-default-foreground,
-.text-primary-foreground {
-  color: white;
-}
+
 .rounded-small,
 .rounded-medium,
 .rounded-large {
