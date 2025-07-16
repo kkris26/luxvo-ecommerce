@@ -96,24 +96,6 @@ export default function UserProfile({ user, setModalOpen }) {
           <DropdownItem key="quick_search" shortcut="⌘K">
             Quick search
           </DropdownItem>
-          <DropdownItem
-            key="theme"
-            isReadOnly
-            className="cursor-default"
-            endContent={
-              <select
-                className="z-10 outline-solid outline-transparent w-16 py-0.5 rounded-md text-tiny group-data-[hover=true]:border-default-500 border-small border-default-300 dark:border-default-200 bg-transparent text-default-500"
-                id="theme"
-                name="theme"
-              >
-                <option>System</option>
-                <option>Dark</option>
-                <option>Light</option>
-              </select>
-            }
-          >
-            Theme
-          </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Help & Feedback">
