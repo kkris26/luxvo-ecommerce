@@ -41,7 +41,7 @@ export default function UserProfile({ user, setModalOpen }) {
     <Dropdown
       //
       classNames={{
-        base: "before:bg-default-200", // change arrow background
+        base: "before:bg-default-200 rounded-lg", // change arrow background
         content: "p-0 border-small border-divider bg-background",
       }}
       radius="sm"

@@ -83,8 +83,7 @@ export default function NavbarHeader() {
         <NavbarContent justify="center">
           <Link to={"/"}>
             <NavbarBrand>
-              <AcmeLogo />
-              <p className="font-bold text-inherit">ACME</p>
+              <p className="font-extralight text-2xl tracking-widest">LÜXVO</p>
             </NavbarBrand>
           </Link>
         </NavbarContent>
