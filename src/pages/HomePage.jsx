@@ -2,7 +2,7 @@ const HomePage = () => {
   return (
     <div className="relative w-full overflow-hidden ">
       <video
-        src="/video-home.mp4"
+        src="https://res.cloudinary.com/dbtathpqx/video/upload/v1752676181/video-test_zceqg9.mp4"
         autoPlay
         muted
         loop
