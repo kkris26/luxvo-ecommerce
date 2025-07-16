@@ -16,6 +16,7 @@ import RightSideBar from "../SideBar/RightSideBar";
 import { auth } from "../../configs/auth";
 import UserProfile from "./UserProfile";
 import PopupModal from "../Modal/PopupModal";
+import { Link } from "react-router";
 
 export const AcmeLogo = () => {
   return (
@@ -67,17 +68,24 @@ export default function NavbarHeader() {
 
   return (
     <>
-      <Navbar>
+      <Navbar
+        maxWidth="2xl"
+        classNames={{
+          wrapper: "px-4 max-w-7xl",
+        }}
+      >
         <NavbarContent className="hidden sm:flex gap-4" justify="start">
           <NavbarItem>
             <TbMenu className="cursor-pointer text-2xl" />
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="center">
-          <NavbarBrand>
-            <AcmeLogo />
-            <p className="font-bold text-inherit">ACME</p>
-          </NavbarBrand>
+          <Link to={"/"}>
+            <NavbarBrand>
+              <AcmeLogo />
+              <p className="font-bold text-inherit">ACME</p>
+            </NavbarBrand>
+          </Link>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>

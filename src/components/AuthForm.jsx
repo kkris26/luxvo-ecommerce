@@ -6,11 +6,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { Link } from "react-router";
 
-export default function AuthForm({ close }) {
+export default function AuthForm({ close, isSignUp, setIsSignUp }) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [isSignUp, setIsSignUp] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function AuthForm({ close }) {
     }
 
     if (data.terms !== "true" && isSignUp) {
-      setErrors((prev) => ({ ...prev, terms: "Please accept the terms" }));
+      setErrors((prev) => ({ ...prev, terms: "please accept the terms" }));
       return;
     } else {
       delete data.terms;
@@ -167,29 +168,34 @@ export default function AuthForm({ close }) {
             </div>
           </div>
           {isSignUp && (
-            <>
+            <div className="flex">
               <Checkbox
                 isRequired
-                classNames={{
-                  label: "text-small",
-                }}
-                className="leading-none"
                 isInvalid={!!errors.terms}
                 name="terms"
-                radius="sm"
+                radius="none"
                 size="sm"
                 validationBehavior="aria"
                 value="true"
                 onValueChange={() =>
                   setErrors((prev) => ({ ...prev, terms: undefined }))
                 }
-              >
-                I agree to the terms and conditions<br></br>
+              />
+              <p className="leading-4 text-sm">
+                I agree to the{" "}
+                <Link
+                  onClick={close}
+                  className="underline"
+                  to={"/terms-and-conditions"}
+                >
+                  terms and conditions
+                </Link>
+                <br />
                 {errors.terms && (
                   <span className="text-danger text-xs">*{errors.terms}</span>
                 )}
-              </Checkbox>
-            </>
+              </p>
+            </div>
           )}
           {errorMessage && (
             <p className="text-danger text-xs">*{errorMessage}</p>

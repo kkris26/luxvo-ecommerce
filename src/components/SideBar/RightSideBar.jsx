@@ -1,7 +1,9 @@
 import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import AuthForm from "../AuthForm";
+import { useState } from "react";
 
 export default function RightSideBar({ isOpen, onOpenChange }) {
+  const [isSignUp, setIsSignUp] = useState(false);
   return (
     <>
       <Drawer
@@ -31,7 +33,11 @@ export default function RightSideBar({ isOpen, onOpenChange }) {
             <>
               <DrawerBody>
                 <div className="flex flex-col gap-8 justify-center items-center h-full">
-                  <AuthForm close={onCLose} />
+                  <AuthForm
+                    close={onCLose}
+                    isSignUp={isSignUp}
+                    setIsSignUp={setIsSignUp}
+                  />
                 </div>
               </DrawerBody>
             </>

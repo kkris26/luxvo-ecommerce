@@ -1,12 +1,23 @@
+import { createBrowserRouter, RouterProvider } from "react-router";
 import NavbarHeader from "./components/Navbar/NavbarHeader";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/HomePage";
+import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "terms-and-conditions", element: <TermsAndConditionsPage /> },
+    ],
+  },
+]);
 const App = () => {
   return (
     <>
-      <NavbarHeader />
-      <div className="flex w-full h-screen items-center justify-center">
-        <h1 className="text-default-600 ">Hello World!</h1>
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 };
