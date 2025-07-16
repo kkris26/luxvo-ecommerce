@@ -49,23 +49,24 @@ const TermsAndConditionsPage = () => {
     <>
       <div className="h-100 relative w-full overflow-hidden flex items-center justify-center text-white">
         <img
-          src="https://img.freepik.com/free-photo/young-girl-talor-fitting-dress-dummy_1220-7465.jpghttps://img.freepik.com/free-photo/interior-clothing-store-with-stylish-merchandise-racks-fashionable-brand-design-casual-wear-modern-boutique-empty-fashion-showroom-shopping-centre-with-elegant-merchandise_482257-65537.jpg"
+          src="https://img.freepik.com/free-photo/portrait-fashionable-interracial-young-couple-sitting-outdoor_23-2148151954.jpg?t=st=1752649556~exp=1752653156~hmac=493539afae9a53d9994d1a27fae2b13aaa96f65bdbcc1a545550d9b8e79285a9&w=2000"
           alt=""
           srcset=""
-          className="inset-0 absolute w-full h-full object-cover object-center -z-1"
+          className="inset-0 absolute w-full h-full object-cover object-top -z-1"
         />
-        <div className="bg-black/20 inset-0 w-full h-full absolute"></div>
-        <div className="flex flex-col w-200 gap-2 z-1">
-          <h1 className="text-3xl text-center">Terms and Conditions</h1>
-          <p className="text-center text-sm">
+        <div className="bg-black/30 inset-0 w-full h-full absolute"></div>
+        <div className="flex flex-col w-140 gap-2 z-1 px-4 md:px-0">
+          <h1 className="text-2xl md:text-3xl text-center">
+            Terms and Conditions
+          </h1>
+          <p className="text-center text-sm ">
             These Terms and Conditions govern your use of our website and
-            services. By accessing or using our platform, you agree to be bound
-            by these terms. Please read them carefully before proceeding.
+            services. Please read them carefully before proceeding.
           </p>
         </div>
       </div>
-      <div className="max-w-5xl mx-auto  py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2  md:gap-6 ">
+      <div className="max-w-5xl mx-auto py-5  md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0  md:gap-6 ">
           <Accordion defaultSelectedKeys={"0"}>
             {tncItem.slice(0, 3).map((section, index) => (
               <AccordionItem key={String(index)} sele title={section.title}>
@@ -78,7 +79,13 @@ const TermsAndConditionsPage = () => {
 
           <Accordion defaultSelectedKeys={"0"}>
             {tncItem.slice(3, 6).map((section, index) => (
-              <AccordionItem key={String(index)} title={section.title}>
+              <AccordionItem
+                key={String(index)}
+                title={section.title}
+                className={
+                  index === 0 ? "border-t-1 border-divider md:border-none" : ""
+                }
+              >
                 <div className="text-sm text-gray-600 leading-relaxed">
                   {section.content}
                 </div>
@@ -87,7 +94,7 @@ const TermsAndConditionsPage = () => {
           </Accordion>
         </div>
 
-        <p className="text-xs text-default-800 underline underline-offset-4 text-center mt-10">
+        <p className="text-xs text-default-800 underline underline-offset-4 text-center mt-4 md:mt-10">
           Last updated: July 15, 2025
         </p>
       </div>
