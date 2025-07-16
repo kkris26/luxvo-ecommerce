@@ -69,6 +69,7 @@ export default function NavbarHeader() {
   return (
     <>
       <Navbar
+        isBlurred={"false"}
         maxWidth="2xl"
         classNames={{
           wrapper: "px-4 max-w-7xl",

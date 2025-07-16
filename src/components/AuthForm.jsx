@@ -148,6 +148,11 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
           <div className="relative">
             <Input
               isRequired
+              endContent={
+                <div className="cursor-pointer" onClick={() => setShowPass((prev) => !prev)}>
+                  {showPass ? <VscEyeClosed /> : <VscEye />}
+                </div>
+              }
               errorMessage={errors.password}
               label="Password"
               labelPlacement="outside"
@@ -160,12 +165,6 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                 setErrors((prev) => ({ ...prev, password: null }))
               }
             />
-            <div
-              onClick={() => setShowPass((prev) => !prev)}
-              className="z-9 cursor-pointer absolute top-1/2 transform translate-y-1/3  right-3"
-            >
-              {showPass ? <VscEyeClosed /> : <VscEye />}
-            </div>
           </div>
           {isSignUp && (
             <div className="flex">
@@ -173,7 +172,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                 isRequired
                 isInvalid={!!errors.terms}
                 name="terms"
-                radius="none"
+                radius="full"
                 size="sm"
                 validationBehavior="aria"
                 value="true"
@@ -181,7 +180,11 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                   setErrors((prev) => ({ ...prev, terms: undefined }))
                 }
               />
-              <p className="leading-4 text-sm">
+              <p
+                className={`${
+                  errors.terms ? "text-danger" : ""
+                } leading-4 text-sm`}
+              >
                 I agree to the{" "}
                 <Link
                   onClick={close}
@@ -190,10 +193,6 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                 >
                   terms and conditions
                 </Link>
-                <br />
-                {errors.terms && (
-                  <span className="text-danger text-xs">*{errors.terms}</span>
-                )}
               </p>
             </div>
           )}
