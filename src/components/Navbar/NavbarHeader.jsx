@@ -1,6 +1,5 @@
 import {
   addToast,
-  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -32,16 +31,18 @@ export const AcmeLogo = () => {
 };
 
 export default function NavbarHeader() {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [userLogin, setUserLogin] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [loadUserLogin, setLoadUserLogin] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserLogin(user);
+        setLoadUserLogin(false);
       } else {
+        setLoadUserLogin(false);
       }
     });
   }, []);
@@ -64,43 +65,41 @@ export default function NavbarHeader() {
       });
   };
 
-  console.log(isModalOpen);
   return (
-    <Navbar>
-      <NavbarContent className="hidden sm:flex gap-4" justify="start">
-        <NavbarItem>
-          <TbMenu className="cursor-pointer text-2xl" />
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="center">
-        <NavbarBrand>
-          <AcmeLogo />
-          <p className="font-bold text-inherit">ACME</p>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
-          {userLogin ? (
-            <>
-              <UserProfile
-                user={userLogin}
-                setModalOpen={setModalOpen}
+    <>
+      <Navbar>
+        <NavbarContent className="hidden sm:flex gap-4" justify="start">
+          <NavbarItem>
+            <TbMenu className="cursor-pointer text-2xl" />
+          </NavbarItem>
+        </NavbarContent>
+        <NavbarContent justify="center">
+          <NavbarBrand>
+            <AcmeLogo />
+            <p className="font-bold text-inherit">ACME</p>
+          </NavbarBrand>
+        </NavbarContent>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            {userLogin ? (
+              <>
+                <UserProfile user={userLogin} setModalOpen={setModalOpen} />
+              </>
+            ) : (
+              <GoPerson
+                className="cursor-pointer text-xl"
+                onClick={() => !loadUserLogin && setSidebarOpen(true)}
               />
-            </>
-          ) : (
-            <GoPerson
-              className="cursor-pointer text-xl"
-              onClick={() => setSidebarOpen(true)}
-            />
-          )}
-        </NavbarItem>
-        <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
-        <PopupModal
-          logOut={handleLogout}
-          isOpen={isModalOpen}
-          onOpenChange={setModalOpen}
-        />
-      </NavbarContent>
-    </Navbar>
+            )}
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
+      <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
+      <PopupModal
+        logOut={handleLogout}
+        isOpen={isModalOpen}
+        onOpenChange={setModalOpen}
+      />
+    </>
   );
 }

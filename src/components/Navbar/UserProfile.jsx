@@ -8,6 +8,7 @@ import {
   User,
   Avatar,
 } from "@heroui/react";
+import { MdLogout } from "react-icons/md";
 
 export const PlusIcon = (props) => {
   return (
@@ -56,19 +57,10 @@ export default function UserProfile({ user, setModalOpen }) {
       <DropdownMenu
         aria-label="Custom item styles"
         className="p-3"
+        variant="flat"
         disabledKeys={["profile"]}
         itemClasses={{
-          base: [
-            "rounded-md",
-            "text-default-500",
-            "transition-opacity",
-            "data-[hover=true]:text-foreground",
-            "data-[hover=true]:bg-default-100",
-            "dark:data-[hover=true]:bg-default-50",
-            "data-[selectable=true]:focus:bg-default-50",
-            "data-[pressed=true]:opacity-70",
-            "data-[focus-visible=true]:ring-default-500",
-          ],
+          base: ["rounded-sm"],
         }}
       >
         <DropdownSection showDivider aria-label="Profile & Actions">
@@ -127,12 +119,15 @@ export default function UserProfile({ user, setModalOpen }) {
         <DropdownSection aria-label="Help & Feedback">
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
           <DropdownItem
+            key={"logout"}
             onPress={() => setModalOpen(true)}
-            key="logout"
+            className="text-danger "
             color="danger"
-            className="text-danger-400"
           >
-            Log Out
+            <div className="flex justify-between items-center">
+              Log Out
+              <MdLogout />
+            </div>
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>

@@ -1,9 +1,4 @@
-import {
-  Drawer,
-  DrawerContent,
-  DrawerBody,
-
-} from "@heroui/react";
+import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import AuthForm from "../AuthForm";
 
 export default function RightSideBar({ isOpen, onOpenChange }) {
@@ -19,7 +14,7 @@ export default function RightSideBar({ isOpen, onOpenChange }) {
           animate: "enter",
           exit: "exit",
         }}
-        backdrop="blur"
+        // backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >

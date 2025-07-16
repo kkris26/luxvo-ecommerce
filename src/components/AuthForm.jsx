@@ -13,6 +13,7 @@ export default function AuthForm({ close }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = (e) => {
     setErrorMessage("");
@@ -40,6 +41,7 @@ export default function AuthForm({ close }) {
 
     async function handleRegister() {
       try {
+        setLoading(true);
         const userRegister = await createUserWithEmailAndPassword(
           auth,
           data.email,
@@ -47,8 +49,8 @@ export default function AuthForm({ close }) {
         );
         console.log(userRegister);
         addToast({
-          title: "Sign Up",
-          description: "Sign Up Successfully",
+          title: "Sign Up Successful",
+          description: "Your account has been created successfully.",
           timeout: 3000,
           shouldShowTimeoutProgress: true,
           color: "success",
@@ -57,13 +59,14 @@ export default function AuthForm({ close }) {
           close();
         }, 300);
       } catch (error) {
+        setLoading(false);
         const errorCode = error.code;
         console.log(errorCode);
         let message;
 
         switch (errorCode) {
           case "auth/email-already-in-use":
-            message = "Email Already Registered";
+            message = "Email already registered";
             break;
 
           default:
@@ -75,14 +78,15 @@ export default function AuthForm({ close }) {
     }
     async function handleLogin() {
       try {
+        setLoading(true);
         const userRegister = await signInWithEmailAndPassword(
           auth,
           data.email,
           data.password
         );
         addToast({
-          title: "Sign In",
-          description: "Sign In Successfully",
+          title: "Signed In",
+          description: "You have successfully signed in.",
           timeout: 3000,
           shouldShowTimeoutProgress: true,
           color: "success",
@@ -92,13 +96,14 @@ export default function AuthForm({ close }) {
         }, 300);
         console.log(userRegister);
       } catch (error) {
+        setLoading(false);
         const errorCode = error.code;
         console.log(error);
         let message;
 
         switch (errorCode) {
           case "auth/invalid-credential":
-            message = "Invalid Email or Password";
+            message = "Invalid email or password";
             break;
 
           default:
@@ -156,7 +161,7 @@ export default function AuthForm({ close }) {
             />
             <div
               onClick={() => setShowPass((prev) => !prev)}
-              className="z-9 cursor-pointer absolute top-1/2 transform translate-1/2  right-4"
+              className="z-9 cursor-pointer absolute top-1/2 transform translate-y-1/3  right-3"
             >
               {showPass ? <VscEyeClosed /> : <VscEye />}
             </div>
@@ -191,7 +196,12 @@ export default function AuthForm({ close }) {
           )}
 
           <div className="flex gap-4">
-            <Button className="w-full" color="primary" type="submit">
+            <Button
+              isLoading={isLoading}
+              className="w-full"
+              color="primary"
+              type="submit"
+            >
               {isSignUp ? "Sign Up" : "Sign In"}
             </Button>
           </div>

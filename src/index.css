@@ -4,7 +4,7 @@
 
 .text-default-foreground,
 .text-primary-foreground {
-    color: white;
+  color: white;
 }
 .bg-default,
 .bg-primary {
@@ -21,4 +21,11 @@
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button{
+  cursor: pointer;
 }
