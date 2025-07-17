@@ -20,7 +20,7 @@ const AdminLayout = () => {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   useEffect(() => {
     if (!loadUserLogin) {
-      if (!userLogin || userLogin.email !== "admin2@gmail.com") {
+      if (!userLogin || userLogin.email !== "admin@luxvo.com") {
         navigate("/?auth=signin");
         addToast({
           title: "Access Denied !",
@@ -36,7 +36,7 @@ const AdminLayout = () => {
 
   return (
     !loadUserLogin &&
-    userLogin?.email === "admin2@gmail.com" && (
+    userLogin?.email === "admin@luxvo.com" && (
       <>
         <Navbar>
           <NavbarBrand>
