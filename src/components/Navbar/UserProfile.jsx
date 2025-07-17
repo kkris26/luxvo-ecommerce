@@ -4,7 +4,6 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownItem,
-  Button,
   User,
   Avatar,
 } from "@heroui/react";
@@ -38,6 +37,7 @@ export const PlusIcon = (props) => {
 };
 
 export default function UserProfile({ user, setModalOpen }) {
+  console.log(user);
   return (
     <Dropdown
       //
@@ -69,7 +69,7 @@ export default function UserProfile({ user, setModalOpen }) {
             key="profile"
             isReadOnly
             className="h-14 gap-2 opacity-100"
-            textValue={user.email}
+            textValue={user?.profile?.fullName}
           >
             <User
               avatarProps={{
@@ -80,8 +80,8 @@ export default function UserProfile({ user, setModalOpen }) {
                 name: "text-default-600",
                 description: "text-default-500",
               }}
-              description="@jrgarciadev"
-              name={user.email}
+              description={user.email}
+              name={user?.profile?.fullName}
             />
           </DropdownItem>
           <DropdownItem key="dashboard" textValue="dashboard">

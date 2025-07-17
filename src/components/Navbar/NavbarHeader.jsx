@@ -18,7 +18,6 @@ export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-
   return (
     <>
       <Navbar
