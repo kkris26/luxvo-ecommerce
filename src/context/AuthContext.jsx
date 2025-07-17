@@ -8,14 +8,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../configs/auth";
 import { addToast } from "@heroui/react";
 import db from "../db/db";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext(null);
 
@@ -61,7 +54,7 @@ export default function AuthContextProvider({ children }) {
       });
   };
 
-  const signUp = async (email, password) => {
+  const signUp = async (fullName, imgUrl, email, password) => {
     try {
       const userSignUp = await createUserWithEmailAndPassword(
         auth,
@@ -73,15 +66,13 @@ export default function AuthContextProvider({ children }) {
         const docRef = await setDoc(
           doc(db, "users", userSignUp.user.uid, "profile", "main"),
           {
-            fullName: "Krisnu Artha",
-            born: 1815,
+            fullName,
+            imgUrl,
           }
         );
-        console.log("Document written with ID: ", docRef);
       } catch (e) {
         console.error("Error adding document: ", e);
       }
-      console.log(userSignUp.user.uid);
       addToast({
         title: "Sign Up Successful",
         description: "Your account has been created successfully.",
@@ -107,7 +98,6 @@ export default function AuthContextProvider({ children }) {
         shouldShowTimeoutProgress: true,
         color: "success",
       });
-      console.log({ userSignIn });
     } catch (error) {
       throw error;
     }

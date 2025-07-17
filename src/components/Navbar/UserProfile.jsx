@@ -37,7 +37,6 @@ export const PlusIcon = (props) => {
 };
 
 export default function UserProfile({ user, setModalOpen }) {
-  console.log(user);
   return (
     <Dropdown
       //
@@ -51,7 +50,7 @@ export default function UserProfile({ user, setModalOpen }) {
         <Avatar
           isBordered
           size="sm"
-          src="https://avatars.githubusercontent.com/u/30373425?v=4"
+          src={user?.profile?.imgUrl}
           className="cursor-pointer"
         />
       </DropdownTrigger>
@@ -74,7 +73,7 @@ export default function UserProfile({ user, setModalOpen }) {
             <User
               avatarProps={{
                 size: "sm",
-                src: "https://avatars.githubusercontent.com/u/30373425?v=4",
+                src: user?.profile?.imgUrl,
               }}
               classNames={{
                 name: "text-default-600",

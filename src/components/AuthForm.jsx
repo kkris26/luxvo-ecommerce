@@ -46,7 +46,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
     async function handleRegister() {
       try {
         setLoading(true);
-        await signUp(data.email, data.password);
+        await signUp(data.fullName, data.imgURL, data.email, data.password);
 
         setTimeout(() => {
           close();
@@ -107,6 +107,42 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
         onSubmit={onSubmit}
       >
         <div className="flex flex-col gap-4 w-full">
+          {isSignUp && (
+            <>
+              <Input
+                isRequired
+                errorMessage={({ validationDetails }) => {
+                  if (validationDetails.valueMissing) {
+                    return "Please enter your full name";
+                  }
+
+                  return errors.name;
+                }}
+                label="Full Name"
+                labelPlacement="outside"
+                name="fullName"
+                placeholder="Enter your full name"
+              />
+              <Input
+                isRequired
+                errorMessage={({ validationDetails }) => {
+                  if (validationDetails.valueMissing) {
+                    return "Please enter your image URL";
+                  }
+                  if (validationDetails.typeMismatch) {
+                    return "Please enter a valid URL";
+                  }
+
+                  return errors.name;
+                }}
+                label="Image URL"
+                labelPlacement="outside"
+                name="imgURL"
+                placeholder="Enter your image URL"
+                type="url"
+              />
+            </>
+          )}
           <Input
             isRequired
             errorMessage={({ validationDetails }) => {
@@ -124,31 +160,27 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
             placeholder="Enter your email"
             type="email"
           />
+          <Input
+            isRequired
+            endContent={
+              <div
+                className="cursor-pointer"
+                onClick={() => setShowPass((prev) => !prev)}
+              >
+                {showPass ? <VscEyeClosed /> : <VscEye />}
+              </div>
+            }
+            errorMessage={errors.password}
+            label="Password"
+            labelPlacement="outside"
+            name="password"
+            placeholder="Enter your password"
+            type={showPass ? "text" : "password"}
+            value={password}
+            onValueChange={setPassword}
+            onChange={() => setErrors((prev) => ({ ...prev, password: null }))}
+          />
 
-          <div className="relative">
-            <Input
-              isRequired
-              endContent={
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setShowPass((prev) => !prev)}
-                >
-                  {showPass ? <VscEyeClosed /> : <VscEye />}
-                </div>
-              }
-              errorMessage={errors.password}
-              label="Password"
-              labelPlacement="outside"
-              name="password"
-              placeholder="Enter your password"
-              type={showPass ? "text" : "password"}
-              value={password}
-              onValueChange={setPassword}
-              onChange={() =>
-                setErrors((prev) => ({ ...prev, password: null }))
-              }
-            />
-          </div>
           {isSignUp && (
             <div className="flex">
               <Checkbox
