@@ -9,6 +9,7 @@ import {
   Avatar,
 } from "@heroui/react";
 import { MdLogout } from "react-icons/md";
+import { Link } from "react-router";
 
 export const PlusIcon = (props) => {
   return (
@@ -68,6 +69,7 @@ export default function UserProfile({ user, setModalOpen }) {
             key="profile"
             isReadOnly
             className="h-14 gap-2 opacity-100"
+            textValue={user.email}
           >
             <User
               avatarProps={{
@@ -82,10 +84,17 @@ export default function UserProfile({ user, setModalOpen }) {
               name={user.email}
             />
           </DropdownItem>
-          <DropdownItem key="dashboard">Dashboard</DropdownItem>
-          <DropdownItem key="settings">Settings</DropdownItem>
+          <DropdownItem key="dashboard" textValue="dashboard">
+            <Link className="w-full flex " to={"/admin"}>
+              Dashboard
+            </Link>
+          </DropdownItem>
+          <DropdownItem key="settings" textValue="settings">
+            Settings
+          </DropdownItem>
           <DropdownItem
             key="new_project"
+            textValue="new_project"
             endContent={<PlusIcon className="text-large" />}
           >
             New Project
@@ -93,18 +102,25 @@ export default function UserProfile({ user, setModalOpen }) {
         </DropdownSection>
 
         <DropdownSection showDivider aria-label="Preferences">
-          <DropdownItem key="quick_search" shortcut="⌘K">
+          <DropdownItem
+            key="quick_search"
+            textValue="quick_search"
+            shortcut="⌘K"
+          >
             Quick search
           </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Help & Feedback">
-          <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+          <DropdownItem key="help_and_feedback" textValue="help_and_feedback">
+            Help & Feedback
+          </DropdownItem>
           <DropdownItem
             key={"logout"}
             onPress={() => setModalOpen(true)}
             className="text-danger "
             color="danger"
+            textValue="logout"
           >
             <div className="flex justify-between items-center">
               Log Out

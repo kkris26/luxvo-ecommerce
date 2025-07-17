@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Input, Checkbox, Button, addToast } from "@heroui/react";
 import { auth } from "../configs/auth";
 import {
@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 export default function AuthForm({ close, isSignUp, setIsSignUp }) {
   const [password, setPassword] = useState("");
@@ -15,6 +16,8 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setLoading] = useState(false);
+
+  const { signUp, signIn } = useContext(AuthContext);
 
   const onSubmit = (e) => {
     setErrorMessage("");
@@ -43,19 +46,8 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
     async function handleRegister() {
       try {
         setLoading(true);
-        const userRegister = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-        console.log(userRegister);
-        addToast({
-          title: "Sign Up Successful",
-          description: "Your account has been created successfully.",
-          timeout: 3000,
-          shouldShowTimeoutProgress: true,
-          color: "success",
-        });
+        await signUp(data.email, data.password);
+
         setTimeout(() => {
           close();
         }, 300);
@@ -80,22 +72,10 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
     async function handleLogin() {
       try {
         setLoading(true);
-        const userRegister = await signInWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-        addToast({
-          title: "Signed In",
-          description: "You have successfully signed in.",
-          timeout: 3000,
-          shouldShowTimeoutProgress: true,
-          color: "success",
-        });
+        await signIn(data.email, data.password);
         setTimeout(() => {
           close();
         }, 300);
-        console.log(userRegister);
       } catch (error) {
         setLoading(false);
         const errorCode = error.code;
@@ -149,7 +129,10 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
             <Input
               isRequired
               endContent={
-                <div className="cursor-pointer" onClick={() => setShowPass((prev) => !prev)}>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setShowPass((prev) => !prev)}
+                >
                   {showPass ? <VscEyeClosed /> : <VscEye />}
                 </div>
               }

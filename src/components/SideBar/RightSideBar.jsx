@@ -1,10 +1,13 @@
 import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import AuthForm from "../AuthForm";
 import { useSearchParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function RightSideBar({ isOpen, onOpenChange }) {
   const [searchParams, setSearchParams] = useSearchParams("");
+
+  const { userLogin } = useContext(AuthContext);
   const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
@@ -17,15 +20,17 @@ export default function RightSideBar({ isOpen, onOpenChange }) {
 
   useEffect(() => {
     const auth = searchParams.get("auth");
-    if (auth === "signin") {
-      onOpenChange(true);
-    } else if (auth === "signup") {
-      setIsSignUp(true);
-      onOpenChange(true);
-    } else {
-      onOpenChange(false);
+    if (!userLogin) {
+      if (auth === "signin") {
+        onOpenChange(true);
+      } else if (auth === "signup") {
+        setIsSignUp(true);
+        onOpenChange(true);
+      } else {
+        onOpenChange(false);
+      }
     }
-  }, [searchParams]);
+  }, [searchParams, userLogin]);
 
   return (
     <>

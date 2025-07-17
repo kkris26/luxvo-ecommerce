@@ -6,8 +6,11 @@ import {
   ModalFooter,
   Button,
 } from "@heroui/react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function PopupModal({ isOpen, onOpenChange, logOut }) {
+export default function PopupModal({ isOpen, onOpenChange }) {
+  const { handleLogout } = useContext(AuthContext);
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="sm">
@@ -27,7 +30,7 @@ export default function PopupModal({ isOpen, onOpenChange, logOut }) {
                 <Button
                   color="primary"
                   onPress={() => {
-                    onClose(), logOut();
+                    onClose(), handleLogout();
                   }}
                 >
                   Confirm

@@ -7,48 +7,17 @@ import {
 } from "@heroui/react";
 import { GoPerson } from "react-icons/go";
 import { TbMenu } from "react-icons/tb";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useContext, useState } from "react";
 import RightSideBar from "../SideBar/RightSideBar";
-import { auth } from "../../configs/auth";
 import UserProfile from "./UserProfile";
 import PopupModal from "../Modal/PopupModal";
 import { Link } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function NavbarHeader() {
-  const [userLogin, setUserLogin] = useState(null);
+  const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [loadUserLogin, setLoadUserLogin] = useState(true);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserLogin(user);
-        setLoadUserLogin(false);
-      } else {
-        setLoadUserLogin(false);
-      }
-    });
-  }, []);
-
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        setUserLogin(null);
-        addToast({
-          title: "Logout",
-          description: "Log Out Successfully",
-          timeout: 3000,
-          size: "sm",
-          color: "success",
-          shouldShowTimeoutProgress: true,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <>
@@ -87,11 +56,7 @@ export default function NavbarHeader() {
         </NavbarContent>
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
-      <PopupModal
-        logOut={handleLogout}
-        isOpen={isModalOpen}
-        onOpenChange={setModalOpen}
-      />
+      <PopupModal isOpen={isModalOpen} onOpenChange={setModalOpen} />
     </>
   );
 }
