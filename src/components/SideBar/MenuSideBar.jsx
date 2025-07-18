@@ -1,18 +1,14 @@
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  Button,
-  Divider,
-} from "@heroui/react";
+import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
 import MenuSideBarWrapper from "../Wrapper/MenuSideBarWrapper";
 
-import { HiChevronLeft } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
-import MainLogo from "../Logo/MainLogo";
-
+const menuItem = [
+  { name: "Home", path: "/" },
+  { name: "Shop", path: "/shop" },
+  { name: "Categories", path: "/categories" },
+  { name: "About Us", path: "/about" },
+  { name: "Contact", path: "/contact" },
+];
 export default function MenuSideBar({ isOpen, onOpenChange }) {
   return (
     <>
@@ -53,18 +49,12 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                     close
                   </p>
                 </div>
-                <div className="flex flex-col gap-6 w-full">
-                  <MenuSideBarWrapper path={"/"}>Home</MenuSideBarWrapper>
-                  <MenuSideBarWrapper path="/shop">Shop</MenuSideBarWrapper>
-                  <MenuSideBarWrapper path="/categories">
-                    Categories
-                  </MenuSideBarWrapper>
-                  <MenuSideBarWrapper path="/about">
-                    About Us
-                  </MenuSideBarWrapper>
-                  <MenuSideBarWrapper path="/contact">
-                    Contact
-                  </MenuSideBarWrapper>
+                <div className="flex flex-col gap-4 w-full">
+                  {menuItem.map((menu) => (
+                    <MenuSideBarWrapper path={menu.path}>
+                      {menu.name}
+                    </MenuSideBarWrapper>
+                  ))}
                 </div>
               </DrawerBody>
             </>

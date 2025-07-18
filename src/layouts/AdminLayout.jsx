@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import {
   Navbar,
   NavbarBrand,
@@ -12,10 +12,14 @@ import {
   Avatar,
   addToast,
 } from "@heroui/react";
+import { Tabs, Tab, Card, CardBody, Switch } from "@heroui/react";
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect } from "react";
+import LinkWrapper from "../components/Wrapper/LinkWrapper";
 
 const AdminLayout = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
   const navigate = useNavigate();
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   useEffect(() => {
@@ -34,32 +38,28 @@ const AdminLayout = () => {
     }
   }, [userLogin, loadUserLogin, navigate]);
 
+  const tabMenus = [
+    { name: "Dashboard", path: "/admin" },
+    { name: "Produk", path: "/admin/product" },
+    { name: "Transaksi", path: "/admin/transactions" },
+    { name: "Pengguna", path: "/admin/users" },
+  ];
+
   return (
     !loadUserLogin &&
     userLogin?.email === "admin@luxvo.com" && (
-      <>
-        <Navbar>
-          <NavbarBrand>
-            <p className="font-bold text-inherit">Admin Dashboard</p>
+      <div className="h-screen px-6 py-4 flex gap-3 flex-col">
+        <Navbar
+          maxWidth="full"
+          position="static"
+          className="bg-default-100 rounded-lg"
+          classNames={{
+            wrapper: "px-4",
+          }}
+        >
+          <NavbarBrand className="px-0">
+            <p className="font-bold text-inherit">Hi Admin</p>
           </NavbarBrand>
-
-          <NavbarContent className="hidden sm:flex gap-4" justify="center">
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Features
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive>
-              <Link aria-current="page" color="secondary" href="#">
-                Customers
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Integrations
-              </Link>
-            </NavbarItem>
-          </NavbarContent>
 
           <NavbarContent as="div" justify="end">
             <Dropdown placement="bottom-end">
@@ -94,8 +94,34 @@ const AdminLayout = () => {
             </Dropdown>
           </NavbarContent>
         </Navbar>
-        <Outlet />
-      </>
+        <div className="flex gap-4 h-full">
+          <Tabs
+            variant="light"
+            className="rounded-lg bg-default-100 p-2"
+            aria-label="Options"
+            selectedKey={pathname}
+            color="primary"
+            isVertical
+            size="lg"
+            radius="sm"
+          >
+            {tabMenus.map((menu) => (
+              <Tab
+                className="w-40 block text-start font-normal tracking text-md text-white"
+                key={menu.path}
+                title={
+                  <LinkWrapper className={"block"} path={menu.path}>
+                    {menu.name}
+                  </LinkWrapper>
+                }
+              ></Tab>
+            ))}
+          </Tabs>
+          <div className="bg-default-100 w-full rounded-lg p-4">
+            <Outlet />
+          </div>
+        </div>
+      </div>
     )
   );
 };

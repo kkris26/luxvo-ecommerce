@@ -4,6 +4,7 @@ import DashboardPage from "../pages/admin/DashboardPage";
 import HomePage from "../pages/HomePage";
 import TermsAndConditionsPage from "../pages/TermsAndConditionsPage";
 import AdminLayout from "../layouts/AdminLayout";
+import ProductPage from "../pages/admin/ProductPage";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,9 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminLayout />,
-    children: [{ index: true, element: <DashboardPage /> }],
+    children: [
+      { index: true, element: <DashboardPage /> },
+      { path: "product", element: <ProductPage /> },
+    ],
   },
 ]);

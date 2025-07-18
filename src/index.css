@@ -17,7 +17,7 @@
 
 .rounded-medium,
 .rounded-large {
-  border-radius: 0;
+  border-radius: 0!important;
 }
 
 * {
