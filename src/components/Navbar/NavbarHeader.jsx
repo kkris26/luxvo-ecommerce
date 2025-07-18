@@ -14,11 +14,14 @@ import PopupModal from "../Modal/PopupModal";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+import MenuSideBar from "../SideBar/MenuSideBar";
+import MainLogo from "../Logo/MainLogo";
 
 export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isMenuSideOpen, setMenuSideOpen] = useState(false);
   return (
     <>
       <Navbar
@@ -29,14 +32,18 @@ export default function NavbarHeader() {
         }}
       >
         <NavbarContent className="hidden sm:flex gap-4" justify="start">
-          <NavbarItem>
-            <TbMenu className="cursor-pointer text-2xl" />
+          <NavbarItem
+            onClick={() => setMenuSideOpen(true)}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <TbMenu strokeWidth={1} className="cursor-pointer text-2xl" />
+            <p className="text-xs font-light tracking-widest">MENU</p>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="center">
           <Link to={"/"}>
             <NavbarBrand>
-              <p className="font-extralight text-2xl tracking-widest">LÜXVO</p>
+              <MainLogo />
             </NavbarBrand>
           </Link>
         </NavbarContent>
@@ -63,6 +70,7 @@ export default function NavbarHeader() {
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
       <PopupModal isOpen={isModalOpen} onOpenChange={setModalOpen} />
+      <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
     </>
   );
 }
