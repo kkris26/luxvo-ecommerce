@@ -13,6 +13,7 @@ import UserProfile from "./UserProfile";
 import PopupModal from "../Modal/PopupModal";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
@@ -40,6 +41,12 @@ export default function NavbarHeader() {
           </Link>
         </NavbarContent>
         <NavbarContent justify="end">
+          <NavbarItem>
+            <IoSearchOutline className="text-xl" />
+          </NavbarItem>
+          <NavbarItem>
+            <IoCartOutline className="text-xl" />
+          </NavbarItem>
           <NavbarItem>
             {userLogin ? (
               <>

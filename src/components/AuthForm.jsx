@@ -1,10 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Form, Input, Checkbox, Button, addToast } from "@heroui/react";
-import { auth } from "../configs/auth";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";

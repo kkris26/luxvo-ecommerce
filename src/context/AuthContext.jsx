@@ -11,7 +11,6 @@ import db from "../db/db";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext(null);
-
 export default function AuthContextProvider({ children }) {
   const [userLogin, setUserLogin] = useState(null);
   const [loadUserLogin, setLoadUserLogin] = useState(true);
@@ -63,13 +62,10 @@ export default function AuthContextProvider({ children }) {
       );
 
       try {
-        const docRef = await setDoc(
-          doc(db, "users", userSignUp.user.uid, "profile", "main"),
-          {
-            fullName,
-            imgUrl,
-          }
-        );
+        await setDoc(doc(db, "users", userSignUp.user.uid, "profile", "main"), {
+          fullName,
+          imgUrl,
+        });
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -86,11 +82,7 @@ export default function AuthContextProvider({ children }) {
   };
   const signIn = async (email, password) => {
     try {
-      const userSignIn = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
       addToast({
         title: "Signed In",
         description: "You have successfully signed in.",
@@ -104,10 +96,10 @@ export default function AuthContextProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider
+    <AuthContext
       value={{ userLogin, loadUserLogin, handleLogout, signUp, signIn }}
     >
       {children}
-    </AuthContext.Provider>
+    </AuthContext>
   );
 }
