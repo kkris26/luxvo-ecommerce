@@ -3,7 +3,6 @@ import { Outlet } from "react-router";
 import "../main.css";
 
 const MainLayout = () => {
-  console.log("main layout");
   return (
     <>
       <NavbarHeader />

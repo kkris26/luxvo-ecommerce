@@ -45,6 +45,7 @@ export default function AuthContextProvider({ children }) {
           timeout: 3000,
           size: "sm",
           color: "success",
+          radius: "sm",
           shouldShowTimeoutProgress: true,
         });
       })
@@ -75,6 +76,7 @@ export default function AuthContextProvider({ children }) {
         timeout: 3000,
         shouldShowTimeoutProgress: true,
         color: "success",
+        radius: "sm",
       });
     } catch (error) {
       throw error;
@@ -89,6 +91,7 @@ export default function AuthContextProvider({ children }) {
         timeout: 3000,
         shouldShowTimeoutProgress: true,
         color: "success",
+        radius: "sm",
       });
     } catch (error) {
       throw error;

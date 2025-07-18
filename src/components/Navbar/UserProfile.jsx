@@ -7,8 +7,11 @@ import {
   User,
   Avatar,
 } from "@heroui/react";
+import { useContext } from "react";
 import { MdLogout } from "react-icons/md";
 import { Link } from "react-router";
+import { ModalContext } from "../../context/ModalContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export const PlusIcon = (props) => {
   return (
@@ -36,12 +39,13 @@ export const PlusIcon = (props) => {
   );
 };
 
-export default function UserProfile({ user, setModalOpen }) {
+export default function UserProfile() {
+  const { userLogin } = useContext(AuthContext);
+  const { setModalOpen } = useContext(ModalContext);
   return (
     <Dropdown
-      //
       classNames={{
-        base: "before:bg-default-200 rounded-lg", // change arrow background
+        base: "before:bg-default-200 rounded-lg", 
         content: "p-0 border-small border-divider bg-background",
       }}
       radius="sm"
@@ -50,7 +54,7 @@ export default function UserProfile({ user, setModalOpen }) {
         <Avatar
           isBordered
           size="sm"
-          src={user?.profile?.imgUrl}
+          src={userLogin?.profile?.imgUrl}
           className="cursor-pointer"
         />
       </DropdownTrigger>
@@ -68,19 +72,19 @@ export default function UserProfile({ user, setModalOpen }) {
             key="profile"
             isReadOnly
             className="h-14 gap-2 opacity-100"
-            textValue={user?.profile?.fullName}
+            textValue={userLogin?.profile?.fullName}
           >
             <User
               avatarProps={{
                 size: "sm",
-                src: user?.profile?.imgUrl,
+                src: userLogin?.profile?.imgUrl,
               }}
               classNames={{
                 name: "text-default-600",
                 description: "text-default-500",
               }}
-              description={user.email}
-              name={user?.profile?.fullName}
+              description={userLogin.email}
+              name={userLogin?.profile?.fullName}
             />
           </DropdownItem>
           <DropdownItem key="dashboard" textValue="dashboard">

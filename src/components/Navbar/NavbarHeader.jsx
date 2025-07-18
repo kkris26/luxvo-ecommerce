@@ -10,7 +10,6 @@ import { TbMenu } from "react-icons/tb";
 import { useContext, useState } from "react";
 import RightSideBar from "../SideBar/RightSideBar";
 import UserProfile from "./UserProfile";
-import PopupModal from "../Modal/PopupModal";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
@@ -20,7 +19,6 @@ import MainLogo from "../Logo/MainLogo";
 export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [isMenuSideOpen, setMenuSideOpen] = useState(false);
   return (
     <>
@@ -57,7 +55,7 @@ export default function NavbarHeader() {
           <NavbarItem>
             {userLogin ? (
               <>
-                <UserProfile user={userLogin} setModalOpen={setModalOpen} />
+                <UserProfile user={userLogin} />
               </>
             ) : (
               <GoPerson
@@ -69,7 +67,6 @@ export default function NavbarHeader() {
         </NavbarContent>
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
-      <PopupModal isOpen={isModalOpen} onOpenChange={setModalOpen} />
       <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
     </>
   );

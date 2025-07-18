@@ -19,12 +19,12 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
             enter: {
               opacity: 1,
               x: 0,
-              transition: { duration: 0.3, ease: "easeInOut" },
+              transition: { duration: 0.3, ease: "easeOut" },
             },
             exit: {
               opacity: 0,
               x: -100,
-              transition: { duration: 0.3, ease: "easeInOut" },
+              transition: { duration: 0.3, ease: "easeIn" },
             },
           },
           initial: "exit",
@@ -33,6 +33,7 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
         }}
         backdrop="blur"
         isOpen={isOpen}
+        size="sm"
         placement={"left"}
         onOpenChange={onOpenChange}
       >
@@ -51,7 +52,7 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                 </div>
                 <div className="flex flex-col gap-4 w-full">
                   {menuItem.map((menu) => (
-                    <MenuSideBarWrapper path={menu.path}>
+                    <MenuSideBarWrapper onClick={onClose} path={menu.path}>
                       {menu.name}
                     </MenuSideBarWrapper>
                   ))}

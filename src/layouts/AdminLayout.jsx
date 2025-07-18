@@ -3,25 +3,24 @@ import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
-  Link,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
   addToast,
+  Button,
+  Divider,
 } from "@heroui/react";
-import { Tabs, Tab, Card, CardBody, Switch } from "@heroui/react";
+import { Tabs, Tab } from "@heroui/react";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import LinkWrapper from "../components/Wrapper/LinkWrapper";
+import UserProfile from "../components/Navbar/UserProfile";
+import { HiOutlineChevronRight } from "react-icons/hi";
+import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
 const AdminLayout = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+
   const navigate = useNavigate();
   const { userLogin, loadUserLogin } = useContext(AuthContext);
+  const [collapseMenu, setCollapseMenu] = useState(false);
   useEffect(() => {
     if (!loadUserLogin) {
       if (!userLogin || userLogin.email !== "admin@luxvo.com") {
@@ -32,7 +31,17 @@ const AdminLayout = () => {
           timeout: 3000,
           size: "sm",
           color: "danger",
+          radius: "sm",
           shouldShowTimeoutProgress: true,
+        });
+      }
+      if (userLogin?.email === "admin@luxvo.com") {
+        addToast({
+          title: `Welcome ${userLogin?.profile?.fullName || "User"}!`,
+          description: "Happy to have you here again.",
+          hideIcon: true,
+          radius: "sm",
+          timeout: 3000,
         });
       }
     }
@@ -40,9 +49,10 @@ const AdminLayout = () => {
 
   const tabMenus = [
     { name: "Dashboard", path: "/admin" },
-    { name: "Produk", path: "/admin/product" },
-    { name: "Transaksi", path: "/admin/transactions" },
-    { name: "Pengguna", path: "/admin/users" },
+    { name: "Products", path: "/admin/products" },
+    { name: "Orders", path: "/admin/orders" },
+    { name: "Customers", path: "/admin/customers" },
+    { name: "Reports", path: "/admin/reports" },
   ];
 
   return (
@@ -58,65 +68,64 @@ const AdminLayout = () => {
           }}
         >
           <NavbarBrand className="px-0">
-            <p className="font-bold text-inherit">Hi Admin</p>
+            <p className="font-bold text-inherit">
+              Hi, {userLogin?.profile?.fullName || "Admin"} 👋
+            </p>
           </NavbarBrand>
 
           <NavbarContent as="div" justify="end">
-            <Dropdown placement="bottom-end">
-              <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="secondary"
-                  name="Jason Hughes"
-                  size="sm"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem key="profile" className="h-14 gap-2">
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">zoey@example.com</p>
-                </DropdownItem>
-                <DropdownItem key="settings">My Settings</DropdownItem>
-                <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                <DropdownItem key="analytics">Analytics</DropdownItem>
-                <DropdownItem key="system">System</DropdownItem>
-                <DropdownItem key="configurations">Configurations</DropdownItem>
-                <DropdownItem key="help_and_feedback">
-                  Help & Feedback
-                </DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <UserProfile />
           </NavbarContent>
         </Navbar>
-        <div className="flex gap-4 h-full">
-          <Tabs
-            variant="light"
-            className="rounded-lg bg-default-100 p-2"
-            aria-label="Options"
-            selectedKey={pathname}
-            color="primary"
-            isVertical
-            size="lg"
-            radius="sm"
-          >
-            {tabMenus.map((menu) => (
-              <Tab
-                className="w-40 block text-start font-normal tracking text-md text-white"
-                key={menu.path}
-                title={
-                  <LinkWrapper className={"block"} path={menu.path}>
-                    {menu.name}
-                  </LinkWrapper>
-                }
-              ></Tab>
-            ))}
-          </Tabs>
+        <div className="flex gap-3 h-full">
+          <div className=" flex flex-col rounded-lg  h-full  bg-default-100 p-2">
+            <Button
+              onPress={() => setCollapseMenu((prev) => !prev)}
+              radius="sm"
+              variant="light"
+              isIconOnly={collapseMenu}
+              color="default"
+              startContent={
+                <TbLayoutSidebarLeftCollapse
+                  strokeWidth={1}
+                  className="text-xl"
+                />
+              }
+              className={`text-black text-start flex items-center ${
+                collapseMenu ? "" : "justify-start"
+              } `}
+            >
+              {!collapseMenu && "Collapse"}
+            </Button>
+            <Divider className="mb-2 mt-2 " />
+            <Tabs
+              variant="light"
+              className=""
+              aria-label="Options"
+              selectedKey={pathname}
+              color="primary"
+              isVertical
+              size="lg"
+              radius="sm"
+            >
+              {!collapseMenu &&
+                tabMenus.map((menu) => (
+                  <Tab
+                    className="w-40 block text-start font-normal tracking text-md text-white"
+                    key={menu.path}
+                    title={
+                      <LinkWrapper
+                        className={"flex items-center justify-between"}
+                        path={menu.path}
+                      >
+                        {menu.name}
+                        {pathname === menu.path && <HiOutlineChevronRight />}
+                      </LinkWrapper>
+                    }
+                  ></Tab>
+                ))}
+            </Tabs>
+          </div>
           <div className="bg-default-100 w-full rounded-lg p-4">
             <Outlet />
           </div>

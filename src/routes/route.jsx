@@ -1,10 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
-import DashboardPage from "../pages/admin/DashboardPage";
 import HomePage from "../pages/HomePage";
-import TermsAndConditionsPage from "../pages/TermsAndConditionsPage";
 import AdminLayout from "../layouts/AdminLayout";
-import ProductPage from "../pages/admin/ProductPage";
 
 export const router = createBrowserRouter([
   {
@@ -12,15 +9,21 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "terms-and-conditions", element: <TermsAndConditionsPage /> },
+      { path: "shop", element: <div>Shop Page</div> },
+      { path: "categories", element: <div>Categories Page</div> },
+      { path: "about", element: <div>About Us Page</div> },
+      { path: "contact", element: <div>Contact Page</div> },
     ],
   },
   {
     path: "/admin",
     element: <AdminLayout />,
     children: [
-      { index: true, element: <DashboardPage /> },
-      { path: "product", element: <ProductPage /> },
+      { index: true, element: <div>Dashboard Page</div> },
+      { path: "products", element: <div>Products Page</div> },
+      { path: "orders", element: <div>Orders Page</div> },
+      { path: "customers", element: <div>Customers Page</div> },
+      { path: "reports", element: <div>Reports Page</div> },
     ],
   },
 ]);
