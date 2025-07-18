@@ -1,4 +1,4 @@
-import { Drawer, DrawerContent, DrawerBody } from "@heroui/react";
+import { Drawer, DrawerContent, DrawerBody, Button } from "@heroui/react";
 import MenuSideBarWrapper from "../Wrapper/MenuSideBarWrapper";
 
 import { TfiClose } from "react-icons/tfi";
@@ -40,23 +40,26 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
         <DrawerContent>
           {(onClose) => (
             <>
-              <DrawerBody className="p-8">
-                <div
-                  onClick={onClose}
-                  className="flex justify-start items-center gap-2 mb-8 cursor-pointer w-max"
-                >
-                  <TfiClose className="text-sm " />
-                  <p className="font-extralight text-md tracking-wider">
-                    close
-                  </p>
+              <DrawerBody className="p-8 flex flex-col justify-between">
+                <div>
+                  <div
+                    onClick={onClose}
+                    className="flex justify-start items-center gap-2 mb-8 cursor-pointer w-max"
+                  >
+                    <TfiClose className="text-sm " />
+                    <p className="font-extralight text-md tracking-wider">
+                      close
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-4 w-full">
+                    {menuItem.map((menu) => (
+                      <MenuSideBarWrapper onClick={onClose} path={menu.path}>
+                        {menu.name}
+                      </MenuSideBarWrapper>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-col gap-4 w-full">
-                  {menuItem.map((menu) => (
-                    <MenuSideBarWrapper onClick={onClose} path={menu.path}>
-                      {menu.name}
-                    </MenuSideBarWrapper>
-                  ))}
-                </div>
+                <Button>Have Question?</Button>
               </DrawerBody>
             </>
           )}
