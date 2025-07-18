@@ -1,16 +1,16 @@
 import { Outlet, useNavigate } from "react-router";
 import { addToast } from "@heroui/react";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, } from "react";
 import DashboardLayout from "./DashboardLayout";
 
-const AdminLayout = () => {
+const UserLayout = () => {
   const navigate = useNavigate();
   const { userLogin, loadUserLogin } = useContext(AuthContext);
 
   useEffect(() => {
     if (!loadUserLogin) {
-      if (!userLogin || userLogin.email !== "admin@luxvo.com") {
+      if (!userLogin) {
         navigate("/?auth=signin");
         addToast({
           title: "Access Denied !",
@@ -21,8 +21,7 @@ const AdminLayout = () => {
           radius: "sm",
           shouldShowTimeoutProgress: true,
         });
-      }
-      if (userLogin?.email === "admin@luxvo.com") {
+      } else {
         addToast({
           title: `Welcome ${userLogin?.profile?.fullName || "User"}!`,
           description: "Happy to have you here again.",
@@ -35,16 +34,15 @@ const AdminLayout = () => {
   }, [userLogin, loadUserLogin, navigate]);
 
   const tabMenus = [
-    { name: "Dashboard", path: "/admin" },
-    { name: "Products", path: "/admin/products" },
-    { name: "Orders", path: "/admin/orders" },
-    { name: "Customers", path: "/admin/customers" },
-    { name: "Reports", path: "/admin/reports" },
+    { name: "Porfile", path: "/user" },
+    { name: "Cart", path: "/user/cart" },
+    { name: "Favorite", path: "/user/favorite" },
+    { name: "Contact", path: "/user/contact" },
   ];
 
   return (
     !loadUserLogin &&
-    userLogin?.email === "admin@luxvo.com" && (
+    userLogin && (
       <DashboardLayout tabMenus={tabMenus} userLogin={userLogin}>
         <Outlet />
       </DashboardLayout>
@@ -52,4 +50,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default UserLayout;

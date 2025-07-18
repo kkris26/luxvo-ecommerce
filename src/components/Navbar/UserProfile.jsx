@@ -12,6 +12,7 @@ import { MdLogout } from "react-icons/md";
 import { Link } from "react-router";
 import { ModalContext } from "../../context/ModalContext";
 import { AuthContext } from "../../context/AuthContext";
+import LinkWrapper from "../Wrapper/LinkWrapper";
 
 export const PlusIcon = (props) => {
   return (
@@ -45,7 +46,7 @@ export default function UserProfile() {
   return (
     <Dropdown
       classNames={{
-        base: "before:bg-default-200 rounded-lg", 
+        base: "before:bg-default-200 rounded-lg",
         content: "p-0 border-small border-divider bg-background",
       }}
       radius="sm"
@@ -88,12 +89,14 @@ export default function UserProfile() {
             />
           </DropdownItem>
           <DropdownItem key="dashboard" textValue="dashboard">
-            <Link className="w-full flex " to={"/admin"}>
+            <LinkWrapper className="w-full flex " path={"/admin"}>
               Dashboard
-            </Link>
+            </LinkWrapper>
           </DropdownItem>
           <DropdownItem key="settings" textValue="settings">
-            Settings
+            <LinkWrapper className="w-full flex" path={"/user"}>
+              Settings
+            </LinkWrapper>
           </DropdownItem>
           <DropdownItem
             key="new_project"

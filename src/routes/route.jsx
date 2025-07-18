@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
+import UserLayout from "../layouts/UserLayout";
+import CartPage from "../pages/user/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +26,16 @@ export const router = createBrowserRouter([
       { path: "orders", element: <div>Orders Page</div> },
       { path: "customers", element: <div>Customers Page</div> },
       { path: "reports", element: <div>Reports Page</div> },
+    ],
+  },
+  {
+    path: "/user",
+    element: <UserLayout />,
+    children: [
+      { index: true, element: <div>User Page</div> },
+      { path: "cart", element: <CartPage /> },
+      { path: "favorite", element: <div>Favorite Page</div> },
+      { path: "contact", element: <div>Contact Page</div> },
     ],
   },
 ]);
