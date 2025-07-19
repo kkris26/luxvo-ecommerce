@@ -7,7 +7,7 @@ const HomePage = () => {
         muted
         loop
         playsInline
-        className="w-full h-[calc(100vh-64px)] object-cover "
+        className="w-full h-[calc(100vh-64px)] sm:h-auto object-cover aspect-video "
       ></video>
     </div>
   );

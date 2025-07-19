@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
 import CartPage from "../pages/user/CartPage";
+import ProfilePage from "../pages/user/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
     path: "/user",
     element: <UserLayout />,
     children: [
-      { index: true, element: <div>User Page</div> },
+      { index: true, element: <ProfilePage /> },
       { path: "cart", element: <CartPage /> },
       { path: "favorite", element: <div>Favorite Page</div> },
       { path: "contact", element: <div>Contact Page</div> },

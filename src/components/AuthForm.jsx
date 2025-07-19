@@ -119,7 +119,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                 placeholder="Enter your full name"
               />
               <Input
-                isRequired
+                // isRequired
                 errorMessage={({ validationDetails }) => {
                   if (validationDetails.valueMissing) {
                     return "Please enter your image URL";

@@ -1,6 +1,5 @@
 import NavbarHeader from "../components/Navbar/NavbarHeader";
 import { Outlet } from "react-router";
-import "../main.css";
 
 const MainLayout = () => {
   return (

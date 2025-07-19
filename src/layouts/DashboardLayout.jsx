@@ -16,6 +16,8 @@ import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 const DashboardLayout = ({ userLogin, tabMenus, children }) => {
   const [collapseMenu, setCollapseMenu] = useState(false);
   const { pathname } = useLocation();
+
+  
   return (
     <div className="h-screen px-6 py-4 flex gap-3 flex-col">
       <Navbar
