@@ -94,7 +94,7 @@ const ProfilePage = () => {
           className="w-full flex flex-col gap-10"
           onSubmit={updateUserProfile}
         >
-          <div className="grid w-full grid-cols-2  gap-x-5 gap-y-10">
+          <div className="grid w-full grid-cols-3  gap-x-5 gap-y-10">
             {profileFields.map((field) =>
               field.name !== "address" ? (
                 field.name !== "gender" ? (
@@ -196,6 +196,20 @@ const ProfilePage = () => {
                 />
               )
             )}
+            <div className="flex  items-center gap-5">
+              <Avatar
+                isBordered
+                size="lg"
+                src={newDataUser?.imgUrl}
+                className="cursor-pointer w-20 h-auto aspect-square"
+              />
+              <div className="flex flex-col gap-3">
+                <h4>Profile Picture</h4>
+                <Button size="sm" variant="flat">
+                  Change
+                </Button>
+              </div>
+            </div>
           </div>
           <Button
             isDisabled={!newDataUser}
@@ -207,16 +221,6 @@ const ProfilePage = () => {
             Save
           </Button>
         </Form>
-
-        <div className="w-1/3 flex justify-center flex-col items-center gap-5">
-          <Avatar
-            isBordered
-            size="lg"
-            src={newDataUser?.imgUrl}
-            className="cursor-pointer w-50 h-auto aspect-square"
-          />
-          <Button variant="flat">Change Pricture</Button>
-        </div>
       </div>
     </>
   );
