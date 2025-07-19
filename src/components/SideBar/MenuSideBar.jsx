@@ -1,13 +1,26 @@
-import { Drawer, DrawerContent, DrawerBody, Button } from "@heroui/react";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerBody,
+  Button,
+  Divider,
+} from "@heroui/react";
 import MenuSideBarWrapper from "../Wrapper/MenuSideBarWrapper";
 
 import { TfiClose } from "react-icons/tfi";
+import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 const menuItem = [
   { name: "Home", path: "/" },
   { name: "Shop", path: "/shop" },
   { name: "Categories", path: "/categories" },
   { name: "About Us", path: "/about" },
   { name: "Contact", path: "/contact" },
+];
+const socialButtons = [
+  { icon: <FaInstagram />, ariaLabel: "Instagram" },
+  { icon: <FaTiktok />, ariaLabel: "TikTok" },
+  { icon: <FaFacebook />, ariaLabel: "Facebook" },
+  { icon: <FaYoutube />, ariaLabel: "YouTube" },
 ];
 export default function MenuSideBar({ isOpen, onOpenChange }) {
   return (
@@ -31,6 +44,9 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
           animate: "enter",
           exit: "exit",
         }}
+        classNames={{
+          base: "sm:data-[placement=right]:m-2 rounded-none sm:rounded-md",
+        }}
         backdrop="blur"
         isOpen={isOpen}
         size="sm"
@@ -44,13 +60,14 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                 <div>
                   <div
                     onClick={onClose}
-                    className="flex justify-start items-center gap-2 mb-8 cursor-pointer w-max"
+                    className="flex justify-start items-center gap-2 cursor-pointer w-max"
                   >
                     <TfiClose className="text-sm " />
                     <p className="font-extralight text-md tracking-wider">
                       close
                     </p>
                   </div>
+                  <Divider className="my-6 bg-divider/50" />
                   <div className="flex flex-col gap-4 w-full">
                     {menuItem.map((menu) => (
                       <MenuSideBarWrapper onClick={onClose} path={menu.path}>
@@ -58,8 +75,34 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                       </MenuSideBarWrapper>
                     ))}
                   </div>
+                  {/* <Divider className="my-8 bg-divider/50" /> */}
+                  <div>
+                    <div className="flex gap-3 mt-10 ">
+                      {socialButtons.map((social) => (
+                        <Button
+                          isIconOnly
+                          aria-label={social.ariaLabel}
+                          color="default"
+                          radius="full"
+                        >
+                          {social.icon}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <Button>Have Question?</Button>
+                <div className="mt-8 font-light">
+                  <h3 className="text-lg">Get in Touch</h3>
+                  <div className="text-sm tracking-wider mt-2 flex gap-5">
+                    <p className="underline underline-offset-2">
+                      info@luxvo.com
+                    </p>
+                    <p className="underline underline-offset-2">
+                      +99 7865 677 53
+                    </p>
+                  </div>
+                </div>
+                {/* <Button>Have Question?</Button> */}
               </DrawerBody>
             </>
           )}

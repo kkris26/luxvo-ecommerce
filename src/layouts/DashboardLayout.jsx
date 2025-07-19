@@ -57,7 +57,7 @@ const DashboardLayout = ({ userLogin, tabMenus, children }) => {
             >
               {!collapseMenu && "Collapse"}
             </Button>
-            <Divider className="mb-2 mt-2 " />
+            <Divider className="mb-3 mt-1 bg-divider/30 " />
             <Tabs
               variant="light"
               className=""

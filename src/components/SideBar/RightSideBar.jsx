@@ -52,6 +52,9 @@ export default function RightSideBar({ isOpen, onOpenChange }) {
           animate: "enter",
           exit: "exit",
         }}
+        classNames={{
+          base: "sm:data-[placement=right]:m-2 rounded-none sm:rounded-md",
+        }}
         backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}

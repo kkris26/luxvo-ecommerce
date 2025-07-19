@@ -15,9 +15,14 @@
   background-color: black;
 }
 
-.rounded-medium,
+.rounded-small{
+   border-radius: 5px!important;
+}
+.rounded-medium{
+   border-radius: 4px!important;
+}
 .rounded-large {
-  border-radius: 0!important;
+  border-radius: 8px!important;
 }
 
 * {
