@@ -1,12 +1,42 @@
-# React + Vite
+# 🛒 E-Commerce Demo Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple e-commerce web application built using **React** and **Firebase**, intended for learning, testing, and showcasing basic functionality like authentication, admin dashboard, and product management.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo
 
-## Expanding the ESLint configuration
+👉 [https://luxvo.vercel.app](https://luxvo.vercel.app)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> **Admin Credentials (for testing):**  
+> **Email:** `admin@luxvo.com`  
+> **Password:** `Admin1234`  
+> _(only this admin account has access to dashboard)_
+
+> **For regular users:**  
+> You can register manually through the Sign Up page.
+
+---
+
+## ✨ Features
+
+- 🔐 User Authentication (Sign up, Login, Logout via Firebase Auth)
+- 👤 User Dashboard (Soon)
+- 📦 Product Management (Soon)
+- 🛒 Product Listing (Soon)
+- 🧾 Order Overview (Soon)
+- 📊 Reports Page (Soon)
+- 🌐 Responsive Design
+- 📁 Profile Info Editing (with Firestore) (Soon)
+- 🔔 Toast Notifications using Hero UI
+
+---
+
+## 🛠️ Tech Stack
+
+- **React.js** with Vite
+- **Firebase** (Auth & Firestore)
+- **Hero UI** (Components & Toast)
+- **Tailwind CSS**
+
+---
