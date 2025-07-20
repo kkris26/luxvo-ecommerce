@@ -15,10 +15,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import MenuSideBar from "../SideBar/MenuSideBar";
 import MainLogo from "../Logo/MainLogo";
+import CartSideBar from "../SideBar/CartSideBar";
 
 export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isCartOpen, setCartOpen] = useState(false);
   const [isMenuSideOpen, setMenuSideOpen] = useState(false);
   return (
     <>
@@ -50,7 +52,10 @@ export default function NavbarHeader() {
             <IoSearchOutline className="text-xl" />
           </NavbarItem>
           <NavbarItem>
-            <IoCartOutline className="text-xl" />
+            <IoCartOutline
+              className="text-xl cursor-pointer"
+              onClick={() => setCartOpen(true)}
+            />
           </NavbarItem>
           <NavbarItem>
             {userLogin ? (
@@ -68,6 +73,7 @@ export default function NavbarHeader() {
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
       <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
+      <CartSideBar isOpen={isCartOpen} onOpenChange={setCartOpen} />
     </>
   );
 }
