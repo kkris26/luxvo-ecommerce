@@ -89,12 +89,12 @@ const ProfilePage = () => {
   return (
     <>
       <h1 className="text-2xl">My Profile</h1>
-      <div className="flex w-full mt-10 gap-10">
+      <div className="flex w-full my-5 sm:my-10 gap-10">
         <Form
           className="w-full flex flex-col gap-10"
           onSubmit={updateUserProfile}
         >
-          <div className="grid w-full grid-cols-3  gap-x-5 gap-y-10">
+          <div className="grid w-full sm:grid-cols-2 md:grid-cols-3  gap-4 sm:gap-x-5 sm:gap-y-10">
             {profileFields.map((field) =>
               field.name !== "address" ? (
                 field.name !== "gender" ? (

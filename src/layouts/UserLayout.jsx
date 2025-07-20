@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import { addToast } from "@heroui/react";
 import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect, } from "react";
+import { useContext, useEffect } from "react";
 import DashboardLayout from "./DashboardLayout";
 
 const UserLayout = () => {
@@ -34,10 +34,10 @@ const UserLayout = () => {
   }, [userLogin, loadUserLogin, navigate]);
 
   const tabMenus = [
-    { name: "Porfile", path: "/user" },
-    { name: "Cart", path: "/user/cart" },
-    { name: "Favorite", path: "/user/favorite" },
-    { name: "Contact", path: "/user/contact" },
+    { key: "profile", name: "Profile", path: "/user" },
+    { key: "cart", name: "Cart", path: "/user/cart" },
+    { key: "favorite", name: "Favorite", path: "/user/favorite" },
+    { key: "contact", name: "Contact", path: "/user/contact" },
   ];
 
   return (

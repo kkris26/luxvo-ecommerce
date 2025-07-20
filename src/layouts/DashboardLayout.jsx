@@ -12,12 +12,12 @@ import LinkWrapper from "../components/Wrapper/LinkWrapper";
 import UserProfile from "../components/Navbar/UserProfile";
 import { HiOutlineChevronRight, HiOutlineHome } from "react-icons/hi";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import MenuDropdown from "../components/Dashboard/MenuDropdown";
 
 const DashboardLayout = ({ userLogin, tabMenus, children }) => {
   const [collapseMenu, setCollapseMenu] = useState(false);
   const { pathname } = useLocation();
 
-  
   return (
     <div className="h-screen px-6 py-4 flex gap-3 flex-col">
       <Navbar
@@ -28,18 +28,21 @@ const DashboardLayout = ({ userLogin, tabMenus, children }) => {
           wrapper: "px-4",
         }}
       >
-        <NavbarBrand className="px-0">
-          <p className="font-bold text-inherit">
-            Hi, {userLogin?.profile?.fullName || "Admin"} 👋
-          </p>
-        </NavbarBrand>
+        <NavbarContent as="div" justify="start" className="gap-2 items-center">
+          <MenuDropdown tabMenus={tabMenus} />
+          <NavbarBrand className="px-0">
+            <p className="font-bold text-inherit">
+              Hi, {userLogin?.profile?.fullName || "Admin"} 👋
+            </p>
+          </NavbarBrand>
+        </NavbarContent>
 
         <NavbarContent as="div" justify="end">
           <UserProfile />
         </NavbarContent>
       </Navbar>
-      <div className="flex gap-3 h-full">
-        <div className=" flex flex-col rounded-lg  h-full justify-between  bg-default-100 p-2">
+      <div className="flex gap-3 pb-10 sm:pb-0 sm:h-full ">
+        <div className=" hidden lg:flex flex-col rounded-lg  h-full justify-between  bg-default-100 p-2">
           <div>
             <Button
               onPress={() => setCollapseMenu((prev) => !prev)}
@@ -106,7 +109,7 @@ const DashboardLayout = ({ userLogin, tabMenus, children }) => {
             </Link>
           </Button>
         </div>
-        <div className="bg-default-100 w-full rounded-lg p-4">{children}</div>
+        <div className="bg-default-100 w-full h-full rounded-lg p-4 ">{children}</div>
       </div>
     </div>
   );

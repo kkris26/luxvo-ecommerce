@@ -35,11 +35,11 @@ const AdminLayout = () => {
   }, [userLogin, loadUserLogin, navigate]);
 
   const tabMenus = [
-    { name: "Dashboard", path: "/admin" },
-    { name: "Products", path: "/admin/products" },
-    { name: "Orders", path: "/admin/orders" },
-    { name: "Customers", path: "/admin/customers" },
-    { name: "Reports", path: "/admin/reports" },
+    { key: "dashboard", name: "Dashboard", path: "/admin" },
+    { key: "products", name: "Products", path: "/admin/products" },
+    { key: "orders", name: "Orders", path: "/admin/orders" },
+    { key: "customers", name: "Customers", path: "/admin/customers" },
+    { key: "reports", name: "Reports", path: "/admin/reports" },
   ];
 
   return (
