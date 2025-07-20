@@ -9,39 +9,13 @@ import {
 } from "@heroui/react";
 import { useContext } from "react";
 import { MdLogout } from "react-icons/md";
-import { Link } from "react-router";
 import { ModalContext } from "../../context/ModalContext";
 import { AuthContext } from "../../context/AuthContext";
 import LinkWrapper from "../Wrapper/LinkWrapper";
 
-export const PlusIcon = (props) => {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      focusable="false"
-      height="1em"
-      role="presentation"
-      viewBox="0 0 24 24"
-      width="1em"
-      {...props}
-    >
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-      >
-        <path d="M6 12h12" />
-        <path d="M12 18V6" />
-      </g>
-    </svg>
-  );
-};
 
 export default function UserProfile() {
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, userProfile } = useContext(AuthContext);
   const { setModalOpen } = useContext(ModalContext);
   return (
     <Dropdown
@@ -55,7 +29,7 @@ export default function UserProfile() {
         <Avatar
           isBordered
           size="sm"
-          src={userLogin?.profile?.imgUrl}
+          src={userProfile?.imgUrl}
           className="cursor-pointer"
         />
       </DropdownTrigger>
@@ -73,19 +47,19 @@ export default function UserProfile() {
             key="profile"
             isReadOnly
             className="h-14 gap-2 opacity-100"
-            textValue={userLogin?.profile?.fullName}
+            textValue={userProfile?.fullName}
           >
             <User
               avatarProps={{
                 size: "sm",
-                src: userLogin?.profile?.imgUrl,
+                src: userProfile?.imgUrl,
               }}
               classNames={{
                 name: "text-default-600",
                 description: "text-default-500",
               }}
               description={userLogin.email}
-              name={userLogin?.profile?.fullName}
+              name={userProfile?.fullName}
             />
           </DropdownItem>
           <DropdownItem key="dashboard" textValue="dashboard">
@@ -98,11 +72,7 @@ export default function UserProfile() {
               Settings
             </LinkWrapper>
           </DropdownItem>
-          <DropdownItem
-            key="new_project"
-            textValue="new_project"
-            endContent={<PlusIcon className="text-large" />}
-          >
+          <DropdownItem key="new_project" textValue="new_project">
             New Project
           </DropdownItem>
         </DropdownSection>

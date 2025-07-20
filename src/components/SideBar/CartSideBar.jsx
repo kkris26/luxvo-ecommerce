@@ -35,7 +35,7 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
             </DrawerHeader>
             <DrawerBody>
               <div className="grid grid-cols-2 gap-3">
-                {Array.from({ length: 8 }).map((_, index) => (
+                {[...Array(8)].map((_, index) => (
                   <Card
                     isFooterBlurred
                     className="border-none w-fit"

@@ -14,6 +14,8 @@ export const AuthContext = createContext(null);
 export default function AuthContextProvider({ children }) {
   const [userLogin, setUserLogin] = useState(null);
   const [loadUserLogin, setLoadUserLogin] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -32,6 +34,7 @@ export default function AuthContextProvider({ children }) {
     const profileSnap = await getDoc(
       doc(db, "users", userId, "profile", "main")
     );
+    setUserProfile(profileSnap.data());
     setUserLogin((prev) => ({ ...prev, profile: profileSnap.data() }));
   };
 
@@ -100,7 +103,14 @@ export default function AuthContextProvider({ children }) {
 
   return (
     <AuthContext
-      value={{ userLogin, loadUserLogin, handleLogout, signUp, signIn }}
+      value={{
+        userLogin,
+        loadUserLogin,
+        handleLogout,
+        signUp,
+        signIn,
+        userProfile,
+      }}
     >
       {children}
     </AuthContext>

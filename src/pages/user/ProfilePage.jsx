@@ -2,7 +2,6 @@ import {
   addToast,
   Avatar,
   Button,
-  Image,
   Input,
   Select,
   SelectItem,
@@ -14,15 +13,6 @@ import { Form } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import db from "../../db/db";
 import { doc, setDoc } from "firebase/firestore";
-const user = {
-  fullName: "John Doe",
-  email: "john.doe@example.com",
-  phone: "+99 7865 677 53",
-  //   dob: "1990-01-01",
-  gender: "male",
-  address: "123 Main Street, Luxville",
-  avatar: "https://i.pravatar.cc/150?u=john",
-};
 
 const profileFields = [
   { name: "fullName", label: "Full Name", valueKey: "fullName" },
@@ -39,8 +29,7 @@ const genders = [
   { key: "female", label: "Female" },
 ];
 const ProfilePage = () => {
-  const { userLogin } = useContext(AuthContext);
-  const profileUser = userLogin.profile;
+  const { userLogin, userProfile } = useContext(AuthContext);
   const [editableField, setEditableField] = useState(null);
   const [newDataUser, setNewDataUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +41,8 @@ const ProfilePage = () => {
     }));
   };
   useEffect(() => {
-    setNewDataUser(profileUser);
-  }, [profileUser]);
+    setNewDataUser(userProfile);
+  }, [userProfile]);
 
   const handleEdit = () => {
     setTimeout(() => {
@@ -84,7 +73,6 @@ const ProfilePage = () => {
       console.log({ error });
     }
   };
-  console.log({ newDataUser });
 
   return (
     <>

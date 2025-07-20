@@ -100,7 +100,11 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                   <Divider className="my-6 bg-divider/50" />
                   <div className="flex flex-col gap-4 w-full">
                     {menuItem.map((menu) => (
-                      <MenuSideBarWrapper onClick={onClose} path={menu.path}>
+                      <MenuSideBarWrapper
+                        key={menu.name}
+                        onClick={onClose}
+                        path={menu.path}
+                      >
                         {menu.name}
                       </MenuSideBarWrapper>
                     ))}
@@ -109,7 +113,11 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                   <div>
                     <div className="flex gap-4 mt-0 ">
                       {socialButtons.map((social) => (
-                        <a href={social.link} target="_blank">
+                        <a
+                          href={social.link}
+                          target="_blank"
+                          key={social.ariaLabel}
+                        >
                           <Button
                             isIconOnly
                             aria-label={social.ariaLabel}

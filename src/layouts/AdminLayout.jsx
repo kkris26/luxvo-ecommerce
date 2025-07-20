@@ -6,8 +6,7 @@ import DashboardLayout from "./DashboardLayout";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
-  const { userLogin, loadUserLogin } = useContext(AuthContext);
-
+  const { userLogin, loadUserLogin, userProfile } = useContext(AuthContext);
   useEffect(() => {
     if (!loadUserLogin) {
       if (!userLogin || userLogin.email !== "admin@luxvo.com") {
@@ -24,7 +23,7 @@ const AdminLayout = () => {
       }
       if (userLogin?.email === "admin@luxvo.com") {
         addToast({
-          title: `Welcome ${userLogin?.profile?.fullName || "User"}!`,
+          title: `Welcome ${userProfile?.fullName || "User"}!`,
           description: "Happy to have you here again.",
           hideIcon: true,
           radius: "sm",
@@ -32,7 +31,7 @@ const AdminLayout = () => {
         });
       }
     }
-  }, [userLogin, loadUserLogin, navigate]);
+  }, [userLogin, loadUserLogin, navigate, userProfile]);
 
   const tabMenus = [
     { key: "dashboard", name: "Dashboard", path: "/admin" },
@@ -45,7 +44,11 @@ const AdminLayout = () => {
   return (
     !loadUserLogin &&
     userLogin?.email === "admin@luxvo.com" && (
-      <DashboardLayout tabMenus={tabMenus} userLogin={userLogin}>
+      <DashboardLayout
+        tabMenus={tabMenus}
+        userLogin={userLogin}
+        userProfile={userProfile}
+      >
         <Outlet />
       </DashboardLayout>
     )

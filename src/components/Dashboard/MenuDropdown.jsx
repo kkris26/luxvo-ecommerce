@@ -22,7 +22,7 @@ const MenuDropdown = ({ tabMenus }) => {
         </DropdownTrigger>
         <DropdownMenu aria-label="Dynamic Actions" items={dropDownMenu}>
           {(item) => (
-            <DropdownItem key={item.key} className="">
+            <DropdownItem textValue={item.key} key={item.key} className="">
               <Link className="flex w-full " to={item.path}>
                 {item.name}
               </Link>
