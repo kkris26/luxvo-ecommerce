@@ -1,4 +1,4 @@
-# 🛒 E-Commerce Demo Project
+# 🛒 LÜXVO | E-Commerce Project
 
 This is a simple e-commerce web application built using **React** and **Firebase**, intended for learning, testing, and showcasing basic functionality like authentication, admin dashboard, and product management.
 

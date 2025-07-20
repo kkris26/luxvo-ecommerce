@@ -47,8 +47,13 @@ const contactInfo = [
   },
   {
     type: "phone",
-    label: "+99 7865 677 53",
+    label: "+99 786 677 53",
     href: "tel:+99786567753",
+  },
+  {
+    type: "text",
+    label: "Read Docs",
+    href: "https://github.com/kkris26/luxvo-ecommerce?tab=readme-ov-file#-e-commerce-demo-project",
   },
 ];
 
@@ -134,7 +139,7 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                 </div>
                 <div className="mt-8 font-light">
                   <h3 className="text-lg">Get in touch</h3>
-                  <div className="text-sm tracking-wider mt-2 flex gap-5 ">
+                  <div className="text-sm tracking-wider mt-2 flex flex-wrap gap-3 ">
                     {contactInfo.map((item, i) => (
                       <a
                         key={i}
