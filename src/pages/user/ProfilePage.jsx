@@ -7,7 +7,7 @@ import {
   SelectItem,
   Textarea,
 } from "@heroui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { Form } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
@@ -29,7 +29,8 @@ const genders = [
   { key: "female", label: "Female" },
 ];
 const ProfilePage = () => {
-  const { userLogin, userProfile } = useContext(AuthContext);
+  const { userLogin, userProfile, userProfileImg, userFullName } =
+    useContext(AuthContext);
   const [editableField, setEditableField] = useState(null);
   const [newDataUser, setNewDataUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,7 @@ const ProfilePage = () => {
     }));
   };
   useEffect(() => {
-    setNewDataUser(userProfile);
+    setNewDataUser({ ...userProfile, fullName: userFullName });
   }, [userProfile]);
 
   const handleEdit = () => {
@@ -188,7 +189,7 @@ const ProfilePage = () => {
               <Avatar
                 isBordered
                 size="lg"
-                src={newDataUser?.imgUrl}
+                src={userProfileImg}
                 className="cursor-pointer w-20 h-auto aspect-square"
               />
               <div className="flex flex-col gap-3">

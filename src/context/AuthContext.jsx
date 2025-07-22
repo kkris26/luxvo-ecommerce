@@ -16,6 +16,9 @@ export default function AuthContextProvider({ children }) {
   const [loadUserLogin, setLoadUserLogin] = useState(true);
   const [userProfile, setUserProfile] = useState(null);
 
+  const userProfileImg = userProfile?.imgUrl || userLogin?.photoURL;
+  const userFullName =  userProfile?.fullName || userLogin?.displayName;
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -56,7 +59,7 @@ export default function AuthContextProvider({ children }) {
       });
   };
 
-  const signUp = async (fullName, imgUrl, email, password) => {
+  const signUp = async (fullName, email, password) => {
     try {
       const userSignUp = await createUserWithEmailAndPassword(
         auth,
@@ -108,6 +111,8 @@ export default function AuthContextProvider({ children }) {
         signUp,
         signIn,
         userProfile,
+        userProfileImg,
+        userFullName,
       }}
     >
       {children}

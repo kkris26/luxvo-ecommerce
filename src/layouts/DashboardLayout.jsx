@@ -31,7 +31,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
         <NavbarContent as="div" justify="start" className="gap-2 items-center">
           <MenuDropdown tabMenus={tabMenus} />
           <NavbarBrand className="px-0">
-            <p className="font-bold text-inherit">
+            <p className="font-bold text-inherit capitalize">
               Hi, {userProfile?.fullName || "Admin"} 👋
             </p>
           </NavbarBrand>

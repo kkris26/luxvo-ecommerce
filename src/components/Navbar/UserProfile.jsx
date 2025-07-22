@@ -13,10 +13,11 @@ import { ModalContext } from "../../context/ModalContext";
 import { AuthContext } from "../../context/AuthContext";
 import LinkWrapper from "../Wrapper/LinkWrapper";
 
-
 export default function UserProfile() {
-  const { userLogin, userProfile } = useContext(AuthContext);
+  const { userLogin, userProfile, userProfileImg, userFullName } =
+    useContext(AuthContext);
   const { setModalOpen } = useContext(ModalContext);
+
   return (
     <Dropdown
       classNames={{
@@ -29,7 +30,7 @@ export default function UserProfile() {
         <Avatar
           isBordered
           size="sm"
-          src={userProfile?.imgUrl}
+          src={userProfileImg}
           className="cursor-pointer"
         />
       </DropdownTrigger>
@@ -47,19 +48,19 @@ export default function UserProfile() {
             key="profile"
             isReadOnly
             className="h-14 gap-2 opacity-100"
-            textValue={userProfile?.fullName}
+            textValue={userFullName}
           >
             <User
               avatarProps={{
                 size: "sm",
-                src: userProfile?.imgUrl,
+                src: userProfileImg,
               }}
               classNames={{
                 name: "text-default-600",
                 description: "text-default-500",
               }}
               description={userLogin.email}
-              name={userProfile?.fullName}
+              name={<span className="capitalize">{userFullName}</span>}
             />
           </DropdownItem>
           <DropdownItem key="dashboard" textValue="dashboard">

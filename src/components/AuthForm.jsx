@@ -11,6 +11,9 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { FaGoogle } from "react-icons/fa";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../configs/auth";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
 export default function AuthForm({ close, isSignUp, setIsSignUp }) {
   const [password, setPassword] = useState("");
@@ -49,7 +52,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
     async function handleRegister() {
       try {
         setLoading(true);
-        await signUp(data.fullName, data.imgURL, data.email, data.password);
+        await signUp(data.fullName, data.email, data.password);
 
         setTimeout(() => {
           close();
@@ -99,6 +102,25 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
     }
     isSignUp && handleRegister();
     !isSignUp && handleLogin();
+  };
+
+  const handleLoginGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      setTimeout(() => {
+        close();
+      }, 300);
+    } catch (error) {
+      addToast({
+        title: "Something Went Wrong",
+        description: "An unexpected error occurred.",
+        timeout: 3000,
+        size: "sm",
+        color: "danger",
+        radius: "sm",
+        shouldShowTimeoutProgress: true,
+      });
+    }
   };
 
   return (
@@ -239,6 +261,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
         variant="bordered"
         className="w-full"
         startContent={<FaGoogle />}
+        onPress={handleLoginGoogle}
       >
         Sign In with Google
       </Button>
