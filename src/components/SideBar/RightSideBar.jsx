@@ -63,7 +63,7 @@ export default function RightSideBar({ isOpen, onOpenChange }) {
           {(onCLose) => (
             <>
               <DrawerBody>
-                <div className="flex flex-col gap-8 justify-center items-center h-full">
+                <div className="flex w-full flex-col gap-3 justify-center items-center h-full">
                   <AuthForm
                     close={onCLose}
                     isSignUp={isSignUp}

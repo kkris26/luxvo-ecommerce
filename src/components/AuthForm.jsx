@@ -1,8 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Form, Input, Checkbox, Button, addToast } from "@heroui/react";
+import {
+  Form,
+  Input,
+  Checkbox,
+  Button,
+  addToast,
+  Divider,
+} from "@heroui/react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import { FaGoogle } from "react-icons/fa";
 
 export default function AuthForm({ close, isSignUp, setIsSignUp }) {
   const [password, setPassword] = useState("");
@@ -95,7 +103,7 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
 
   return (
     <>
-      <h2 className="text-3xl">{isSignUp ? "Sign Up" : "Sign In"}</h2>
+      <h2 className="text-3xl mb-5">{isSignUp ? "Sign Up" : "Sign In"}</h2>
       <Form
         className="w-full justify-center items-center space-y-4"
         validationErrors={errors}
@@ -117,24 +125,6 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
                 labelPlacement="outside"
                 name="fullName"
                 placeholder="Enter your full name"
-              />
-              <Input
-                // isRequired
-                errorMessage={({ validationDetails }) => {
-                  if (validationDetails.valueMissing) {
-                    return "Please enter your image URL";
-                  }
-                  if (validationDetails.typeMismatch) {
-                    return "Please enter a valid URL";
-                  }
-
-                  return errors.name;
-                }}
-                label="Image URL"
-                labelPlacement="outside"
-                name="imgURL"
-                placeholder="Enter your image URL"
-                type="url"
               />
             </>
           )}
@@ -239,6 +229,19 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
           </div>
         </div>
       </Form>
+      <div className="flex gap-2 items-center w-full justify-center overflow-hidden">
+        <Divider className="w-full" />
+        <p>or</p>
+        <Divider className="w-full" />
+      </div>
+      <Button
+        color="default"
+        variant="bordered"
+        className="w-full"
+        startContent={<FaGoogle />}
+      >
+        Sign In with Google
+      </Button>
     </>
   );
 }

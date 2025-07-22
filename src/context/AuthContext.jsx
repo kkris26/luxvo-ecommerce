@@ -16,7 +16,6 @@ export default function AuthContextProvider({ children }) {
   const [loadUserLogin, setLoadUserLogin] = useState(true);
   const [userProfile, setUserProfile] = useState(null);
 
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -68,7 +67,6 @@ export default function AuthContextProvider({ children }) {
       try {
         await setDoc(doc(db, "users", userSignUp.user.uid, "profile", "main"), {
           fullName,
-          imgUrl,
         });
       } catch (e) {
         console.error("Error adding document: ", e);
