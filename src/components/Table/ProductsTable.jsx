@@ -19,6 +19,7 @@ import {
 } from "@heroui/react";
 
 export const productColumns = [
+  { name: "#", uid: "id" },
   { name: "Product Name", uid: "name", sortable: true },
   { name: "Category", uid: "category", sortable: true },
   { name: "Price", uid: "price", sortable: true },
@@ -152,7 +153,12 @@ const INITIAL_VISIBLE_COLUMNS = [
   "actions",
 ];
 
-export default function ProductsTable({ products, loading, setOpenModal }) {
+export default function ProductsTable({
+  products,
+  loading,
+  setOpenModal,
+  setSelectedProduct,
+}) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -229,7 +235,9 @@ export default function ProductsTable({ products, loading, setOpenModal }) {
             description={product.description}
             name={
               <span
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true), setSelectedProduct(product);
+                }}
                 className="cursor-pointer hover:underline"
               >
                 {cellValue}
@@ -259,7 +267,12 @@ export default function ProductsTable({ products, loading, setOpenModal }) {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem onPress={() => setOpenModal(true)} key="view">
+                <DropdownItem
+                  onPress={() => {
+                    setOpenModal(true), setSelectedProduct(product);
+                  }}
+                  key="view"
+                >
                   View
                 </DropdownItem>
                 <DropdownItem key="edit">Edit</DropdownItem>
@@ -376,7 +389,9 @@ export default function ProductsTable({ products, loading, setOpenModal }) {
             <Button
               color="primary"
               endContent={<PlusIcon />}
-              onPress={() => setOpenModal(true)}
+              onPress={() => {
+                setOpenModal(true);
+              }}
             >
               Add New
             </Button>

@@ -5,20 +5,81 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Image,
+  Card,
+  CardBody,
+  Divider,
 } from "@heroui/react";
 
-export default function ModalEditProduct({ isOpen, onOpenChange }) {
+export default function ModalEditProduct({
+  isOpen,
+  onOpenChange,
+  selectedProduct,
+}) {
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="sm">
+      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Product Details 
+                Product Details
               </ModalHeader>
               <ModalBody>
-                <p>Are you sure you want to log out?</p>
+                <div className="w-full flex-col">
+                  <div className="flex flex-col gap-6 p-4">
+                    <div className="flex gap-4 items-center">
+                      <Image
+                        alt={selectedProduct.name}
+                        src={selectedProduct.imgUrl}
+                        width={"full"}
+                        className="rounded-xl object-cover "
+                      />
+
+                      <div className="flex flex-col gap-2 p-0">
+                        <h2 className="text-xl font-semibold">
+                          {selectedProduct.name}
+                        </h2>
+
+                        <Divider className="my-2" />
+
+                        <p className="text-sm text-default-600">
+                          <span className="font-medium">Price:</span> Rp{" "}
+                          {selectedProduct.price.toLocaleString("id-ID")}
+                        </p>
+                        <p className="text-sm text-default-600">
+                          <span className="font-medium">Category:</span>{" "}
+                          {selectedProduct.category}
+                        </p>
+                        <p className="text-sm text-default-600">
+                          <span className="font-medium">Stock:</span>{" "}
+                          {selectedProduct.stock}
+                        </p>
+                        <p className="text-sm text-default-600">
+                          <span className="font-medium">Status:</span>{" "}
+                          <span
+                            className={
+                              selectedProduct.status === "publish"
+                                ? "text-success"
+                                : selectedProduct.status === "draft"
+                                ? "text-warning"
+                                : "text-gray-500"
+                            }
+                          >
+                            {selectedProduct.status}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <Divider className="my-2" />
+                      <h4 className="font-medium mb-1">Description</h4>
+                      <p className="text-sm text-default-500 leading-relaxed">
+                        {selectedProduct.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button

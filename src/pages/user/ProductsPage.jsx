@@ -8,6 +8,7 @@ const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const getProducts = async () => {
     try {
       setLoading(true);
@@ -29,14 +30,27 @@ const ProductsPage = () => {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    if (openModal === false) {
+      setSelectedProduct(null)
+    }
+  }, [openModal]);
+
+  console.log(selectedProduct);
+
   return (
     <>
       <h1 className="text-2xl mb-8">All Products</h1>
-      <ModalEditProduct isOpen={openModal} onOpenChange={setOpenModal} />
+      <ModalEditProduct
+        isOpen={openModal}
+        onOpenChange={setOpenModal}
+        selectedProduct={selectedProduct}
+      />
       <ProductsTable
         loading={loading}
         products={products}
         setOpenModal={setOpenModal}
+        setSelectedProduct={setSelectedProduct}
       />
     </>
   );
