@@ -9,6 +9,7 @@ import {
   Card,
   CardBody,
   Divider,
+  ScrollShadow,
 } from "@heroui/react";
 
 export default function ModalEditProduct({
@@ -18,7 +19,7 @@ export default function ModalEditProduct({
 }) {
   return (
     <>
-      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size="3xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -26,7 +27,7 @@ export default function ModalEditProduct({
                 Product Details
               </ModalHeader>
               <ModalBody>
-                <div className="w-full flex-col">
+                <ScrollShadow className="w-full flex-col h-100 overflow-auto">
                   <div className="flex flex-col gap-6 p-4">
                     <div className="flex gap-4 items-center">
                       <Image
@@ -79,7 +80,7 @@ export default function ModalEditProduct({
                       </p>
                     </div>
                   </div>
-                </div>
+                </ScrollShadow>
               </ModalBody>
               <ModalFooter>
                 <Button
