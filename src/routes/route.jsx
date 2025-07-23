@@ -5,6 +5,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
 import CartPage from "../pages/user/CartPage";
 import ProfilePage from "../pages/user/ProfilePage";
+import ProductsPage from "../pages/user/ProductsPage";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       { index: true, element: <div>Dashboard Page</div> },
-      { path: "products", element: <div>Products Page</div> },
+      { path: "products", element: <ProductsPage /> },
       { path: "orders", element: <div>Orders Page</div> },
       { path: "customers", element: <div>Customers Page</div> },
       { path: "reports", element: <div>Reports Page</div> },

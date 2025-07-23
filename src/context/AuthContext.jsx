@@ -8,7 +8,14 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../configs/auth";
 import { addToast } from "@heroui/react";
 import db from "../db/db";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 
 export const AuthContext = createContext(null);
 export default function AuthContextProvider({ children }) {
@@ -17,7 +24,7 @@ export default function AuthContextProvider({ children }) {
   const [userProfile, setUserProfile] = useState(null);
 
   const userProfileImg = userProfile?.imgUrl || userLogin?.photoURL;
-  const userFullName =  userProfile?.fullName || userLogin?.displayName;
+  const userFullName = userProfile?.fullName || userLogin?.displayName;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,7 +37,15 @@ export default function AuthContextProvider({ children }) {
       }
       return () => unsubscribe();
     });
+    // addDoc(collection(db, "products"), {
+    //   name: "Sepatu Adidas",
+    //   slug: "sepatu-adidas",
+    //   price: 899000,
+    //   stock: 15,
+    // });
   }, []);
+
+
 
   const handleGetProfileUSer = async (userId) => {
     const profileSnap = await getDoc(
