@@ -152,7 +152,7 @@ const INITIAL_VISIBLE_COLUMNS = [
   "actions",
 ];
 
-export default function ProductsTable({ products, loading }) {
+export default function ProductsTable({ products, loading, setOpenModal }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -227,11 +227,17 @@ export default function ProductsTable({ products, loading }) {
               src: product.imgUrl,
             }}
             description={product.description}
-            name={cellValue}
+            name={
+              <span
+                onClick={() => setOpenModal(true)}
+                className="cursor-pointer hover:underline"
+              >
+                {cellValue}
+              </span>
+            }
             classNames={{ description: "text-xs w-fit max-w-80 line-clamp-1" }}
           ></User>
         );
-
       case "status":
         return (
           <Chip
@@ -253,7 +259,9 @@ export default function ProductsTable({ products, loading }) {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem key="view">View</DropdownItem>
+                <DropdownItem onPress={() => setOpenModal(true)} key="view">
+                  View
+                </DropdownItem>
                 <DropdownItem key="edit">Edit</DropdownItem>
                 <DropdownItem
                   className="text-danger"
@@ -365,7 +373,11 @@ export default function ProductsTable({ products, loading }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
+            <Button
+              color="primary"
+              endContent={<PlusIcon />}
+              onPress={() => setOpenModal(true)}
+            >
               Add New
             </Button>
           </div>

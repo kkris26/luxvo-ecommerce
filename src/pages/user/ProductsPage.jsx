@@ -2,10 +2,12 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "../../db/db";
 import { useEffect, useState } from "react";
 import ProductsTable from "../../components/Table/ProductsTable";
+import ModalEditProduct from "../../components/Modal/ModalEditProduct";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const getProducts = async () => {
     try {
       setLoading(true);
@@ -30,7 +32,12 @@ const ProductsPage = () => {
   return (
     <>
       <h1 className="text-2xl mb-8">All Products</h1>
-      <ProductsTable loading={loading} products={products} />
+      <ModalEditProduct isOpen={openModal} onOpenChange={setOpenModal} />
+      <ProductsTable
+        loading={loading}
+        products={products}
+        setOpenModal={setOpenModal}
+      />
     </>
   );
 };
