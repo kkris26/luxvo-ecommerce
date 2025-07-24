@@ -8,7 +8,8 @@ const EditProduct = ({ selectedProduct }) => {
           alt={selectedProduct.name}
           src={selectedProduct.imgUrl}
           width={"full"}
-          className="rounded-none object-cover "
+          radius="sm"
+          className=" object-cover "
         />
 
         <div className="flex flex-col gap-2 p-0">

@@ -33,9 +33,9 @@ export const statusOptions = [
   { name: "Non ACtive", uid: "nonactive" },
 ];
 export const productCategories = [
-  { name: "shoes", uid: "shoes" },
-  { name: "shirt", uid: "shirt" },
-  { name: "short", uid: "short" },
+  { name: "Shoes", uid: "shoes" },
+  { name: "Shirt", uid: "shirt" },
+  { name: "Short", uid: "short" },
 ];
 
 export function capitalize(s) {
@@ -163,6 +163,8 @@ export default function ProductsTable({
   setOpenModal,
   setSelectedProduct,
   setAddProduct,
+  setProductsToDelete,
+  confirmDelete,
 }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -271,6 +273,12 @@ export default function ProductsTable({
             {cellValue}
           </Chip>
         );
+      case "category":
+        return (
+          <p className="capitalize" color="default" size="sm" variant="flat">
+            {cellValue}
+          </p>
+        );
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -294,6 +302,13 @@ export default function ProductsTable({
                   className="text-danger"
                   color="danger"
                   key="delete"
+                  onPress={() => {
+                    confirmDelete(),
+                      setProductsToDelete({
+                        id: product.id,
+                        name: product.name,
+                      });
+                  }}
                 >
                   Delete
                 </DropdownItem>

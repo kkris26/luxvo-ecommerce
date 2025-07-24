@@ -30,9 +30,9 @@ const AddProduct = ({ getProducts, setLoading }) => {
     { name: "Non ACtive", uid: "nonactive" },
   ];
   const productCategories = [
-    { name: "shoes", uid: "shoes" },
-    { name: "shirt", uid: "shirt" },
-    { name: "short", uid: "short" },
+    { name: "Shoes", uid: "shoes" },
+    { name: "Shirt", uid: "shirt" },
+    { name: "Short", uid: "short" },
   ];
 
   const onSubmit = (e) => {

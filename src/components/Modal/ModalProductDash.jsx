@@ -2,10 +2,9 @@ import {
   Modal,
   ModalContent,
   ModalBody,
-  Image,
-  Divider,
+
   ScrollShadow,
-  ModalHeader,
+
 } from "@heroui/react";
 
 export default function ModalProductDash({
@@ -19,6 +18,7 @@ export default function ModalProductDash({
     onOpenChange(false);
     setAddProduct(false);
   };
+
   return (
     <>
       <Modal
