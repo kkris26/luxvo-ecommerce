@@ -45,7 +45,9 @@ const ProductsPage = () => {
   useEffect(() => {
     if (openModal === false) {
       setSelectedProduct(null);
-      setProductsToDelete(null);
+      setTimeout(() => {
+        setProductsToDelete(null);
+      }, 200);
     }
   }, [openModal]);
 
@@ -83,7 +85,7 @@ const ProductsPage = () => {
       <ModalProductDash
         isOpen={openModal}
         onOpenChange={setOpenModal}
-        size={productsToDelete ? "sm" : "4xl"}
+        size={productsToDelete ? "md" : "4xl"}
         setAddProduct={setAddProduct}
       >
         {productsToDelete ? (

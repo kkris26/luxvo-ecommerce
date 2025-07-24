@@ -17,6 +17,7 @@ import {
   Pagination,
   Spinner,
 } from "@heroui/react";
+import { currencyFormat } from "../../service/formatter";
 
 export const productColumns = [
   { name: "Product Name", uid: "name", sortable: true },
@@ -274,11 +275,9 @@ export default function ProductsTable({
           </Chip>
         );
       case "category":
-        return (
-          <p className="capitalize" color="default" size="sm" variant="flat">
-            {cellValue}
-          </p>
-        );
+        return <p className="capitalize">{cellValue}</p>;
+      case "price":
+        return <p>{currencyFormat(product.price)}</p>;
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
