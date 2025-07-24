@@ -2,12 +2,15 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "../../db/db";
 import { useEffect, useState } from "react";
 import ProductsTable from "../../components/Table/ProductsTable";
-import ModalEditProduct from "../../components/Modal/ModalEditProduct";
+import ModalProductDash from "../../components/Modal/ModalProductDash";
+import EditProduct from "../admin/Modal/EditProduct";
+import AddProduct from "../admin/Modal/AddProduct";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isAddProduct, setAddProduct] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const getProducts = async () => {
     try {
@@ -32,24 +35,32 @@ const ProductsPage = () => {
 
   useEffect(() => {
     if (openModal === false) {
-      setSelectedProduct(null)
+      setSelectedProduct(null);
     }
   }, [openModal]);
 
   return (
     <>
       <h1 className="text-2xl mb-8">All Products</h1>
-      <ModalEditProduct
-        isOpen={openModal}
-        onOpenChange={setOpenModal}
-        selectedProduct={selectedProduct}
-      />
       <ProductsTable
         loading={loading}
         products={products}
         setOpenModal={setOpenModal}
         setSelectedProduct={setSelectedProduct}
+        setAddProduct={setAddProduct}
       />
+      <ModalProductDash
+        isOpen={openModal}
+        onOpenChange={setOpenModal}
+        size="4xl"
+        setAddProduct={setAddProduct}
+      >
+        {isAddProduct ? (
+          <AddProduct getProducts={getProducts} setLoading={setLoading} />
+        ) : (
+          <EditProduct selectedProduct={selectedProduct} />
+        )}
+      </ModalProductDash>
     </>
   );
 };

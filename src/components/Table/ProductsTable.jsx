@@ -28,10 +28,9 @@ export const productColumns = [
 ];
 
 export const statusOptions = [
-    { name: "Publish", uid: "publish" },
-    { name: "Draft", uid: "draft" },
-    { name: "Non ACtive", uid: "nonactive" },
-
+  { name: "Publish", uid: "publish" },
+  { name: "Draft", uid: "draft" },
+  { name: "Non ACtive", uid: "nonactive" },
 ];
 export const productCategories = [
   { name: "shoes", uid: "shoes" },
@@ -163,6 +162,7 @@ export default function ProductsTable({
   loading,
   setOpenModal,
   setSelectedProduct,
+  setAddProduct,
 }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -428,7 +428,7 @@ export default function ProductsTable({
               color="primary"
               endContent={<PlusIcon />}
               onPress={() => {
-                setOpenModal(true);
+                setOpenModal(true), setAddProduct(true);
               }}
             >
               Add New
