@@ -16,6 +16,7 @@ import {
   User,
   Pagination,
   Spinner,
+  Divider,
 } from "@heroui/react";
 import { currencyFormat } from "../../service/formatter";
 
@@ -215,9 +216,9 @@ export default function ProductsTable({
         Array.from(statusFilter).includes(product.status)
       );
     }
-
     return filteredProducts;
   }, [products, filterValue, categoryFilter, statusFilter]);
+  console.log(filteredItems.length);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -450,9 +451,9 @@ export default function ProductsTable({
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">
-            Total {products.length} products
-          </span>
+          <div className="text-default-400 text-small">
+            Showing {filteredItems.length} of {products.length} products
+          </div>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -481,15 +482,14 @@ export default function ProductsTable({
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
+        {/* <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
             : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
+        </span> */}
         <Pagination
           isCompact
           showControls
-          showShadow
           color="primary"
           page={page}
           total={pages}

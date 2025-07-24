@@ -19,11 +19,12 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="h-screen px-6 py-4 flex gap-3 flex-col">
+    <div className="h-screen px-6 py-4 flex gap-3 flex-col bg-default-200">
       <Navbar
         maxWidth="full"
         position="static"
-        className="bg-default-100 rounded-lg"
+        isBlurred="false"
+        className="rounded-lg bg-white"
         classNames={{
           wrapper: "px-4",
         }}
@@ -42,7 +43,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
         </NavbarContent>
       </Navbar>
       <div className="flex gap-3 pb-10 sm:pb-0 sm:h-full ">
-        <div className=" hidden lg:flex flex-col rounded-lg  h-full justify-between  bg-default-100 p-2">
+        <div className=" hidden lg:flex flex-col rounded-lg  h-full justify-between  bg-white  p-2">
           <div>
             <Button
               onPress={() => setCollapseMenu((prev) => !prev)}
@@ -109,7 +110,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
             </Link>
           </Button>
         </div>
-        <div className="bg-default-100 w-full h-full rounded-lg p-4 ">
+        <div className="bg-white w-full h-full rounded-lg p-4 ">
           {children}
         </div>
       </div>
