@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableHeader,
@@ -19,7 +19,6 @@ import {
 } from "@heroui/react";
 
 export const productColumns = [
-  { name: "#", uid: "id" },
   { name: "Product Name", uid: "name", sortable: true },
   { name: "Category", uid: "category", sortable: true },
   { name: "Price", uid: "price", sortable: true },
@@ -29,9 +28,15 @@ export const productColumns = [
 ];
 
 export const statusOptions = [
-  { name: "Publish", uid: "publish" },
-  { name: "Draft", uid: "draft" },
-  { name: "Non ACtive", uid: "nonactive" },
+    { name: "Publish", uid: "publish" },
+    { name: "Draft", uid: "draft" },
+    { name: "Non ACtive", uid: "nonactive" },
+
+];
+export const productCategories = [
+  { name: "shoes", uid: "shoes" },
+  { name: "shirt", uid: "shirt" },
+  { name: "short", uid: "short" },
 ];
 
 export function capitalize(s) {
@@ -164,6 +169,7 @@ export default function ProductsTable({
   const [visibleColumns, setVisibleColumns] = React.useState(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -191,6 +197,14 @@ export default function ProductsTable({
       );
     }
     if (
+      categoryFilter !== "all" &&
+      Array.from(categoryFilter).length !== productCategories.length
+    ) {
+      filteredProducts = filteredProducts.filter((product) =>
+        Array.from(categoryFilter).includes(product.category)
+      );
+    }
+    if (
       statusFilter !== "all" &&
       Array.from(statusFilter).length !== statusOptions.length
     ) {
@@ -200,7 +214,7 @@ export default function ProductsTable({
     }
 
     return filteredProducts;
-  }, [products, filterValue, statusFilter]);
+  }, [products, filterValue, categoryFilter, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -344,6 +358,30 @@ export default function ProductsTable({
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
+                  Category
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Category Column"
+                closeOnSelect={false}
+                selectedKeys={categoryFilter}
+                selectionMode="multiple"
+                onSelectionChange={setCategoryFilter}
+              >
+                {productCategories.map((category) => (
+                  <DropdownItem key={category.uid} className="capitalize">
+                    {capitalize(category.name)}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  variant="flat"
+                >
                   Status
                 </Button>
               </DropdownTrigger>
@@ -423,6 +461,7 @@ export default function ProductsTable({
     products.length,
     onSearchChange,
     hasSearchFilter,
+    categoryFilter,
   ]);
 
   const bottomContent = React.useMemo(() => {

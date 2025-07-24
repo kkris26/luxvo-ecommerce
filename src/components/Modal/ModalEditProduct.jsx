@@ -19,22 +19,19 @@ export default function ModalEditProduct({
 }) {
   return (
     <>
-      <Modal size="3xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size="3xl" isOpen={isOpen} onOpenChange={onOpenChange} className="py-4">
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Product Details
-              </ModalHeader>
               <ModalBody>
-                <ScrollShadow className="w-full flex-col h-100 overflow-auto">
+                <ScrollShadow className="w-full flex-col h-120 overflow-auto">
                   <div className="flex flex-col gap-6 p-4">
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-6 items-center">
                       <Image
                         alt={selectedProduct.name}
                         src={selectedProduct.imgUrl}
                         width={"full"}
-                        className="rounded-xl object-cover "
+                        className="rounded-none object-cover "
                       />
 
                       <div className="flex flex-col gap-2 p-0">
@@ -44,7 +41,7 @@ export default function ModalEditProduct({
 
                         <Divider className="my-2" />
 
-                        <p className="text-sm text-default-600">
+                        <p className=" text-default-600 ">
                           <span className="font-medium">Price:</span> Rp{" "}
                           {selectedProduct.price.toLocaleString("id-ID")}
                         </p>
@@ -82,16 +79,6 @@ export default function ModalEditProduct({
                   </div>
                 </ScrollShadow>
               </ModalBody>
-              <ModalFooter>
-                <Button
-                  color="primary"
-                  onPress={() => {
-                    onClose();
-                  }}
-                >
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

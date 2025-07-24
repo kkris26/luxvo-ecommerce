@@ -22,7 +22,7 @@ const ProductsPage = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
@@ -35,8 +35,6 @@ const ProductsPage = () => {
       setSelectedProduct(null)
     }
   }, [openModal]);
-
-  console.log(selectedProduct);
 
   return (
     <>
