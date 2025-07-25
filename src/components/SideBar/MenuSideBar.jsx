@@ -126,7 +126,7 @@ export default function MenuSideBar({ isOpen, onOpenChange }) {
                           <Button
                             isIconOnly
                             aria-label={social.ariaLabel}
-                            color="default"
+                            color="primary"
                             radius="full"
                             size="sm"
                           >
