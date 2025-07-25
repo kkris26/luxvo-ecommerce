@@ -13,33 +13,22 @@ import EditProduct from "../admin/Modal/EditProduct";
 import AddProduct from "../admin/Modal/AddProduct";
 import { ConfirmDelete } from "../admin/Modal/ConfirmDelete";
 import { addToast } from "@heroui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/store/product/productSlice";
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const [openModal, setOpenModal] = useState(false);
   const [isAddProduct, setAddProduct] = useState(false);
   const [productsToDelete, setProductsToDelete] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const getProducts = async () => {
-    try {
-      setLoading(true);
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const allProducts = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
 
-      setProducts(allProducts);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+
+  const { products, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
-    getProducts();
+    dispatch(getProducts());
   }, []);
 
   useEffect(() => {

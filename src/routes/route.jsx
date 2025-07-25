@@ -5,7 +5,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
 import CartPage from "../pages/user/CartPage";
 import ProfilePage from "../pages/user/ProfilePage";
-import ProductsPage from "../pages/user/ProductsPage";
+import ProductsPage from "../pages/admin/ProductsPage";
 
 export const router = createBrowserRouter([
   {
