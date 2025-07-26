@@ -13,10 +13,11 @@ import db from "../../../db/db";
 const initialState = {
   openModal: false,
   mode: null,
-  productToEdit: null,
   productToDelete: null,
   selectedProduct: null,
   loadingHandleProduct: false,
+  onEdit: false,
+  safeToClose: true,
 };
 
 const manageProductSlice = createSlice({
@@ -29,9 +30,6 @@ const manageProductSlice = createSlice({
     setMode: (state, action) => {
       state.mode = action.payload;
     },
-    setProductToEdit: (state, action) => {
-      state.productToEdit = action.payload;
-    },
     setProductToDelete: (state, action) => {
       state.productToDelete = action.payload;
     },
@@ -40,6 +38,12 @@ const manageProductSlice = createSlice({
     },
     setLoadingHandleProduct: (state, action) => {
       state.loadingHandleProduct = action.payload;
+    },
+    setOnEdit: (state, action) => {
+      state.onEdit = action.payload;
+    },
+    setSafeToClose: (state, action) => {
+      state.safeToClose = action.payload;
     },
   },
 });
@@ -50,7 +54,8 @@ export const {
   setProductToDelete,
   setSelectedProduct,
   setLoadingHandleProduct,
-  setProductToEdit,
+  setOnEdit,
+  setSafeToClose,
 } = manageProductSlice.actions;
 
 export const handleAddproduct = (data) => async (dispatch) => {
@@ -68,6 +73,8 @@ export const handleAddproduct = (data) => async (dispatch) => {
       radius: "sm",
       shouldShowTimeoutProgress: true,
     });
+    dispatch(setSelectedProduct(null));
+    dispatch(setOnEdit(false));
     dispatch(getProducts());
   } catch (error) {
     console.log("error", error);
@@ -87,8 +94,11 @@ export const handleAddproduct = (data) => async (dispatch) => {
 
 export const handleOnChange = (e) => (dispatch, getState) => {
   const { name, value } = e.target;
-  const prev = getState().manageProduct.productToEdit;
-  dispatch(setProductToEdit({ ...prev, [name]: value }));
+  const { onEdit, selectedProduct } = getState().manageProduct;
+  dispatch(setSelectedProduct({ ...selectedProduct, [name]: value }));
+  if (!onEdit) {
+    dispatch(setOnEdit(true));
+  }
 };
 
 export const handleEditProduct = (data, productId) => async (dispatch) => {
@@ -105,8 +115,9 @@ export const handleEditProduct = (data, productId) => async (dispatch) => {
       radius: "sm",
       shouldShowTimeoutProgress: true,
     });
+    dispatch(setOnEdit(false));
     dispatch(getProducts());
-    dispatch(setOpenModal(false))
+    dispatch(setOpenModal(false));
   } catch (error) {
     console.log("error", error);
     addToast({
@@ -140,6 +151,15 @@ export const handleDeleteProduct = (productId) => async (dispatch) => {
 
 export const confirmDelete = () => (dispatch) => {
   dispatch(setOpenModal(true));
+};
+
+export const handleCloseModal = () => (dispatch) => {
+  dispatch(setOpenModal(false));
+  dispatch(setOnEdit(false));
+  setTimeout(() => {
+    dispatch(setSafeToClose(true));
+  }, 300);
+  dispatch(setMode(null));
 };
 
 export const manageProductReducer = manageProductSlice.reducer;

@@ -1,17 +1,31 @@
-import { Modal, ModalContent, ModalBody, ScrollShadow } from "@heroui/react";
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ScrollShadow,
+  addToast,
+} from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setMode,
   setOpenModal,
+  setSafeToClose,
 } from "../../redux/store/product/manageProductSlice";
 
 export default function ModalProductDash({ size = "3xl", children }) {
   const dispatch = useDispatch();
-  const { openModal } = useSelector((state) => state.manageProduct);
+  const { openModal, onEdit, safeToClose, mode } = useSelector(
+    (state) => state.manageProduct
+  );
 
   const handleCloseModal = () => {
+    if (onEdit) {
+      return dispatch(setSafeToClose(false));
+    }
     dispatch(setOpenModal(false));
-    dispatch(setMode(null));
+    setTimeout(() => {
+      dispatch(setMode(null));
+    }, 350);
   };
 
   return (
@@ -21,6 +35,7 @@ export default function ModalProductDash({ size = "3xl", children }) {
         isOpen={openModal}
         onOpenChange={handleCloseModal}
         className="py-4"
+        hideCloseButton={!safeToClose || mode === "delete"}
       >
         <ModalContent>
           {(onClose) => (

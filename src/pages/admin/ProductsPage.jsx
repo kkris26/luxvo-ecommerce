@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/store/product/productSlice";
 import {
   setProductToDelete,
-  setProductToEdit,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
 import ViewProduct from "./Modal/ViewProduct";
 import HandleProduct from "./Modal/HandleProduct";
+import WarningCloseModal from "./Modal/WarningCloseModal";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
-  const { openModal, mode, productToDelete } = useSelector(
+  const { openModal, mode, productToDelete, safeToClose } = useSelector(
     (state) => state.manageProduct
   );
 
@@ -36,11 +36,17 @@ const ProductsPage = () => {
     <>
       <h1 className="text-2xl mb-8">All Products</h1>
       <ProductsTable />
-      <ModalProductDash size={productToDelete ? "md" : "4xl"}>
-        {mode === "add" && <HandleProduct />}
-        {mode === "edit" && <HandleProduct />}
-        {mode === "view" && <ViewProduct />}
-        {productToDelete && <ConfirmDelete />}
+      <ModalProductDash size={productToDelete || !safeToClose ? "md" : "4xl"}>
+        {!safeToClose ? (
+          <WarningCloseModal />
+        ) : (
+          <>
+            {mode === "add" && <HandleProduct />}
+            {mode === "edit" && <HandleProduct />}
+            {mode === "view" && <ViewProduct />}
+            {productToDelete && <ConfirmDelete />}
+          </>
+        )}
       </ModalProductDash>
     </>
   );

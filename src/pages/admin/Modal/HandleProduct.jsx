@@ -12,15 +12,16 @@ import {
   handleAddproduct,
   handleEditProduct,
   handleOnChange,
+  setOnEdit,
+  setOpenModal,
+  setSelectedProduct,
 } from "../../../redux/store/product/manageProductSlice";
 const HandleProduct = () => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const { loadingAddProduct, mode, productToEdit } = useSelector(
+  const { loadingAddProduct, mode, selectedProduct, onEdit } = useSelector(
     (state) => state.manageProduct
   );
-
-  console.log(productToEdit);
   const productFields = [
     {
       name: "name",
@@ -63,7 +64,7 @@ const HandleProduct = () => {
     if (mode === "add") {
       dispatch(handleAddproduct(data));
     } else {
-      dispatch(handleEditProduct(data, productToEdit.id));
+      dispatch(handleEditProduct(data, selectedProduct.id));
     }
     setErrors({});
   };
@@ -92,10 +93,8 @@ const HandleProduct = () => {
             key={f.valueKey}
             placeholder={`Enter product ${f.label.toLowerCase()}`}
             variant="underlined"
-            value={mode === "edit" ? productToEdit?.[f.name] : undefined}
-            onChange={
-              mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
-            }
+            value={selectedProduct?.[f.name] || ""}
+            onChange={(e) => dispatch(handleOnChange(e))}
           />
         ))}
 
@@ -108,12 +107,8 @@ const HandleProduct = () => {
             name={f.name}
             placeholder={f.placeholder}
             variant="underlined"
-            selectedKeys={
-              mode === "edit" ? [productToEdit?.[f.name]] : undefined
-            }
-            onChange={
-              mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
-            }
+            selectedKeys={[selectedProduct?.[f.name]]}
+            onChange={(e) => dispatch(handleOnChange(e))}
           >
             {f.options.map((option) => (
               <SelectItem key={option.uid} value={option.uid}>
@@ -131,26 +126,41 @@ const HandleProduct = () => {
         placeholder="Enter your description"
         variant="underlined"
         name="description"
-        value={mode === "edit" ? productToEdit?.description : undefined}
-        onChange={
-          mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
-        }
+        value={selectedProduct?.description || ""}
+        onChange={(e) => dispatch(handleOnChange(e))}
       />
 
       <div className="flex gap-4 mt-8">
         <Button
           isLoading={loadingAddProduct}
-          className="w-full"
+          className="w-full px-10"
           color="primary"
           type="submit"
         >
           {mode === "edit" ? "Update Product" : "Add Product"}
         </Button>
-        {/* {mode !== "edit" && (
-          <Button type="reset" className="w-full px-10" variant="bordered">
-            Add New Product
+        {mode === "edit" ? ( onEdit &&
+          <Button
+            onPress={() => dispatch(setOpenModal(false))}
+            className="w-full px-10"
+
+            color="danger"
+          >
+            Cancel
           </Button>
-        )} */}
+        ) : (
+          selectedProduct && (
+            <Button
+              onPress={() => {
+                dispatch(setOnEdit(false)), dispatch(setSelectedProduct(null));
+              }}
+              className="w-full px-10"
+              variant="bordered"
+            >
+              Reset
+            </Button>
+          )
+        )}
       </div>
     </Form>
   );

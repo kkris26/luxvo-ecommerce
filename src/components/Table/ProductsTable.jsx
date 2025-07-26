@@ -24,7 +24,6 @@ import {
   setMode,
   setOpenModal,
   setProductToDelete,
-  setProductToEdit,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
 
@@ -307,7 +306,7 @@ export default function ProductsTable() {
                   key="edit"
                   onPress={() => {
                     dispatch(setOpenModal(true)), dispatch(setMode("edit"));
-                    dispatch(setProductToEdit(product));
+                    dispatch(setSelectedProduct(product));
                   }}
                 >
                   Edit
