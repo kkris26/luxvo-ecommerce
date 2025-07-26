@@ -16,9 +16,16 @@ import {
   User,
   Pagination,
   Spinner,
-  Divider,
 } from "@heroui/react";
 import { currencyFormat } from "../../service/formatter";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  confirmDelete,
+  setIsAddProduct,
+  setOpenModal,
+  setProductToDelete,
+  setSelectedProduct,
+} from "../../redux/store/product/manageProductSlice";
 
 export const productColumns = [
   { name: "Product Name", uid: "name", sortable: true },
@@ -159,15 +166,10 @@ const INITIAL_VISIBLE_COLUMNS = [
   "actions",
 ];
 
-export default function ProductsTable({
-  products,
-  loading,
-  setOpenModal,
-  setSelectedProduct,
-  setAddProduct,
-  setProductsToDelete,
-  confirmDelete,
-}) {
+export default function ProductsTable() {
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector((state) => state.products);
+
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -218,7 +220,6 @@ export default function ProductsTable({
     }
     return filteredProducts;
   }, [products, filterValue, categoryFilter, statusFilter]);
-  console.log(filteredItems.length);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -254,7 +255,8 @@ export default function ProductsTable({
             name={
               <span
                 onClick={() => {
-                  setOpenModal(true), setSelectedProduct(product);
+                  dispatch(setOpenModal(true)),
+                    dispatch(setSelectedProduct(product));
                 }}
                 className="cursor-pointer hover:underline"
               >
@@ -291,7 +293,8 @@ export default function ProductsTable({
               <DropdownMenu>
                 <DropdownItem
                   onPress={() => {
-                    setOpenModal(true), setSelectedProduct(product);
+                    dispatch(setOpenModal(true)),
+                      dispatch(setSelectedProduct(product));
                   }}
                   key="view"
                 >
@@ -303,11 +306,13 @@ export default function ProductsTable({
                   color="danger"
                   key="delete"
                   onPress={() => {
-                    confirmDelete(),
-                      setProductsToDelete({
+                    dispatch(confirmDelete());
+                    dispatch(
+                      setProductToDelete({
                         id: product.id,
                         name: product.name,
-                      });
+                      })
+                    );
                   }}
                 >
                   Delete
@@ -443,7 +448,7 @@ export default function ProductsTable({
               color="primary"
               endContent={<PlusIcon />}
               onPress={() => {
-                setOpenModal(true), setAddProduct(true);
+                dispatch(setOpenModal(true)), dispatch(setIsAddProduct(true));
               }}
             >
               Add New

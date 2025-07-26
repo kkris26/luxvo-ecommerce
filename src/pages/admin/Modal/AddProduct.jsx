@@ -8,11 +8,15 @@ import {
   addToast,
   Textarea,
 } from "@heroui/react";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import db from "../../../db/db";
-const AddProduct = ({ getProducts, setLoading }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../../redux/store/product/productSlice";
+import { handleAddproduct } from "../../../redux/store/product/manageProductSlice";
+const AddProduct = () => {
   const [errors, setErrors] = React.useState({});
-  const [loadingAddProduct, setLoadingAddProduct] = useState(false);
+  const dispatch = useDispatch();
+  const { loadingAddProduct } = useSelector((state) => state.manageProduct);
   const productFields = [
     {
       name: "name",
@@ -37,42 +41,8 @@ const AddProduct = ({ getProducts, setLoading }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    try {
-      setLoadingAddProduct(true);
-      setLoading(true);
-      const data = Object.fromEntries(new FormData(e.currentTarget));
-      const newErrors = {};
-      console.log(data);
-      const handleAddproduct = async () => {
-        const docRef = await addDoc(collection(db, "products"), data);
-      };
-      addToast({
-        title: "Product Added",
-        description: "Add Product Successfully",
-        timeout: 3000,
-        size: "sm",
-        color: "success",
-        radius: "sm",
-        shouldShowTimeoutProgress: true,
-      });
-      handleAddproduct();
-      getProducts();
-    } catch (error) {
-      console.log("error", error);
-      addToast({
-        title: "Error",
-        description: "Something went wrong !",
-        timeout: 3000,
-        size: "sm",
-        color: "danger",
-        radius: "sm",
-        shouldShowTimeoutProgress: true,
-      });
-    } finally {
-      setLoadingAddProduct(false);
-      setLoading(false);
-    }
-
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    dispatch(handleAddproduct(data));
     setErrors({});
   };
 

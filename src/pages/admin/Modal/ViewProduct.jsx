@@ -1,45 +1,47 @@
 import { Divider, Image } from "@heroui/react";
+import { useSelector } from "react-redux";
 
-const EditProduct = ({ selectedProduct }) => {
+const ViewProduct = () => {
+  const { selectedProduct } = useSelector((state) => state.manageProduct);
   return (
     <div className="flex flex-col gap-6 p-4 w-full">
       <div className="flex gap-6 items-center">
         <Image
-          alt={selectedProduct.name}
-          src={selectedProduct.imgUrl}
+          alt={selectedProduct?.name}
+          src={selectedProduct?.imgUrl}
           width={"full"}
           radius="sm"
           className=" object-cover "
         />
 
         <div className="flex flex-col gap-2 p-0">
-          <h2 className="text-xl font-semibold">{selectedProduct.name}</h2>
+          <h2 className="text-xl font-semibold">{selectedProduct?.name}</h2>
 
           <Divider className="my-2" />
 
           <p className=" text-default-600 ">
             <span className="font-medium">Price:</span> Rp{" "}
-            {selectedProduct.price.toLocaleString("id-ID")}
+            {selectedProduct?.price.toLocaleString("id-ID")}
           </p>
           <p className="text-sm text-default-600">
             <span className="font-medium">Category:</span>{" "}
-            {selectedProduct.category}
+            {selectedProduct?.category}
           </p>
           <p className="text-sm text-default-600">
-            <span className="font-medium">Stock:</span> {selectedProduct.stock}
+            <span className="font-medium">Stock:</span> {selectedProduct?.stock}
           </p>
           <p className="text-sm text-default-600">
             <span className="font-medium">Status:</span>{" "}
             <span
               className={
-                selectedProduct.status === "publish"
+                selectedProduct?.status === "publish"
                   ? "text-success"
-                  : selectedProduct.status === "draft"
+                  : selectedProduct?.status === "draft"
                   ? "text-warning"
                   : "text-gray-500"
               }
             >
-              {selectedProduct.status}
+              {selectedProduct?.status}
             </span>
           </p>
         </div>
@@ -48,11 +50,11 @@ const EditProduct = ({ selectedProduct }) => {
         <Divider className="my-2" />
         <h4 className="font-medium mb-1">Description</h4>
         <p className="text-sm text-default-500 leading-relaxed">
-          {selectedProduct.description}
+          {selectedProduct?.description}
         </p>
       </div>
     </div>
   );
 };
 
-export default EditProduct;
+export default ViewProduct;
