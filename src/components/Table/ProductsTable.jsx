@@ -21,9 +21,10 @@ import { currencyFormat } from "../../service/formatter";
 import { useDispatch, useSelector } from "react-redux";
 import {
   confirmDelete,
-  setIsAddProduct,
+  setMode,
   setOpenModal,
   setProductToDelete,
+  setProductToEdit,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
 
@@ -255,7 +256,8 @@ export default function ProductsTable() {
             name={
               <span
                 onClick={() => {
-                  dispatch(setOpenModal(true)),
+                  dispatch(setOpenModal(true));
+                  dispatch(setMode("view")),
                     dispatch(setSelectedProduct(product));
                 }}
                 className="cursor-pointer hover:underline"
@@ -294,19 +296,29 @@ export default function ProductsTable() {
                 <DropdownItem
                   onPress={() => {
                     dispatch(setOpenModal(true)),
+                      dispatch(setMode("view")),
                       dispatch(setSelectedProduct(product));
                   }}
                   key="view"
                 >
                   View
                 </DropdownItem>
-                <DropdownItem key="edit">Edit</DropdownItem>
+                <DropdownItem
+                  key="edit"
+                  onPress={() => {
+                    dispatch(setOpenModal(true)), dispatch(setMode("edit"));
+                    dispatch(setProductToEdit(product));
+                  }}
+                >
+                  Edit
+                </DropdownItem>
                 <DropdownItem
                   className="text-danger"
                   color="danger"
                   key="delete"
                   onPress={() => {
                     dispatch(confirmDelete());
+
                     dispatch(
                       setProductToDelete({
                         id: product.id,
@@ -448,7 +460,7 @@ export default function ProductsTable() {
               color="primary"
               endContent={<PlusIcon />}
               onPress={() => {
-                dispatch(setOpenModal(true)), dispatch(setIsAddProduct(true));
+                dispatch(setOpenModal(true)), dispatch(setMode("add"));
               }}
             >
               Add New

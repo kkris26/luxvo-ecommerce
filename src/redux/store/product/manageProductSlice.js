@@ -1,15 +1,22 @@
 import { addToast } from "@heroui/react";
 import { createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { getProducts } from "./productSlice";
 import db from "../../../db/db";
 
 const initialState = {
   openModal: false,
-  isAddProduct: false,
+  mode: null,
+  productToEdit: null,
   productToDelete: null,
   selectedProduct: null,
-  loadingAddProduct: false,
+  loadingHandleProduct: false,
 };
 
 const manageProductSlice = createSlice({
@@ -19,8 +26,11 @@ const manageProductSlice = createSlice({
     setOpenModal: (state, action) => {
       state.openModal = action.payload;
     },
-    setIsAddProduct: (state, action) => {
-      state.isAddProduct = action.payload;
+    setMode: (state, action) => {
+      state.mode = action.payload;
+    },
+    setProductToEdit: (state, action) => {
+      state.productToEdit = action.payload;
     },
     setProductToDelete: (state, action) => {
       state.productToDelete = action.payload;
@@ -28,22 +38,23 @@ const manageProductSlice = createSlice({
     setSelectedProduct: (state, action) => {
       state.selectedProduct = action.payload;
     },
-    setLoadingAddProduct: (state, action) => {
-      state.loadingAddProduct = action.payload;
+    setLoadingHandleProduct: (state, action) => {
+      state.loadingHandleProduct = action.payload;
     },
   },
 });
 
 export const {
   setOpenModal,
-  setIsAddProduct,
+  setMode,
   setProductToDelete,
   setSelectedProduct,
-  setLoadingAddProduct,
+  setLoadingHandleProduct,
+  setProductToEdit,
 } = manageProductSlice.actions;
 
 export const handleAddproduct = (data) => async (dispatch) => {
-  dispatch(setLoadingAddProduct(true));
+  dispatch(setLoadingHandleProduct(true));
   try {
     console.log(data);
     const docRef = await addDoc(collection(db, "products"), data);
@@ -70,7 +81,45 @@ export const handleAddproduct = (data) => async (dispatch) => {
       shouldShowTimeoutProgress: true,
     });
   } finally {
-    dispatch(setLoadingAddProduct(false));
+    dispatch(setLoadingHandleProduct(false));
+  }
+};
+
+export const handleOnChange = (e) => (dispatch, getState) => {
+  const { name, value } = e.target;
+  const prev = getState().manageProduct.productToEdit;
+  dispatch(setProductToEdit({ ...prev, [name]: value }));
+};
+
+export const handleEditProduct = (data, productId) => async (dispatch) => {
+  dispatch(setLoadingHandleProduct(true));
+  try {
+    const updateProductRef = doc(db, "products", productId);
+    await updateDoc(updateProductRef, data);
+    addToast({
+      title: "Product Updated",
+      description: "Update Product Successfully",
+      timeout: 3000,
+      size: "sm",
+      color: "success",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
+    dispatch(getProducts());
+    dispatch(setOpenModal(false))
+  } catch (error) {
+    console.log("error", error);
+    addToast({
+      title: "Error",
+      description: "Something went wrong !",
+      timeout: 3000,
+      size: "sm",
+      color: "danger",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
+  } finally {
+    dispatch(setLoadingHandleProduct(false));
   }
 };
 

@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Form,
   Input,
   Select,
   SelectItem,
   Button,
-  addToast,
   Textarea,
 } from "@heroui/react";
-import { addDoc, collection } from "firebase/firestore";
-import db from "../../../db/db";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../redux/store/product/productSlice";
-import { handleAddproduct } from "../../../redux/store/product/manageProductSlice";
-const AddProduct = () => {
-  const [errors, setErrors] = React.useState({});
+import {
+  handleAddproduct,
+  handleEditProduct,
+  handleOnChange,
+} from "../../../redux/store/product/manageProductSlice";
+const HandleProduct = () => {
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const { loadingAddProduct } = useSelector((state) => state.manageProduct);
+  const { loadingAddProduct, mode, productToEdit } = useSelector(
+    (state) => state.manageProduct
+  );
+
+  console.log(productToEdit);
   const productFields = [
     {
       name: "name",
@@ -38,11 +42,29 @@ const AddProduct = () => {
     { name: "Shirt", uid: "shirt" },
     { name: "Short", uid: "short" },
   ];
+  const selectFields = [
+    {
+      label: "Product Category",
+      name: "category",
+      placeholder: "Select Category",
+      options: productCategories,
+    },
+    {
+      label: "Product Status",
+      name: "status",
+      placeholder: "Select Status",
+      options: statusOptions,
+    },
+  ];
 
   const onSubmit = (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    dispatch(handleAddproduct(data));
+    if (mode === "add") {
+      dispatch(handleAddproduct(data));
+    } else {
+      dispatch(handleEditProduct(data, productToEdit.id));
+    }
     setErrors({});
   };
 
@@ -70,39 +92,36 @@ const AddProduct = () => {
             key={f.valueKey}
             placeholder={`Enter product ${f.label.toLowerCase()}`}
             variant="underlined"
+            value={mode === "edit" ? productToEdit?.[f.name] : undefined}
+            onChange={
+              mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
+            }
           />
         ))}
 
-        <Select
-          isRequired
-          label="Product Category"
-          labelPlacement="outside"
-          name="category"
-          placeholder="Product Category"
-          variant="underlined"
-          aria-hidden={false}
-        >
-          {productCategories.map((c) => (
-            <SelectItem aria-hidden={false} key={c.uid}>
-              {c.name}
-            </SelectItem>
-          ))}
-        </Select>
-        <Select
-          isRequired
-          label="Product Status"
-          labelPlacement="outside"
-          name="status"
-          placeholder="Product Status"
-          variant="underlined"
-          aria-hidden={false}
-        >
-          {statusOptions.map((c) => (
-            <SelectItem aria-hidden={false} key={c.uid}>
-              {c.name}
-            </SelectItem>
-          ))}
-        </Select>
+        {selectFields.map((f) => (
+          <Select
+            key={f.name}
+            isRequired
+            label={f.label}
+            labelPlacement="outside"
+            name={f.name}
+            placeholder={f.placeholder}
+            variant="underlined"
+            selectedKeys={
+              mode === "edit" ? [productToEdit?.[f.name]] : undefined
+            }
+            onChange={
+              mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
+            }
+          >
+            {f.options.map((option) => (
+              <SelectItem key={option.uid} value={option.uid}>
+                {option.name}
+              </SelectItem>
+            ))}
+          </Select>
+        ))}
       </div>
       <Textarea
         isRequired
@@ -112,6 +131,10 @@ const AddProduct = () => {
         placeholder="Enter your description"
         variant="underlined"
         name="description"
+        value={mode === "edit" ? productToEdit?.description : undefined}
+        onChange={
+          mode === "edit" ? (e) => dispatch(handleOnChange(e)) : undefined
+        }
       />
 
       <div className="flex gap-4 mt-8">
@@ -121,14 +144,16 @@ const AddProduct = () => {
           color="primary"
           type="submit"
         >
-          Submit
+          {mode === "edit" ? "Update Product" : "Add Product"}
         </Button>
-        <Button type="reset" className="w-full px-10" variant="bordered">
-          Add New Product
-        </Button>
+        {/* {mode !== "edit" && (
+          <Button type="reset" className="w-full px-10" variant="bordered">
+            Add New Product
+          </Button>
+        )} */}
       </div>
     </Form>
   );
 };
 
-export default AddProduct;
+export default HandleProduct;
