@@ -41,7 +41,7 @@ export default function ModalProductDash({ size = "3xl", children }) {
           {(onClose) => (
             <>
               <ModalBody>
-                <ScrollShadow className="w-full flex-col flex items-center justify-center max-h-120 overflow-auto">
+                <ScrollShadow className="w-full flex-col flex items-center justify-center max-h-140 overflow-auto">
                   {children}
                 </ScrollShadow>
               </ModalBody>

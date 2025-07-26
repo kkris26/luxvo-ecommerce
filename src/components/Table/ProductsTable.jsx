@@ -16,6 +16,8 @@ import {
   User,
   Pagination,
   Spinner,
+  Select,
+  SelectItem,
 } from "@heroui/react";
 import { currencyFormat } from "../../service/formatter";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +28,7 @@ import {
   setProductToDelete,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 export const productColumns = [
   { name: "Product Name", uid: "name", sortable: true },
@@ -177,9 +180,9 @@ export default function ProductsTable() {
   );
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState("10");
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
+    column: "name",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -232,10 +235,21 @@ export default function ProductsTable() {
 
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
-
+      const cmp = (() => {
+        const firstVal = a[sortDescriptor.column];
+        const secondVal = b[sortDescriptor.column];
+        const numericFields = ["price", "stock"];
+        if (numericFields.includes(sortDescriptor.column)) {
+          const numA = Number(firstVal);
+          const numB = Number(secondVal);
+          return numA - numB;
+        }
+        if (typeof firstVal === "string" && typeof secondVal === "string") {
+          return firstVal.localeCompare(secondVal, undefined, {
+            sensitivity: "base",
+          });
+        }
+      })();
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
@@ -282,6 +296,7 @@ export default function ProductsTable() {
         return <p className="capitalize">{cellValue}</p>;
       case "price":
         return <p>{currencyFormat(product.price)}</p>;
+
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -472,14 +487,26 @@ export default function ProductsTable() {
           </div>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
-            <select
-              className="bg-transparent outline-hidden text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
+            <div className="relative inline-block">
+              <label
+                htmlFor="rowsPerPage"
+                className="text-sm text-default-500 mr-2"
+              >
+                Rows per page:
+              </label>
+              <select
+                id="rowsPerPage"
+                className="appearance-none pl-3 pr-6 py-1 rounded-md border border-default-200 bg-white text-sm text-default-700 focus:outline-none focus:ring-1 focus:ring-primary"
+                onChange={onRowsPerPageChange}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+              <RiArrowDropDownLine className=" text-2xl pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" />
+            </div>
           </label>
         </div>
       </div>
@@ -540,9 +567,9 @@ export default function ProductsTable() {
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        wrapper: "max-h-[382px]",
+        wrapper: "max-h-[350px]",
       }}
-      //   selectedKeys={selectedKeys}
+      selectedKeys={selectedKeys}
       //   selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}

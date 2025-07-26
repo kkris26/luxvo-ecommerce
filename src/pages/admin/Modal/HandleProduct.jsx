@@ -139,27 +139,16 @@ const HandleProduct = () => {
         >
           {mode === "edit" ? "Update Product" : "Add Product"}
         </Button>
-        {mode === "edit" ? ( onEdit &&
+        {mode === "add" && selectedProduct && (
           <Button
-            onPress={() => dispatch(setOpenModal(false))}
+            onPress={() => {
+              dispatch(setOnEdit(false)), dispatch(setSelectedProduct(null));
+            }}
             className="w-full px-10"
-
-            color="danger"
+            variant="bordered"
           >
-            Cancel
+            Reset
           </Button>
-        ) : (
-          selectedProduct && (
-            <Button
-              onPress={() => {
-                dispatch(setOnEdit(false)), dispatch(setSelectedProduct(null));
-              }}
-              className="w-full px-10"
-              variant="bordered"
-            >
-              Reset
-            </Button>
-          )
         )}
       </div>
     </Form>
