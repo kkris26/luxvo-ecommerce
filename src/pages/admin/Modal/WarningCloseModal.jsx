@@ -13,19 +13,16 @@ const WarningCloseModal = () => {
       <p>Unsaved data will be lost. Are you sure?</p>
       <div className="flex gap-4 justify-end">
         <Button
-          color="default"
           variant="light"
-          onPress={() => dispatch(setSafeToClose(true))}
-        >
-          Back
-        </Button>
-        <Button
           color="danger"
           onPress={() => {
             dispatch(handleCloseModal());
           }}
         >
           Close
+        </Button>
+        <Button color="primary" onPress={() => dispatch(setSafeToClose(true))}>
+          Back
         </Button>
       </div>
     </div>

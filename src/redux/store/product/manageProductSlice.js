@@ -61,7 +61,6 @@ export const {
 export const handleAddproduct = (data) => async (dispatch) => {
   dispatch(setLoadingHandleProduct(true));
   try {
-    console.log(data);
     const docRef = await addDoc(collection(db, "products"), data);
 
     addToast({
@@ -136,7 +135,6 @@ export const handleEditProduct = (data, productId) => async (dispatch) => {
 
 export const handleDeleteProduct = (productId) => async (dispatch) => {
   await deleteDoc(doc(db, "products", productId));
-  dispatch(setProductToDelete(null));
   addToast({
     title: "Succesfully",
     description: "Delete Product Succesfully",
@@ -159,7 +157,6 @@ export const handleCloseModal = () => (dispatch) => {
   setTimeout(() => {
     dispatch(setSafeToClose(true));
   }, 300);
-  dispatch(setMode(null));
 };
 
 export const manageProductReducer = manageProductSlice.reducer;

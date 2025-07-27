@@ -5,6 +5,7 @@ import { ConfirmDelete } from "../admin/Modal/ConfirmDelete";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/store/product/productSlice";
 import {
+  setMode,
   setProductToDelete,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
@@ -26,8 +27,8 @@ const ProductsPage = () => {
     if (openModal === false) {
       setTimeout(() => {
         dispatch(setSelectedProduct(null));
-
         dispatch(setProductToDelete(null));
+        dispatch(setMode(null));
       }, 300);
     }
   }, [openModal]);
