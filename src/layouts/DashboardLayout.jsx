@@ -42,7 +42,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
           <UserProfile />
         </NavbarContent>
       </Navbar>
-      <div className="flex gap-3 pb-10 sm:pb-0 sm:h-full ">
+      <div className="flex gap-3 sm:pb-0 h-full ">
         <div className=" hidden lg:flex flex-col rounded-lg  h-full justify-between  bg-white  p-2">
           <div>
             <Button
@@ -110,7 +110,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
             </Link>
           </Button>
         </div>
-        <div className="bg-white w-full h-full rounded-lg p-4 ">
+        <div className="bg-white w-full h-[calc(100vh-110px)] rounded-lg p-4  ">
           {children}
         </div>
       </div>

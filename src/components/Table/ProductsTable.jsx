@@ -524,7 +524,7 @@ export default function ProductsTable() {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="py-2 px-2 flex justify-between items-center ">
         {/* <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
@@ -567,10 +567,9 @@ export default function ProductsTable() {
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        wrapper: "max-h-[350px]",
+        base: "h-[calc(100%-70px)] ",
       }}
       selectedKeys={selectedKeys}
-      //   selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"

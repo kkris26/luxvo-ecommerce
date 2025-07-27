@@ -72,7 +72,7 @@ export const handleAddproduct = (data) => async (dispatch) => {
       radius: "sm",
       shouldShowTimeoutProgress: true,
     });
-    dispatch(setSelectedProduct(null));
+    // dispatch(setSelectedProduct(null));
     dispatch(setOnEdit(false));
     dispatch(getProducts());
   } catch (error) {
