@@ -180,7 +180,7 @@ export default function ProductsTable() {
   );
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState("10");
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "name",
     direction: "ascending",
@@ -365,7 +365,7 @@ export default function ProductsTable() {
   }, [page]);
 
   const onRowsPerPageChange = React.useCallback((e) => {
-    setRowsPerPage(Number(e.target.value));
+    setRowsPerPage(e.target.value);
     setPage(1);
   }, []);
 
@@ -496,14 +496,15 @@ export default function ProductsTable() {
               </label>
               <select
                 id="rowsPerPage"
+                defaultValue={rowsPerPage}
                 className="appearance-none pl-3 pr-6 py-1 rounded-md border border-default-200 bg-white text-sm text-default-700 focus:outline-none focus:ring-1 focus:ring-primary"
                 onChange={onRowsPerPageChange}
               >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
               </select>
               <RiArrowDropDownLine className=" text-2xl pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" />
             </div>
