@@ -91,7 +91,7 @@ const HandleProduct = () => {
               label={`Product ${f.label}`}
               labelPlacement="outside"
               name={f.name}
-              isDisabled={f.name === "imgUrl"}
+              // disabled={f.name === "imgUrl"}
               type={f.type}
               key={f.valueKey}
               placeholder={`Upload ${f.label.toLowerCase()}`}

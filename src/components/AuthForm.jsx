@@ -110,6 +110,14 @@ export default function AuthForm({ close, isSignUp, setIsSignUp }) {
       setTimeout(() => {
         close();
       }, 300);
+      addToast({
+        title: "Signed In",
+        description: "You have successfully signed in.",
+        timeout: 3000,
+        shouldShowTimeoutProgress: true,
+        color: "success",
+        radius: "sm",
+      });
     } catch (error) {
       addToast({
         title: "Something Went Wrong",

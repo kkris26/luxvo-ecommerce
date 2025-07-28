@@ -16,6 +16,7 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
+import { useNavigate } from "react-router";
 
 export const AuthContext = createContext(null);
 export default function AuthContextProvider({ children }) {
@@ -82,7 +83,6 @@ export default function AuthContextProvider({ children }) {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        setUserLogin(null);
         addToast({
           title: "Logout",
           description: "Log Out Successfully",
@@ -92,9 +92,11 @@ export default function AuthContextProvider({ children }) {
           radius: "sm",
           shouldShowTimeoutProgress: true,
         });
+        setUserLogin(null);
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Logout failed:", error);
+        throw error;
       });
   };
 
@@ -153,6 +155,7 @@ export default function AuthContextProvider({ children }) {
         userProfile,
         userProfileImg,
         userFullName,
+        handleGetProfileUser,
       }}
     >
       {children}

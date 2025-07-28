@@ -14,6 +14,7 @@ import { Form } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import db from "../../db/db";
 import { doc, setDoc } from "firebase/firestore";
+import FileUpload from "../../components/FileUpload/FileUpload";
 
 const profileFields = [
   { name: "fullName", label: "Full Name", valueKey: "fullName" },
@@ -31,8 +32,13 @@ const genders = [
 ];
 
 const ProfilePage = () => {
-  const { userLogin, userProfile, userProfileImg, userFullName } =
-    useContext(AuthContext);
+  const {
+    userLogin,
+    userProfile,
+    userProfileImg,
+    userFullName,
+    handleGetProfileUser,
+  } = useContext(AuthContext);
   const [editableField, setEditableField] = useState(null);
   const [newDataUser, setNewDataUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +78,7 @@ const ProfilePage = () => {
       });
       setEditableField(null);
       setIsLoading(false);
+      return handleGetProfileUser(userId);
     } catch (error) {
       setIsLoading(false);
       console.log({ error });
@@ -197,9 +204,7 @@ const ProfilePage = () => {
               />
               <div className="flex flex-col gap-3">
                 <h4>Profile Picture</h4>
-                <Button size="sm" variant="flat">
-                  Change
-                </Button>
+                <FileUpload type={"profile"} userId={userId} />
               </div>
             </div>
           </div>
