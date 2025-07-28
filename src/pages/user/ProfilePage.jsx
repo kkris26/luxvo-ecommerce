@@ -2,6 +2,7 @@ import {
   addToast,
   Avatar,
   Button,
+  Divider,
   Input,
   Select,
   SelectItem,
@@ -28,6 +29,7 @@ const genders = [
   { key: "male", label: "Male" },
   { key: "female", label: "Female" },
 ];
+
 const ProfilePage = () => {
   const { userLogin, userProfile, userProfileImg, userFullName } =
     useContext(AuthContext);
@@ -41,9 +43,10 @@ const ProfilePage = () => {
       [fieldName]: newValue,
     }));
   };
+
   useEffect(() => {
     setNewDataUser({ ...userProfile, fullName: userFullName });
-  }, [userProfile]);
+  }, [userProfile, userFullName]);
 
   const handleEdit = () => {
     setTimeout(() => {
@@ -200,15 +203,18 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <Button
-            isDisabled={!newDataUser}
-            isLoading={isLoading}
-            className="w-fit"
-            color="primary"
-            type="submit"
-          >
-            Save
-          </Button>
+          <div className="flex flex-col gap-4 ">
+            <Divider className="block sm:hidden bg-divider/60" />
+            <Button
+              isDisabled={!newDataUser}
+              isLoading={isLoading}
+              className="sm:w-fit w-full"
+              color="primary"
+              type="submit"
+            >
+              Save Change
+            </Button>
+          </div>
         </Form>
       </div>
     </>

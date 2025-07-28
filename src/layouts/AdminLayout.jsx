@@ -6,13 +6,27 @@ import DashboardLayout from "./DashboardLayout";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
-  const { userLogin, loadUserLogin, userProfile } = useContext(AuthContext);
+  const { userLogin, loadUserLogin, userFullName, loadUserProfile } =
+    useContext(AuthContext);
+
+  const allowedEmails = ["admin@luxvo.com", "krisnuartha09@gmail.com"];
+  const isAuthorized =
+    !loadUserLogin && allowedEmails.includes(userLogin?.email);
+
   useEffect(() => {
-    if (!loadUserLogin) {
-      if (!userLogin || userLogin.email !== "admin@luxvo.com") {
+    if (!loadUserLogin && !loadUserProfile && userFullName) {
+      if (isAuthorized) {
+        addToast({
+          title: `Welcome ${userFullName || "User"}!`,
+          description: "Happy to have you here again.",
+          hideIcon: true,
+          radius: "sm",
+          timeout: 3000,
+        });
+      } else {
         navigate("/?auth=signin");
         addToast({
-          title: "Access Denied !",
+          title: "Access Denied!",
           description: "You are not authorized",
           timeout: 3000,
           size: "sm",
@@ -21,17 +35,8 @@ const AdminLayout = () => {
           shouldShowTimeoutProgress: true,
         });
       }
-      if (userLogin?.email === "admin@luxvo.com") {
-        addToast({
-          title: `Welcome ${userProfile?.fullName || "User"}!`,
-          description: "Happy to have you here again.",
-          hideIcon: true,
-          radius: "sm",
-          timeout: 3000,
-        });
-      }
     }
-  }, [userLogin, loadUserLogin, navigate, userProfile]);
+  }, [userLogin, loadUserLogin, navigate, loadUserProfile, userFullName]);
 
   const tabMenus = [
     { key: "dashboard", name: "Dashboard", path: "/admin" },
@@ -42,12 +47,11 @@ const AdminLayout = () => {
   ];
 
   return (
-    !loadUserLogin &&
-    userLogin?.email === "admin@luxvo.com" && (
+    isAuthorized && (
       <DashboardLayout
         tabMenus={tabMenus}
         userLogin={userLogin}
-        userProfile={userProfile}
+        userFullName={userFullName}
       >
         <Outlet />
       </DashboardLayout>

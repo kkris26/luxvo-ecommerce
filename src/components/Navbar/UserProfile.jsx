@@ -18,6 +18,7 @@ export default function UserProfile() {
     useContext(AuthContext);
   const { setModalOpen } = useContext(ModalContext);
 
+
   return (
     <Dropdown
       classNames={{

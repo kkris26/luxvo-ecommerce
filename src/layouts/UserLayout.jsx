@@ -6,10 +6,11 @@ import DashboardLayout from "./DashboardLayout";
 
 const UserLayout = () => {
   const navigate = useNavigate();
-  const { userLogin, loadUserLogin, userProfile } = useContext(AuthContext);
+  const { userLogin, loadUserLogin, userFullName, loadUserProfile } =
+    useContext(AuthContext);
 
   useEffect(() => {
-    if (!loadUserLogin) {
+    if (!loadUserLogin && !loadUserProfile && userFullName) {
       if (!userLogin) {
         navigate("/?auth=signin");
         addToast({
@@ -23,7 +24,7 @@ const UserLayout = () => {
         });
       } else {
         addToast({
-          title: `Welcome ${userProfile?.fullName || "User"}!`,
+          title: `Welcome ${userFullName || "User"}!`,
           description: "Happy to have you here again.",
           hideIcon: true,
           radius: "sm",
@@ -31,7 +32,7 @@ const UserLayout = () => {
         });
       }
     }
-  }, [userLogin, loadUserLogin, navigate, userProfile]);
+  }, [userLogin, loadUserLogin, navigate, loadUserProfile, userFullName]);
 
   const tabMenus = [
     { key: "profile", name: "Profile", path: "/user" },
@@ -46,7 +47,7 @@ const UserLayout = () => {
       <DashboardLayout
         tabMenus={tabMenus}
         userLogin={userLogin}
-        userProfile={userProfile}
+        userFullName={userFullName}
       >
         <Outlet />
       </DashboardLayout>

@@ -21,39 +21,63 @@ export const AuthContext = createContext(null);
 export default function AuthContextProvider({ children }) {
   const [userLogin, setUserLogin] = useState(null);
   const [loadUserLogin, setLoadUserLogin] = useState(true);
-  const [userProfile, setUserProfile] = useState(null);
 
-  const userProfileImg = userProfile?.imgUrl || userLogin?.photoURL;
-  const userFullName = userProfile?.fullName || userLogin?.displayName;
+  const [userProfile, setUserProfile] = useState(null);
+  const [loadUserProfile, setLoadUserProfile] = useState(true);
+
+  const [userProfileImg, setUserProfileImg] = useState("");
+  const [userFullName, setUserFullName] = useState("");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserLogin(user);
-        setLoadUserLogin(false);
-        handleGetProfileUSer(user.uid);
+
+        try {
+          await handleGetProfileUser(user.uid);
+        } catch (err) {
+          console.error("Failed to get profile:", err);
+        } finally {
+          setLoadUserLogin(false);
+        }
       } else {
         setLoadUserLogin(false);
+        setLoadUserProfile(false);
       }
-      return () => unsubscribe();
     });
-    // addDoc(collection(db, "products"), {
-    //   name: "Sepatu Adidas",
-    //   slug: "sepatu-adidas",
-    //   price: 899000,
-    //   stock: 15,
-    // });
+
+    return () => unsubscribe();
   }, []);
 
+  const handleGetProfileUser = async (userId) => {
+    setLoadUserProfile(true);
+    try {
+      const profileSnap = await getDoc(
+        doc(db, "users", userId, "profile", "main")
+      );
+      const profileData = profileSnap.data();
 
-
-  const handleGetProfileUSer = async (userId) => {
-    const profileSnap = await getDoc(
-      doc(db, "users", userId, "profile", "main")
-    );
-    setUserProfile(profileSnap.data());
-    setUserLogin((prev) => ({ ...prev, profile: profileSnap.data() }));
+      if (profileData) {
+        setUserProfile(profileData);
+        setUserLogin((prev) => ({ ...prev, profile: profileData }));
+      }
+    } catch (err) {
+      console.error("Error fetching profile data:", err);
+    } finally {
+      setLoadUserProfile(false);
+    }
   };
+
+  useEffect(() => {
+    if (!loadUserProfile) {
+      setUserFullName(
+        userProfile?.fullName ? userProfile?.fullName : userLogin?.displayName
+      );
+      setUserProfileImg(
+        userProfile?.imgUrl ? userProfile?.imgUrl : userLogin?.photoURL
+      );
+    }
+  }, [userProfile, userLogin, loadUserProfile]);
 
   const handleLogout = () => {
     signOut(auth)
@@ -122,6 +146,7 @@ export default function AuthContextProvider({ children }) {
       value={{
         userLogin,
         loadUserLogin,
+        loadUserProfile,
         handleLogout,
         signUp,
         signIn,

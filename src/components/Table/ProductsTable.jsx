@@ -264,6 +264,9 @@ export default function ProductsTable() {
             avatarProps={{
               radius: "lg",
               src: product.imgUrl,
+              classNames: {
+                base: "hidden sm:block",
+              },
             }}
             description={product.description}
             name={
@@ -525,7 +528,7 @@ export default function ProductsTable() {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center ">
+      <div className="py-2 px-2 flex justify-center sm:justify-between items-center ">
         {/* <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
@@ -563,6 +566,7 @@ export default function ProductsTable() {
 
   return (
     <Table
+      fullWidth
       isHeaderSticky
       aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}

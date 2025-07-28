@@ -14,9 +14,10 @@ import { HiOutlineChevronRight, HiOutlineHome } from "react-icons/hi";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import MenuDropdown from "../components/Dashboard/MenuDropdown";
 
-const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
+const DashboardLayout = ({ userFullName, tabMenus, children }) => {
   const [collapseMenu, setCollapseMenu] = useState(false);
   const { pathname } = useLocation();
+
 
   return (
     <div className="h-screen px-6 py-4 flex gap-3 flex-col bg-default-200">
@@ -33,7 +34,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
           <MenuDropdown tabMenus={tabMenus} />
           <NavbarBrand className="px-0">
             <p className="font-bold text-inherit capitalize">
-              Hi, {userProfile?.fullName || "Admin"} 👋
+              Hi, {userFullName || "Admin"} 👋
             </p>
           </NavbarBrand>
         </NavbarContent>
@@ -110,7 +111,7 @@ const DashboardLayout = ({ userLogin, userProfile, tabMenus, children }) => {
             </Link>
           </Button>
         </div>
-        <div className="bg-white w-full h-[calc(100vh-110px)] rounded-lg p-4  ">
+        <div className="bg-white w-full h-[calc(100vh-110px)] overflow-auto rounded-lg p-4  ">
           {children}
         </div>
       </div>

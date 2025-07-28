@@ -62,8 +62,6 @@ const HandleProduct = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // const data = Object.fromEntries(new FormData(e.currentTarget));
-    // console.log(data);
     if (mode === "add") {
       dispatch(handleAddproduct(selectedProduct));
     } else {
@@ -78,7 +76,7 @@ const HandleProduct = () => {
       validationErrors={errors}
       onSubmit={onSubmit}
     >
-      <div className=" grid grid-cols-2 w-full gap-6">
+      <div className=" grid sm:grid-cols-2 w-full gap-6">
         {productFields.map((f) => (
           <div className="flex items-center gap-2" key={f.valueKey}>
             <Input

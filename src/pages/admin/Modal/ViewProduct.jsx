@@ -42,23 +42,23 @@ const ViewProduct = () => {
     draft: "warning",
   };
   return (
-    <div className="flex flex-col gap-3 p-4 w-full">
-      <div className="flex gap-6 items-center">
+    <div className="flex flex-col gap-3 sm:p-4 w-full">
+      <div className="flex gap-6 flex-col sm:flex-row sm:items-center">
         <Image
           isZoomed
           alt={selectedProduct?.name}
           src={selectedProduct?.imgUrl}
-          height={300}
+          width={'full'}
           radius="sm"
-          className=" object-cover aspect-3/2"
+          className="w-full h-auto sm:h-[300px] object-cover aspect-3/2"
         />
 
-        <div className="flex flex-col gap-2 p-0 w-1/2">
+        <div className="flex flex-col gap-2 p-0 sm:w-1/2">
           <h2 className="text-xl font-semibold">{selectedProduct?.name}</h2>
 
           <Divider className="my-1 bg-divider/30" />
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 sm:gap-2">
             {productDetails.map((pd) => (
               <div className="flex gap-2 items-center" key={pd.key}>
                 <span className="text-sm w-20">{pd.label}</span>
