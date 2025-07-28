@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/store/product/productSlice";
 import {
   setMode,
+  setOpenModal,
   setProductToDelete,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
@@ -33,6 +34,7 @@ const ProductsPage = () => {
     }
   }, [openModal]);
 
+
   return (
     <>
       <h1 className="text-2xl mb-8">All Products</h1>
@@ -40,12 +42,13 @@ const ProductsPage = () => {
       <ModalProductDash size={productToDelete || !safeToClose ? "md" : "4xl"}>
         {!safeToClose ? (
           <WarningCloseModal />
+        ) : productToDelete ? (
+          <ConfirmDelete />
         ) : (
           <>
             {mode === "add" && <HandleProduct />}
             {mode === "edit" && <HandleProduct />}
             {mode === "view" && <ViewProduct />}
-            {productToDelete && <ConfirmDelete />}
           </>
         )}
       </ModalProductDash>

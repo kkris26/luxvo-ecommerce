@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleDeleteProduct,
   setOpenModal,
+  setProductToDelete,
 } from "../../../redux/store/product/manageProductSlice";
 
 export const ConfirmDelete = () => {
   const dispatch = useDispatch();
-  const { productToDelete } = useSelector((state) => state.manageProduct);
+  const { productToDelete, mode } = useSelector((state) => state.manageProduct);
 
   return (
     <div className="flex gap-5 flex-col  w-full">
@@ -18,13 +19,7 @@ export const ConfirmDelete = () => {
       </p>
       <div className="flex gap-4 justify-end">
         <Button
-          color="default"
-          variant="light"
-          onPress={() => dispatch(setOpenModal(false))}
-        >
-          Close
-        </Button>
-        <Button
+        variant="light"
           color="danger"
           onPress={() => {
             dispatch(handleDeleteProduct(productToDelete.id));
@@ -32,6 +27,17 @@ export const ConfirmDelete = () => {
           }}
         >
           Delete
+        </Button>
+        <Button
+          color="primary"
+
+          onPress={() => {
+            mode
+              ? dispatch(setProductToDelete(null))
+              : dispatch(setOpenModal(false));
+          }}
+        >
+          {mode ? "Back" : "Close"}
         </Button>
       </div>
     </div>

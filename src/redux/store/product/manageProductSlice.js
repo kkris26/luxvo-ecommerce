@@ -64,15 +64,15 @@ export const handleAddproduct = (data) => async (dispatch) => {
     const docRef = await addDoc(collection(db, "products"), data);
 
     addToast({
-      title: "Product Added",
-      description: "Add Product Successfully",
+      title: "Success",
+      description: "Product added successfully.",
       timeout: 3000,
       size: "sm",
       color: "success",
       radius: "sm",
       shouldShowTimeoutProgress: true,
     });
-    // dispatch(setSelectedProduct(null));
+    dispatch(setSelectedProduct(null));
     dispatch(setOnEdit(false));
     dispatch(getProducts());
   } catch (error) {
@@ -107,7 +107,7 @@ export const handleEditProduct = (data, productId) => async (dispatch) => {
     await updateDoc(updateProductRef, data);
     addToast({
       title: "Product Updated",
-      description: "Update Product Successfully",
+      description: "Your changes have been saved!",
       timeout: 3000,
       size: "sm",
       color: "success",
@@ -134,17 +134,30 @@ export const handleEditProduct = (data, productId) => async (dispatch) => {
 };
 
 export const handleDeleteProduct = (productId) => async (dispatch) => {
-  await deleteDoc(doc(db, "products", productId));
-  addToast({
-    title: "Succesfully",
-    description: "Delete Product Succesfully",
-    timeout: 3000,
-    size: "sm",
-    color: "success",
-    radius: "sm",
-    shouldShowTimeoutProgress: true,
-  });
-  dispatch(getProducts());
+  try {
+    await deleteDoc(doc(db, "products", productId));
+    addToast({
+      title: "Deleted",
+      description: "Product deleted successfully.",
+      timeout: 3000,
+      size: "sm",
+      color: "success",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
+    dispatch(getProducts());
+  } catch (error) {
+    console.log("error", error);
+    addToast({
+      title: "Error",
+      description: "Something went wrong !",
+      timeout: 3000,
+      size: "sm",
+      color: "danger",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
+  }
 };
 
 export const confirmDelete = () => (dispatch) => {
