@@ -83,15 +83,17 @@ export default function AuthContextProvider({ children }) {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        addToast({
-          title: "Logout",
-          description: "Log Out Successfully",
-          timeout: 3000,
-          size: "sm",
-          color: "success",
-          radius: "sm",
-          shouldShowTimeoutProgress: true,
-        });
+        setTimeout(() => {
+          addToast({
+            title: "Logout",
+            description: "Log Out Successfully",
+            timeout: 3000,
+            size: "sm",
+            color: "success",
+            radius: "sm",
+            shouldShowTimeoutProgress: true,
+          });
+        }, 100);
         setUserLogin(null);
       })
       .catch((error) => {
