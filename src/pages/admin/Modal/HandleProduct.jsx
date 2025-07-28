@@ -131,7 +131,7 @@ const HandleProduct = () => {
         className="w-full mt-4"
         label="Product Description"
         labelPlacement="outside"
-        placeholder="Enter your description"
+        placeholder="Enter product description"
         variant="underlined"
         name="description"
         value={selectedProduct?.description || ""}
