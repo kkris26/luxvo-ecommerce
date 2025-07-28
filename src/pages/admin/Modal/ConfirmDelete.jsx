@@ -19,17 +19,7 @@ export const ConfirmDelete = () => {
       </p>
       <div className="flex gap-4 justify-end">
         <Button
-        variant="light"
-          color="danger"
-          onPress={() => {
-            dispatch(handleDeleteProduct(productToDelete.id));
-            dispatch(setOpenModal(false));
-          }}
-        >
-          Delete
-        </Button>
-        <Button
-          color="primary"
+          variant="light"
 
           onPress={() => {
             mode
@@ -38,6 +28,15 @@ export const ConfirmDelete = () => {
           }}
         >
           {mode ? "Back" : "Close"}
+        </Button>
+        <Button
+          color="danger"
+          onPress={() => {
+            dispatch(handleDeleteProduct(productToDelete.id));
+            dispatch(setOpenModal(false));
+          }}
+        >
+          Delete
         </Button>
       </div>
     </div>
