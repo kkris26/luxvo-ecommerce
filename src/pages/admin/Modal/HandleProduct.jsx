@@ -49,13 +49,13 @@ const HandleProduct = () => {
     {
       label: "Product Category",
       name: "category",
-      placeholder: "Select Category",
+      placeholder: "Select category",
       options: productCategories,
     },
     {
       label: "Product Status",
       name: "status",
-      placeholder: "Select Status",
+      placeholder: "Select status",
       options: statusOptions,
     },
   ];
@@ -91,10 +91,13 @@ const HandleProduct = () => {
               label={`Product ${f.label}`}
               labelPlacement="outside"
               name={f.name}
-              // disabled={f.name === "imgUrl"}
+              // isDisabled={f.name === "imgUrl"}
               type={f.type}
               key={f.valueKey}
-              placeholder={`Upload ${f.label.toLowerCase()}`}
+              placeholder={`${
+                f.name === "imgUrl" ? "Enter or upload" : "Enter product"
+              } 
+ ${f.label.toLowerCase()}`}
               variant="underlined"
               value={selectedProduct?.[f.name] || ""}
               onChange={(e) => dispatch(handleOnChange(e))}

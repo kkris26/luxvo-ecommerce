@@ -488,30 +488,28 @@ export default function ProductsTable() {
           <div className="text-default-400 text-small">
             Showing {filteredItems.length} of {products.length} products
           </div>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <div className="relative inline-block">
-              <label
-                htmlFor="rowsPerPage"
-                className="text-sm text-default-500 mr-2"
-              >
-                Rows per page:
-              </label>
-              <select
-                id="rowsPerPage"
-                defaultValue={rowsPerPage}
-                className="appearance-none pl-3 pr-6 py-1 rounded-md border border-default-200 bg-white text-sm text-default-700 focus:outline-none focus:ring-1 focus:ring-primary"
-                onChange={onRowsPerPageChange}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-              <RiArrowDropDownLine className=" text-2xl pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" />
-            </div>
-          </label>
+
+          <div className="relative inline-block">
+            <label
+              htmlFor="rowsPerPage"
+              className="text-sm text-default-500 mr-2"
+            >
+              Rows per page:
+            </label>
+            <select
+              id="rowsPerPage"
+              defaultValue={rowsPerPage}
+              className="appearance-none pl-3 pr-6 py-1 rounded-md border border-default-200 bg-white text-sm text-default-700 focus:outline-none focus:ring-1 focus:ring-primary"
+              onChange={onRowsPerPageChange}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+            <RiArrowDropDownLine className=" text-2xl pointer-events-none absolute right-1 top-1/2 -translate-y-1/2" />
+          </div>
         </div>
       </div>
     );
