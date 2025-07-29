@@ -10,12 +10,14 @@ import { doc, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { addToast } from "@heroui/react";
 import { AuthContext } from "../../context/AuthContext";
+import { setNewCategory } from "../../redux/features/category/manageCategorySlice";
 
 function FileUpload({ type = null, userId }) {
   const dispatch = useDispatch();
   const { selectedProduct, onEdit } = useSelector(
     (state) => state.manageProduct
   );
+  const { newCategory } = useSelector((state) => state.manageCategory);
   const [newImg, setNewImg] = useState(null);
 
   const { handleGetProfileUser } = useContext(AuthContext);
@@ -62,8 +64,16 @@ function FileUpload({ type = null, userId }) {
           }
         }}
         onCommonUploadSuccess={(e) => {
+          const imgUrl = e.successEntries[0].cdnUrl;
           if (type === "profile") {
             setNewImg(e.successEntries[0].cdnUrl);
+          } else if (type === "category") {
+            dispatch(
+              setNewCategory({
+                ...newCategory,
+                imgUrl,
+              })
+            );
           } else {
             dispatch(
               setSelectedProduct({

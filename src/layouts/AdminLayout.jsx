@@ -41,6 +41,7 @@ const AdminLayout = () => {
   const tabMenus = [
     { key: "dashboard", name: "Dashboard", path: "/admin" },
     { key: "products", name: "Products", path: "/admin/products" },
+    { key: "categories", name: "Categories", path: "/admin/categories" },
     { key: "orders", name: "Orders", path: "/admin/orders" },
     { key: "customers", name: "Customers", path: "/admin/customers" },
     { key: "reports", name: "Reports", path: "/admin/reports" },

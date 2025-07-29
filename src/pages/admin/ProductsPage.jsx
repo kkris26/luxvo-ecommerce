@@ -13,6 +13,7 @@ import {
 import ViewProduct from "./Modal/ViewProduct";
 import HandleProduct from "./Modal/HandleProduct";
 import WarningCloseModal from "./Modal/WarningCloseModal";
+import { getAllCategories } from "../../redux/features/category/manageCategorySlice";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const ProductsPage = () => {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getAllCategories());
   }, []);
 
   useEffect(() => {
@@ -33,7 +35,6 @@ const ProductsPage = () => {
       }, 300);
     }
   }, [openModal]);
-
 
   return (
     <>

@@ -23,6 +23,8 @@ const HandleProduct = () => {
   const { loadingAddProduct, mode, selectedProduct, onEdit } = useSelector(
     (state) => state.manageProduct
   );
+  const { categories } = useSelector((state) => state.manageCategory);
+
 
   const productFields = [
     {
@@ -36,21 +38,17 @@ const HandleProduct = () => {
     { name: "imgUrl", label: "Image Url", valueKey: "imgUrl", type: "link" },
   ];
   const statusOptions = [
-    { name: "Publish", uid: "publish" },
-    { name: "Draft", uid: "draft" },
-    { name: "Non ACtive", uid: "nonactive" },
+    { name: "Publish", id: "publish" },
+    { name: "Draft", id: "draft" },
+    { name: "Non ACtive", id: "nonactive" },
   ];
-  const productCategories = [
-    { name: "Shoes", uid: "shoes" },
-    { name: "Shirt", uid: "shirt" },
-    { name: "Short", uid: "short" },
-  ];
+
   const selectFields = [
     {
       label: "Product Category",
       name: "category",
       placeholder: "Select category",
-      options: productCategories,
+      options: categories,
     },
     {
       label: "Product Status",
@@ -59,6 +57,7 @@ const HandleProduct = () => {
       options: statusOptions,
     },
   ];
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -119,7 +118,7 @@ const HandleProduct = () => {
             onChange={(e) => dispatch(handleOnChange(e))}
           >
             {f.options.map((option) => (
-              <SelectItem key={option.uid} value={option.uid}>
+              <SelectItem key={option.id} value={option.id}>
                 {option.name}
               </SelectItem>
             ))}

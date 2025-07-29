@@ -44,11 +44,11 @@ export const statusOptions = [
   { name: "Draft", uid: "draft" },
   { name: "Non ACtive", uid: "nonactive" },
 ];
-export const productCategories = [
-  { name: "Shoes", uid: "shoes" },
-  { name: "Shirt", uid: "shirt" },
-  { name: "Short", uid: "short" },
-];
+// export const productCategories = [
+//   { name: "Shoes", uid: "shoes" },
+//   { name: "Shirt", uid: "shirt" },
+//   { name: "Short", uid: "short" },
+// ];
 
 export function capitalize(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
@@ -172,6 +172,9 @@ const INITIAL_VISIBLE_COLUMNS = [
 export default function ProductsTable() {
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.products);
+  const { categories, loadingGetCategory } = useSelector(
+    (state) => state.manageCategory
+  );
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -207,7 +210,7 @@ export default function ProductsTable() {
     }
     if (
       categoryFilter !== "all" &&
-      Array.from(categoryFilter).length !== productCategories.length
+      Array.from(categoryFilter).length !== categories.length
     ) {
       filteredProducts = filteredProducts.filter((product) =>
         Array.from(categoryFilter).includes(product.category)
@@ -222,7 +225,7 @@ export default function ProductsTable() {
       );
     }
     return filteredProducts;
-  }, [products, filterValue, categoryFilter, statusFilter]);
+  }, [products, filterValue, categoryFilter, statusFilter, categories]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -254,7 +257,7 @@ export default function ProductsTable() {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((product, columnKey) => {
+  const renderCell = (product, columnKey) => {
     const cellValue = product[columnKey];
 
     switch (columnKey) {
@@ -281,7 +284,9 @@ export default function ProductsTable() {
                 {cellValue}
               </span>
             }
-            classNames={{ description: "text-xs w-fit max-w-80 line-clamp-1" }}
+            classNames={{
+              description: "text-xs w-fit max-w-80 line-clamp-1",
+            }}
           ></User>
         );
       case "status":
@@ -296,7 +301,11 @@ export default function ProductsTable() {
           </Chip>
         );
       case "category":
-        return <p className="capitalize">{cellValue}</p>;
+        return (
+          <p className="capitalize">
+            {categories.find((c) => c.id === cellValue)?.name || "Not Found"}
+          </p>
+        );
       case "price":
         return <p>{currencyFormat(product.price)}</p>;
 
@@ -353,8 +362,7 @@ export default function ProductsTable() {
       default:
         return cellValue;
     }
-  }, []);
-
+  };
   const onNextPage = React.useCallback(() => {
     if (page < pages) {
       setPage(page + 1);
@@ -418,11 +426,15 @@ export default function ProductsTable() {
                 selectionMode="multiple"
                 onSelectionChange={setCategoryFilter}
               >
-                {productCategories.map((category) => (
-                  <DropdownItem key={category.uid} className="capitalize">
-                    {capitalize(category.name)}
-                  </DropdownItem>
-                ))}
+                {!loadingGetCategory ? (
+                  categories.map((category) => (
+                    <DropdownItem key={category.id} className="capitalize">
+                      {capitalize(category.name)}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <DropdownItem>Loading ...</DropdownItem>
+                )}
               </DropdownMenu>
             </Dropdown>
             <Dropdown>
@@ -522,6 +534,7 @@ export default function ProductsTable() {
     onSearchChange,
     hasSearchFilter,
     categoryFilter,
+    categories.length,
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -596,13 +609,15 @@ export default function ProductsTable() {
         }
         items={sortedItems}
       >
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
+        {(item) =>
+          categories.length && (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )
+        }
       </TableBody>
     </Table>
   );
