@@ -9,26 +9,29 @@ import {
   getAllCategories,
   setOpenModal,
 } from "../../redux/features/category/manageCategorySlice";
+import CategoryTable from "./Modal/Category/CategoryTable";
+import { getProducts } from "../../redux/store/product/productSlice";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }, []);
-
   const { categories, loadingGetCategory } = useSelector(
     (state) => state.manageCategory
   );
+  const { products, loading } = useSelector((state) => state.products);
+  useEffect(() => {
+    if (!categories.length ) {
+      dispatch(getAllCategories());
+    }
+    if (!products.length) {
+      dispatch(getProducts());
+    }
+  }, []);
+
+  console.log(!categories.length);
+
   return (
     <>
-      <h1 className="text-2xl mb-8">All Categories</h1>
-      <div>
-        {!loadingGetCategory ? (
-          categories.map((c) => <p>{c.name}</p>)
-        ) : (
-          <p>Loading ...</p>
-        )}
-      </div>
+      <CategoryTable />
       <Button onPress={() => dispatch(setOpenModal(true))} color="primary">
         Open Modal
       </Button>

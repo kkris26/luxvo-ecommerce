@@ -4,7 +4,7 @@ import db from "../../../db/db";
 
 const initialState = {
   products: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 
