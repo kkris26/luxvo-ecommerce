@@ -27,7 +27,6 @@ const CategoriesPage = () => {
     }
   }, []);
 
-  console.log(!categories.length);
 
   return (
     <>

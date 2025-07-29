@@ -24,7 +24,7 @@ import { setOpenModal } from "../../../../redux/features/category/manageCategory
 
 export const productColumns = [
   { name: "Category Name", uid: "name", sortable: true },
-  { name: "Count", uid: "count", sortable: true },
+  { name: "Count", uid: "count" },
   { name: "Actions", uid: "actions" },
 ];
 
@@ -140,7 +140,6 @@ export default function CategoryTable() {
     (state) => state.manageCategory
   );
   const { products, loading } = useSelector((state) => state.products);
-  console.log(loading);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -191,12 +190,7 @@ export default function CategoryTable() {
       const cmp = (() => {
         const firstVal = a[sortDescriptor.column];
         const secondVal = b[sortDescriptor.column];
-        const numericFields = ["price", "stock"];
-        if (numericFields.includes(sortDescriptor.column)) {
-          const numA = Number(firstVal);
-          const numB = Number(secondVal);
-          return numA - numB;
-        }
+
         if (typeof firstVal === "string" && typeof secondVal === "string") {
           return firstVal.localeCompare(secondVal, undefined, {
             sensitivity: "base",
@@ -241,7 +235,6 @@ export default function CategoryTable() {
         );
       case "count":
         const count = products.filter((p) => p.category === category.id);
-        console.log(products);
         return (
           <Chip className="capitalize" size="sm" variant="flat">
             {count.length}

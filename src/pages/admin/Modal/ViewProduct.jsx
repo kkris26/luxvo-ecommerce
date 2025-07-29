@@ -14,6 +14,8 @@ import { AiFillEdit } from "react-icons/ai";
 const ViewProduct = () => {
   const dispatch = useDispatch();
   const { selectedProduct } = useSelector((state) => state.manageProduct);
+  const { categories } = useSelector((state) => state.manageCategory);
+
   const productDetails = [
     {
       key: "price",
@@ -23,7 +25,7 @@ const ViewProduct = () => {
     {
       key: "category",
       label: "Category",
-      value: selectedProduct?.category,
+      value: categories.find((c) => c.id === selectedProduct?.category)?.name,
     },
     {
       key: "stock",
@@ -48,7 +50,7 @@ const ViewProduct = () => {
           isZoomed
           alt={selectedProduct?.name}
           src={selectedProduct?.imgUrl}
-          width={'full'}
+          width={"full"}
           radius="sm"
           className="w-full h-auto sm:h-[300px] object-cover aspect-3/2"
         />

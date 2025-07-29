@@ -28,6 +28,7 @@ export default function AuthContextProvider({ children }) {
 
   const [userProfileImg, setUserProfileImg] = useState("");
   const [userFullName, setUserFullName] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -77,6 +78,7 @@ export default function AuthContextProvider({ children }) {
       setUserProfileImg(
         userProfile?.imgUrl ? userProfile?.imgUrl : userLogin?.photoURL
       );
+      setUserRole(userProfile?.role);
     }
   }, [userProfile, userLogin, loadUserProfile]);
 
@@ -158,6 +160,7 @@ export default function AuthContextProvider({ children }) {
         userProfileImg,
         userFullName,
         handleGetProfileUser,
+        userRole,
       }}
     >
       {children}

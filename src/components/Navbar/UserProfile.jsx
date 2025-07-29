@@ -14,11 +14,9 @@ import { AuthContext } from "../../context/AuthContext";
 import LinkWrapper from "../Wrapper/LinkWrapper";
 
 export default function UserProfile() {
-  const { userLogin, userProfile, userProfileImg, userFullName } =
+  const { userLogin, userRole, userProfileImg, userFullName } =
     useContext(AuthContext);
   const { setModalOpen } = useContext(ModalContext);
-
-
   return (
     <Dropdown
       classNames={{
@@ -64,11 +62,13 @@ export default function UserProfile() {
               name={<span className="capitalize">{userFullName}</span>}
             />
           </DropdownItem>
-          <DropdownItem key="dashboard" textValue="dashboard">
-            <LinkWrapper className="w-full flex " path={"/admin"}>
-              Dashboard
-            </LinkWrapper>
-          </DropdownItem>
+          {userRole === "admin" && (
+            <DropdownItem key="dashboard" textValue="dashboard">
+              <LinkWrapper className="w-full flex " path={"/admin"}>
+                Dashboard
+              </LinkWrapper>
+            </DropdownItem>
+          )}
           <DropdownItem key="settings" textValue="settings">
             <LinkWrapper className="w-full flex" path={"/user"}>
               Settings
