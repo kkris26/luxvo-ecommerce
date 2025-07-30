@@ -124,23 +124,38 @@ export const getAllCategories = () => async (dispatch) => {
   }
 };
 
-export const handleDeleteCategory = (categoryId) => async (dispatch) => {
-  try {
-    await deleteDoc(doc(db, "categories", categoryId));
-    dispatch(getAllCategories());
-    addToast({
-      title: "Deleted",
-      description: "Category deleted successfully.",
-      timeout: 3000,
-      size: "sm",
-      color: "success",
-      radius: "sm",
-      shouldShowTimeoutProgress: true,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const handleDeleteCategory =
+  (categoryId) => async (dispatch, getState) => {
+    const { products } = getState().products;
+    const count = products.filter((p) => p.category === categoryId);
+    if (count.length > 0) {
+      addToast({
+        title: "Cannot Delete",
+        description: `This category is used by ${count.length} products.`,
+        timeout: 3000,
+        size: "sm",
+        color: "danger",
+        radius: "sm",
+        shouldShowTimeoutProgress: true,
+      });
+      return;
+    }
+    try {
+      await deleteDoc(doc(db, "categories", categoryId));
+      dispatch(getAllCategories());
+      addToast({
+        title: "Deleted",
+        description: "Category deleted successfully.",
+        timeout: 3000,
+        size: "sm",
+        color: "success",
+        radius: "sm",
+        shouldShowTimeoutProgress: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const confirmDelete = () => (dispatch) => {};
 export const manageCategoryReducer = manageCategorySlice.reducer;
