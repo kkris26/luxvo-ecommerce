@@ -11,15 +11,16 @@ import {
 } from "../../redux/features/category/manageCategorySlice";
 import CategoryTable from "./Modal/Category/CategoryTable";
 import { getProducts } from "../../redux/store/product/productSlice";
+import ViewCategory from "./Modal/Category/ViewCategory";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
-  const { categories, loadingGetCategory } = useSelector(
+  const { categories, loadingGetCategory, mode } = useSelector(
     (state) => state.manageCategory
   );
   const { products, loading } = useSelector((state) => state.products);
   useEffect(() => {
-    if (!categories.length ) {
+    if (!categories.length) {
       dispatch(getAllCategories());
     }
     if (!products.length) {
@@ -27,15 +28,12 @@ const CategoriesPage = () => {
     }
   }, []);
 
-
   return (
     <>
       <CategoryTable />
-      <Button onPress={() => dispatch(setOpenModal(true))} color="primary">
-        Open Modal
-      </Button>
       <ModalHandleCategory>
-        <HandleCategory />
+        {mode === "view" && <ViewCategory />}
+        {(mode === "add" || mode === "edit") && <HandleCategory />}
       </ModalHandleCategory>
     </>
   );

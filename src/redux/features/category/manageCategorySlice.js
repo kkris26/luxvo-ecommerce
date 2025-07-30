@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import db from "../../../db/db";
 
 const initialState = {
   openModal: false,
   categories: [],
   mode: null,
+  category: null,
   categoryToDelete: null,
   selectedCategory: null,
   newCategory: null,
@@ -28,6 +36,12 @@ const manageCategorySlice = createSlice({
     setLoadingGetCategory: (state, action) => {
       state.loadingGetCategory = action.payload;
     },
+    setMode: (state, action) => {
+      state.mode = action.payload;
+    },
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
   },
 });
 
@@ -36,16 +50,39 @@ export const {
   setOpenModal,
   setCategories,
   setLoadingGetCategory,
+  setMode,
+  setCategory,
 } = manageCategorySlice.actions;
 export const handleOnChange = (e) => (dispatch, getState) => {
   const { name, value } = e.target;
-  const { newCategory } = getState().manageCategory;
-  dispatch(setNewCategory({ ...newCategory, [name]: value }));
+  const { newCategory, mode, category } = getState().manageCategory;
+  if (mode === "add") {
+    dispatch(setNewCategory({ ...newCategory, [name]: value }));
+  } else {
+    dispatch(setCategory({ ...category, [name]: value }));
+  }
 };
-export const onSubmit = (data) => async (dispatch) => {
+export const onSubmit = (data) => async (dispatch, getState) => {
+  const { mode } = getState().manageCategory;
   try {
-    await addDoc(collection(db, "categories"), data);
+    if (mode === "add") {
+      await addDoc(collection(db, "categories"), data);
+    } else {
+      const updateRef = doc(db, "categories", data.id);
+      await updateDoc(updateRef, data);
+    }
     dispatch(getAllCategories());
+    addToast({
+      title: "Success",
+      description: `Product ${
+        mode === "add" ? "added" : "update"
+      } successfully.`,
+      timeout: 3000,
+      size: "sm",
+      color: "success",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
   } catch (error) {
     console.log(error);
   } finally {

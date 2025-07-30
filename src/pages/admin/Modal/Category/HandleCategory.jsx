@@ -13,10 +13,16 @@ const HandleCategory = () => {
   ];
 
   const dispatch = useDispatch();
-  const { newCategory } = useSelector((state) => state.manageCategory);
+  const { newCategory, mode, category } = useSelector(
+    (state) => state.manageCategory
+  );
   const handleAddCategory = (e) => {
     e.preventDefault();
-    dispatch(onSubmit(newCategory));
+    if (mode === "add") {
+      dispatch(onSubmit(newCategory));
+    } else {
+      dispatch(onSubmit(category));
+    }
   };
 
   return (
@@ -41,7 +47,9 @@ const HandleCategory = () => {
               endContent={
                 cf.key === "imgUrl" && <FileUpload type={"category"} />
               }
-              value={newCategory?.[cf.key]}
+              value={
+                mode === "add" ? newCategory?.[cf.key] : category?.[cf.key]
+              }
               onChange={(e) => dispatch(handleOnChange(e))}
             />
           ))}
@@ -53,7 +61,7 @@ const HandleCategory = () => {
           name="description"
           placeholder="Enter your description"
           variant="underlined"
-          value={newCategory?.description}
+          value={mode === "add" ? newCategory?.[cf.key] : category?.description}
           onChange={(e) => dispatch(handleOnChange(e))}
         />
         <Button type="submit" className="mt-4" color="primary">
