@@ -10,10 +10,15 @@ const ViewCategory = () => {
   console.log(category);
   return (
     <div className="flex w-full gap-4 items-center">
-      <Image src={category.imgUrl} width={300} />
+      <Image
+        src={category?.imgUrl}
+        width={300}
+        classNames={{ wrapper: "bg-gray-400  aspect-4/3" }}
+        fallbackSrc="https://via.placeholder.com/300x200"
+      />
       <div className="w-1/2 flex flex-col">
-        <h2 className="font-bold text-lg">{category.name}</h2>
-        <p className="text-sm">{category.description}</p>
+        <h2 className="font-bold text-lg">{category?.name}</h2>
+        <p className="text-sm">{category?.description}</p>
         <div className="flex gap-2 mt-4">
           <Button
             color="secondary"

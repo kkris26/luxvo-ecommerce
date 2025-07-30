@@ -8,6 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import db from "../../../db/db";
+import { addToast } from "@heroui/react";
 
 const initialState = {
   openModal: false,
@@ -67,14 +68,16 @@ export const onSubmit = (data) => async (dispatch, getState) => {
   try {
     if (mode === "add") {
       await addDoc(collection(db, "categories"), data);
+      dispatch(setNewCategory(null));
     } else {
       const updateRef = doc(db, "categories", data.id);
       await updateDoc(updateRef, data);
+      dispatch(setOpenModal(false));
     }
     dispatch(getAllCategories());
     addToast({
       title: "Success",
-      description: `Product ${
+      description: `Category ${
         mode === "add" ? "added" : "update"
       } successfully.`,
       timeout: 3000,
@@ -86,8 +89,8 @@ export const onSubmit = (data) => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
   } finally {
-    dispatch(setOpenModal(false));
-    console.log("succes add ctagory");
+    // dispatch(setOpenModal(false));
+    // console.log("succes add ctagory");
   }
 };
 

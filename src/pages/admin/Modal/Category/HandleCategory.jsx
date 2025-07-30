@@ -61,7 +61,9 @@ const HandleCategory = () => {
           name="description"
           placeholder="Enter your description"
           variant="underlined"
-          value={mode === "add" ? newCategory?.[cf.key] : category?.description}
+          value={
+            mode === "add" ? newCategory?.description : category?.description
+          }
           onChange={(e) => dispatch(handleOnChange(e))}
         />
         <Button type="submit" className="mt-4" color="primary">
