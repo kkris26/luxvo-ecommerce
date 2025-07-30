@@ -58,7 +58,7 @@ export default function UserProfile() {
                 name: "text-default-600",
                 description: "text-default-500",
               }}
-              description={userLogin.email}
+              description={userLogin?.email}
               name={<span className="capitalize">{userFullName}</span>}
             />
           </DropdownItem>

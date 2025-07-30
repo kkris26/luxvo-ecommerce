@@ -10,6 +10,9 @@ const UserLayout = () => {
     useContext(AuthContext);
 
   useEffect(() => {
+    if (!loadUserLogin && !userLogin) {
+      navigate("/?auth=signin");
+    }
     if (!loadUserLogin && !loadUserProfile && userFullName) {
       if (!userLogin) {
         navigate("/?auth=signin");

@@ -6,14 +6,15 @@ import DashboardLayout from "./DashboardLayout";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
-  const { userLogin, loadUserLogin, userFullName, loadUserProfile } =
+  const { userLogin, loadUserLogin, userFullName, loadUserProfile, userRole } =
     useContext(AuthContext);
 
-  const allowedEmails = ["admin@luxvo.com", "krisnuartha09@gmail.com"];
-  const isAuthorized =
-    !loadUserLogin && allowedEmails.includes(userLogin?.email);
+  const isAuthorized = !loadUserLogin && userRole === "admin";
 
   useEffect(() => {
+    if (!loadUserLogin && !userLogin) {
+      navigate("/?auth=signin");
+    }
     if (!loadUserLogin && !loadUserProfile && userFullName) {
       if (isAuthorized) {
         addToast({
