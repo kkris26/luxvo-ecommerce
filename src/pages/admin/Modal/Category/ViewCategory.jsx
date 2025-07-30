@@ -14,7 +14,6 @@ const ViewCategory = () => {
         src={category?.imgUrl}
         width={300}
         classNames={{ wrapper: "bg-gray-400  aspect-4/3" }}
-        fallbackSrc="https://via.placeholder.com/300x200"
       />
       <div className="w-1/2 flex flex-col">
         <h2 className="font-bold text-lg">{category?.name}</h2>

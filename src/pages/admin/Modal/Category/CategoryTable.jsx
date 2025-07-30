@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import {
   setCategory,
+  setCategoryToDelete,
   setMode,
   setOpenModal,
 } from "../../../../redux/features/category/manageCategorySlice";
@@ -278,14 +279,14 @@ export default function CategoryTable() {
                   color="danger"
                   key="delete"
                   onPress={() => {
-                    dispatch(confirmDelete());
-
                     dispatch(
-                      setProductToDelete({
+                      setCategoryToDelete({
                         id: category.id,
                         name: category.name,
                       })
-                    );
+                    ),
+                      dispatch(setOpenModal(true));
+                    dispatch(setMode("delete"));
                   }}
                 >
                   Delete

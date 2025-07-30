@@ -12,12 +12,12 @@ import {
 import CategoryTable from "./Modal/Category/CategoryTable";
 import { getProducts } from "../../redux/store/product/productSlice";
 import ViewCategory from "./Modal/Category/ViewCategory";
+import { ModalWarning } from "./Modal/Category/ModalWarning";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
-  const { categories, loadingGetCategory, mode } = useSelector(
-    (state) => state.manageCategory
-  );
+  const { categories, loadingGetCategory, mode, categoryToDelete } =
+    useSelector((state) => state.manageCategory);
   const { products, loading } = useSelector((state) => state.products);
   useEffect(() => {
     if (!categories.length) {
@@ -28,12 +28,19 @@ const CategoriesPage = () => {
     }
   }, []);
 
+  console.log(mode);
+
   return (
     <>
       <CategoryTable />
       <ModalHandleCategory>
-        {mode === "view" && <ViewCategory />}
-        {(mode === "add" || mode === "edit") && <HandleCategory />}
+        {
+          <>
+            {mode === "delete" && <ModalWarning />}
+            {mode === "view" && <ViewCategory />}
+            {(mode === "add" || mode === "edit") && <HandleCategory />}
+          </>
+        }
       </ModalHandleCategory>
     </>
   );

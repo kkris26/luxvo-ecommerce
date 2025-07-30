@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   setDoc,
@@ -43,6 +44,9 @@ const manageCategorySlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
+    setCategoryToDelete: (state, action) => {
+      state.categoryToDelete = action.payload;
+    },
   },
 });
 
@@ -53,6 +57,7 @@ export const {
   setLoadingGetCategory,
   setMode,
   setCategory,
+  setCategoryToDelete,
 } = manageCategorySlice.actions;
 export const handleOnChange = (e) => (dispatch, getState) => {
   const { name, value } = e.target;
@@ -109,4 +114,24 @@ export const getAllCategories = () => async (dispatch) => {
     dispatch(setLoadingGetCategory(false));
   }
 };
+
+export const handleDeleteCategory = (categoryId) => async (dispatch) => {
+  try {
+    await deleteDoc(doc(db, "categories", categoryId));
+    dispatch(getAllCategories());
+    addToast({
+      title: "Deleted",
+      description: "Category deleted successfully.",
+      timeout: 3000,
+      size: "sm",
+      color: "success",
+      radius: "sm",
+      shouldShowTimeoutProgress: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const confirmDelete = () => (dispatch) => {};
 export const manageCategoryReducer = manageCategorySlice.reducer;
