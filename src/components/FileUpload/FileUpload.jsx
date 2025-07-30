@@ -2,7 +2,7 @@ import { FileUploaderRegular } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setOnEdit,
+  setOnEdit as setOnEditProduct,
   setSelectedProduct,
 } from "../../redux/store/product/manageProductSlice";
 import db from "../../db/db";
@@ -10,14 +10,23 @@ import { doc, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { addToast } from "@heroui/react";
 import { AuthContext } from "../../context/AuthContext";
-import { setNewCategory } from "../../redux/features/category/manageCategorySlice";
+import {
+  setCategory,
+  setNewCategory,
+  setOnEdit as setOnEditCategory,
+} from "../../redux/features/category/manageCategorySlice";
 
 function FileUpload({ type = null, userId }) {
   const dispatch = useDispatch();
-  const { selectedProduct, onEdit } = useSelector(
+  const { selectedProduct, onEdit: onEditProduct } = useSelector(
     (state) => state.manageProduct
   );
-  const { newCategory } = useSelector((state) => state.manageCategory);
+  const {
+    newCategory,
+    mode,
+    category,
+    onEdit: onEditCategory,
+  } = useSelector((state) => state.manageCategory);
   const [newImg, setNewImg] = useState(null);
 
   const { handleGetProfileUser } = useContext(AuthContext);
@@ -59,8 +68,14 @@ function FileUpload({ type = null, userId }) {
         multipleMax={1}
         imgOnly={true}
         onFileAdded={() => {
-          if (!onEdit && !type) {
-            dispatch(setOnEdit(true));
+          if (!type) {
+            if (!onEditProduct) {
+              dispatch(setOnEditProduct(true));
+            }
+          } else if (type === "category") {
+            if (!onEditCategory) {
+              dispatch(setOnEditCategory(true));
+            }
           }
         }}
         onCommonUploadSuccess={(e) => {
@@ -68,12 +83,21 @@ function FileUpload({ type = null, userId }) {
           if (type === "profile") {
             setNewImg(e.successEntries[0].cdnUrl);
           } else if (type === "category") {
-            dispatch(
-              setNewCategory({
-                ...newCategory,
-                imgUrl,
-              })
-            );
+            if (mode === "edit") {
+              return dispatch(
+                setCategory({
+                  ...category,
+                  imgUrl,
+                })
+              );
+            } else {
+              dispatch(
+                setNewCategory({
+                  ...newCategory,
+                  imgUrl,
+                })
+              );
+            }
           } else {
             dispatch(
               setSelectedProduct({

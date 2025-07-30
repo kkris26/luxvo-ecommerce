@@ -14,9 +14,13 @@ import {
 
 export default function ModalHandleCategory({ children }) {
   const dispatch = useDispatch();
-  const { openModal } = useSelector((state) => state.manageCategory);
+  const { openModal, onEdit } = useSelector((state) => state.manageCategory);
 
   const handleCloseModal = () => {
+    if (onEdit) {
+      dispatch(setMode("warning"));
+      return;
+    }
     dispatch(setOpenModal(false));
     setTimeout(() => {
       dispatch(setMode(null));

@@ -15,6 +15,7 @@ const initialState = {
   openModal: false,
   categories: [],
   mode: null,
+  onEdit: false,
   category: null,
   categoryToDelete: null,
   selectedCategory: null,
@@ -47,6 +48,9 @@ const manageCategorySlice = createSlice({
     setCategoryToDelete: (state, action) => {
       state.categoryToDelete = action.payload;
     },
+    setOnEdit: (state, action) => {
+      state.onEdit = action.payload;
+    },
   },
 });
 
@@ -58,10 +62,14 @@ export const {
   setMode,
   setCategory,
   setCategoryToDelete,
+  setOnEdit,
 } = manageCategorySlice.actions;
 export const handleOnChange = (e) => (dispatch, getState) => {
   const { name, value } = e.target;
-  const { newCategory, mode, category } = getState().manageCategory;
+  const { newCategory, mode, category, onEdit } = getState().manageCategory;
+  if (!onEdit) {
+    dispatch(setOnEdit(true));
+  }
   if (mode === "add") {
     dispatch(setNewCategory({ ...newCategory, [name]: value }));
   } else {
@@ -80,6 +88,7 @@ export const onSubmit = (data) => async (dispatch, getState) => {
       dispatch(setOpenModal(false));
     }
     dispatch(getAllCategories());
+    dispatch(setOnEdit(false));
     addToast({
       title: "Success",
       description: `Category ${

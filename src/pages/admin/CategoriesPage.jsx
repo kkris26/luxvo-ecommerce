@@ -16,7 +16,7 @@ import { ModalWarning } from "./Modal/Category/ModalWarning";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
-  const { categories, loadingGetCategory, mode, categoryToDelete } =
+  const { categories, onEdit, loadingGetCategory, mode, categoryToDelete } =
     useSelector((state) => state.manageCategory);
   const { products, loading } = useSelector((state) => state.products);
   useEffect(() => {
@@ -28,7 +28,6 @@ const CategoriesPage = () => {
     }
   }, []);
 
-  console.log(mode);
 
   return (
     <>
@@ -36,7 +35,7 @@ const CategoriesPage = () => {
       <ModalHandleCategory>
         {
           <>
-            {mode === "delete" && <ModalWarning />}
+            {(mode === "delete" || mode === "warning") && <ModalWarning />}
             {mode === "view" && <ViewCategory />}
             {(mode === "add" || mode === "edit") && <HandleCategory />}
           </>
