@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Outlet } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
@@ -7,6 +7,7 @@ import CartPage from "../pages/user/CartPage";
 import ProfilePage from "../pages/user/ProfilePage";
 import ProductsPage from "../pages/admin/ProductsPage";
 import CategoriesPage from "../pages/admin/CategoriesPage";
+import ProductCategory from "../pages/admin/ProductCategory";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,15 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "shop", element: <div>Shop Page</div> },
-      { path: "categories", element: <div>Categories Page</div> },
+      {
+        path: "categories",
+        element: (
+          <div>
+            <Outlet />
+          </div>
+        ),
+        children: [{ path: ":category", element: <ProductCategory /> }],
+      },
       { path: "about", element: <div>About Us Page</div> },
       { path: "contact", element: <div>Contact Page</div> },
     ],
