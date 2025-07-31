@@ -1,21 +1,16 @@
 import { Link } from "react-router";
-import ProductsCard from "../Products/ProductsCard";
 import SectionTitle from "./SectionTitle";
 import { Button } from "@heroui/react";
+import ProductGridWrapper from "./ProductGridWrapper";
 
 const ProductGrid = ({ label, title, products, loading, link, chipLabel }) => (
   <div className="flex flex-col gap-15 py-20 items-center">
     <SectionTitle label={label} title={title} />
-    <div className="grid grid-cols-4 gap-5 w-full">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        products.map((p) => (
-          <ProductsCard key={p.id} product={p} chipLabel={chipLabel} />
-        ))
-      )}
-    </div>
-
+    <ProductGridWrapper
+      loading={loading}
+      products={products}
+      chipLabel={chipLabel}
+    />
     <Button
       color="black"
       className="w-max border-1 hover:underline font-light"

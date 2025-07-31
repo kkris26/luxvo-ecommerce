@@ -1,12 +1,9 @@
 import { Chip, Image } from "@heroui/react";
-import React from "react";
 import { currencyFormat } from "../../service/formatter";
 import { useSelector } from "react-redux";
 
 const ProductsCard = ({ product, chipLabel }) => {
-  const { categories, loadingGetCategory } = useSelector(
-    (state) => state.manageCategory
-  );
+
   return (
     <div>
       <div className="relative">

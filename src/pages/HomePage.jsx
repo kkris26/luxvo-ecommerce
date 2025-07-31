@@ -8,13 +8,13 @@ import HeadingTitle from "../components/Products/HeadingTitle";
 import LabelTitle from "../components/Products/LabelTitle";
 import { Button, Image } from "@heroui/react";
 import { Link } from "react-router";
-import VideoHero from "../components/Homepage/VideoHero";
-import SectionTitle from "../components/Homepage/SectionTitle";
-import SectionWrapper from "../components/Homepage/SectionWrapper";
-import BannerImage from "../components/Homepage/BannerImage";
-import ProductGrid from "../components/Homepage/ProductGrid";
+import VideoHero from "../components/Main/VideoHero";
+import SectionTitle from "../components/Main/SectionTitle";
+import SectionWrapper from "../components/Main/SectionWrapper";
+import BannerImage from "../components/Main/BannerImage";
+import ProductGrid from "../components/Main/ProductGrid";
 
-const HomePage = () => {
+const Homepage = () => {
   const { products, loading } = useSelector((state) => state.products);
   const { categories, loadingGetCategory } = useSelector(
     (state) => state.manageCategory
@@ -62,7 +62,7 @@ const HomePage = () => {
         </div>
       </SectionWrapper>
 
-      <BannerImage src="https://id.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2025/central/collections/men-lg/Men_Bags_Shopper_Tote_2507_WW_HP_Push__DI3.jpg?wid=4096" />
+      <BannerImage src="https://id.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Main/2025/central/collections/men-lg/Men_Bags_Shopper_Tote_2507_WW_HP_Push__DI3.jpg?wid=4096" />
 
       <ProductGrid
         loading={loading}
@@ -73,7 +73,7 @@ const HomePage = () => {
         chipLabel={"New"}
       />
 
-      <BannerImage src="https://id.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2025/central/collections/women-lg/WLG_EXPRESS_WW_HP_push_DI3.jpg?wid=4096" />
+      <BannerImage src="https://id.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Main/2025/central/collections/women-lg/WLG_EXPRESS_WW_HP_push_DI3.jpg?wid=4096" />
 
       <ProductGrid
         loading={loadingOrderPrice}
@@ -87,4 +87,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Homepage;

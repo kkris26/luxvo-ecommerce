@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import NavbarHeader from "../components/Navbar/NavbarHeader";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { useEffect } from "react";
 import { getProducts } from "../redux/store/product/productSlice";
 import { getAllCategories } from "../redux/features/category/manageCategorySlice";
 import MainFooter from "../components/Footer/MainFooter";
+import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
+import MainBreadcrumbs from "../components/Breadcrumbs/MainBreadcrumbs";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -12,10 +14,18 @@ const MainLayout = () => {
     dispatch(getProducts());
     dispatch(getAllCategories());
   }, []);
+
+  const location = useLocation();
+  console.log(location);
   return (
     <>
       <NavbarHeader />
       <div className="px-4 max-w-7xl  mx-auto">
+        {location.pathname !== "/" && (
+          <div className="py-4">
+            <MainBreadcrumbs />
+          </div>
+        )}
         <Outlet />
       </div>
       <MainFooter />
