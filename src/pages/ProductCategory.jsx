@@ -1,8 +1,8 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import db from "../../db/db";
-import ProductGridWrapper from "../../components/Main/ProductGridWrapper";
+import { Link, useParams } from "react-router";
+import db from "../db/db";
+import ProductGridWrapper from "../components/Main/ProductGridWrapper";
 import { useSelector } from "react-redux";
 import { Button, Image } from "@heroui/react";
 
@@ -35,7 +35,6 @@ const ProductCategory = () => {
     };
     getProductByCategory();
   }, []);
-  console.log(params.category);
   return (
     <>
       <div className="h-100 relative gap-3 flex flex-col items-center justify-center text-white">
@@ -47,15 +46,16 @@ const ProductCategory = () => {
           {categoryData?.name}
         </h1>
         <p className="text-sm font-extralight"> {categoryData?.description}</p>
-        <Button
-          href="/content"
-          variant="bordered"
-          color="white"
-          className="border-1 mt-2"
-          radius="none"
-        >
-          Let's Explore
-        </Button>
+        <Link to={"#content"}>
+          <Button
+            variant="bordered"
+            color="white"
+            className="border-1 mt-2"
+            radius="none"
+          >
+            Let's Explore
+          </Button>
+        </Link>
       </div>
       <div className="py-20" id="content">
         <ProductGridWrapper loading={loading} products={productsByCategory} />

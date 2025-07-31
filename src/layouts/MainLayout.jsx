@@ -16,14 +16,14 @@ const MainLayout = () => {
   }, []);
 
   const location = useLocation();
-  console.log(location);
+
   return (
     <>
       <NavbarHeader />
       <div className="px-4 max-w-7xl  mx-auto">
         {location.pathname !== "/" && (
           <div className="py-4">
-            <MainBreadcrumbs />
+            <MainBreadcrumbs pathname={location.pathname} />
           </div>
         )}
         <Outlet />

@@ -13,6 +13,7 @@ import SectionTitle from "../components/Main/SectionTitle";
 import SectionWrapper from "../components/Main/SectionWrapper";
 import BannerImage from "../components/Main/BannerImage";
 import ProductGrid from "../components/Main/ProductGrid";
+import CategoryCardSkeleton from "../components/Products/CategoryCardSkeleton";
 
 const Homepage = () => {
   const { products, loading } = useSelector((state) => state.products);
@@ -54,11 +55,9 @@ const Homepage = () => {
       <SectionWrapper>
         <SectionTitle label="Category" title="Featured Categories" />
         <div className="grid grid-cols-4 gap-4 ">
-          {loadingGetCategory ? (
-            <p>Loading ...</p>
-          ) : (
-            categories.map((c) => <CategoryCard key={c.id} category={c} />)
-          )}
+          {loadingGetCategory
+            ? [...Array(4)].map((_, i) => <CategoryCardSkeleton key={i} />)
+            : categories.map((c) => <CategoryCard key={c.id} category={c} />)}
         </div>
       </SectionWrapper>
 

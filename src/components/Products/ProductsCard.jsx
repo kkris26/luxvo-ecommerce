@@ -24,11 +24,6 @@ const ProductsCard = ({ product, chipLabel }) => {
         )}
       </div>
       <div className="mt-3 flex flex-col">
-        {/* {!loadingGetCategory && (
-          <p className="text-sm text-black/60 font-light">
-            {categories.find((c) => c.id === product.category).name}
-          </p>
-        )} */}
         <h3 className="text-sm font-light hover:underline cursor-pointer">
           {product.name}
         </h3>

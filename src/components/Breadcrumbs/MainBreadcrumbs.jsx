@@ -1,14 +1,19 @@
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
 import React from "react";
+import { Link } from "react-router";
 
-const MainBreadcrumbs = () => {
+const MainBreadcrumbs = ({ pathname }) => {
+  const pathSegments = pathname.split("/").filter(Boolean);
   return (
-    <Breadcrumbs>
-      <BreadcrumbItem>Home</BreadcrumbItem>
-      <BreadcrumbItem>Music</BreadcrumbItem>
-      <BreadcrumbItem>Artist</BreadcrumbItem>
-      <BreadcrumbItem>Album</BreadcrumbItem>
-      <BreadcrumbItem>Song</BreadcrumbItem>
+    <Breadcrumbs underline="hover">
+      <BreadcrumbItem>
+        <Link to={"/"}>Home</Link>
+      </BreadcrumbItem>
+      {pathSegments.map((path, i) => (
+        <BreadcrumbItem className="capitalize" key={i + path}>
+          {path}
+        </BreadcrumbItem>
+      ))}
     </Breadcrumbs>
   );
 };
