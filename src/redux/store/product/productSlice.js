@@ -34,7 +34,6 @@ export const getProducts = () => async (dispatch) => {
       id: doc.id,
       ...doc.data(),
     }));
-
     dispatch(setProducts(allProducts));
   } catch (error) {
     dispatch(setError(error));

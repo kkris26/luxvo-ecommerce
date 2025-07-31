@@ -217,7 +217,7 @@ export default function CategoryTable() {
               radius: "lg",
               src: category.imgUrl,
               classNames: {
-                base: "hidden sm:block",
+                base: "hidden sm:block bg-default-100",
               },
             }}
             description={category.description}

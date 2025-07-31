@@ -18,7 +18,7 @@ const ViewCategory = () => {
         src={category?.imgUrl}
         width={"full"}
         radius="sm"
-        className=" h-auto sm:h-[300px] object-cover aspect-3/2 bg-amber-200"
+        className=" h-auto sm:h-[300px] object-cover aspect-3/2 bg-default-100"
       />
       <div className="sm:w-1/2 gap-2 flex flex-col">
         <Divider className="my-1 bg-divider/30" />

@@ -52,7 +52,7 @@ const ViewProduct = () => {
           src={selectedProduct?.imgUrl}
           width={"full"}
           radius="sm"
-          className="w-full h-auto sm:h-[300px] object-cover aspect-3/2"
+          className="w-full h-auto sm:h-[300px] object-cover bg-default-100 aspect-3/2"
         />
 
         <div className="flex flex-col gap-2 p-0 sm:w-1/2">
