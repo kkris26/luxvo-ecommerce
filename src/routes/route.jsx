@@ -8,7 +8,7 @@ import ProfilePage from "../pages/user/ProfilePage";
 import ProductsPage from "../pages/admin/ProductsPage";
 import CategoriesPage from "../pages/admin/CategoriesPage";
 import ProductCategory from "../pages/ProductCategory";
-
+import ProductDetails from "../pages/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
       {
         path: "product",
         // element: <Outlet />,
-        children: [{ path: ":product", element: <ProductCategory /> }],
+        children: [{ path: ":product", element: <ProductDetails /> }],
       },
       { path: "about", element: <div>About Us Page</div> },
       { path: "contact", element: <div>Contact Page</div> },
