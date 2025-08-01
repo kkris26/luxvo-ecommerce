@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import db from "../../../db/db";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 const initialState = {
   loadingCart: true,
@@ -23,12 +23,30 @@ const manageCartSlice = createSlice({
 export const { setLoadingCart, setUserCarts } = manageCartSlice.actions;
 
 export const getUserCarts = (userID) => async (dispatch) => {
-  // Query a reference to a subcollection
-  const querySnapshot = await getDocs(collection(db, "users", userID, "carts"));
-  const results = querySnapshot.docs.map((doc) => {
-    doc.data();
-  });
-  console.log(results);
+  try {
+    const querySnapshot = await getDocs(
+      collection(db, "users", userID, "carts")
+    );
+    const cartItems = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const productPromises = cartItems.map((item) =>
+      getDoc(doc(db, "products", item.id))
+    );
+
+    const productSnapshots = await Promise.all(productPromises);
+
+    const productsInCart = productSnapshots.map((p, i) => ({
+      id: p.id,
+      quantity: cartItems[i].quantity,
+      ...p.data(),
+    }));
+    dispatch(setUserCarts(productsInCart));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const manageCartReducer = manageCartSlice.reducer;

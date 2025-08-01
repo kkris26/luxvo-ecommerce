@@ -1,6 +1,28 @@
-import { Drawer, DrawerContent, DrawerBody, DrawerHeader } from "@heroui/react";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerBody,
+  DrawerHeader,
+  User,
+  ButtonGroup,
+} from "@heroui/react";
 import { Card, CardFooter, Image, Button } from "@heroui/react";
+import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserCarts } from "../../redux/features/cart/manageCartSlice";
+import { AuthContext } from "../../context/AuthContext";
+import { FaMinus, FaPlus } from "react-icons/fa";
 const CartSideBar = ({ isOpen, onOpenChange }) => {
+  const dispatch = useDispatch();
+  const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
+  const { userLogin } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (userLogin?.id) {
+      dispatch(getUserCarts(userLogin.id));
+    }
+  }, [userLogin]);
+
   return (
     <Drawer
       motionProps={{
@@ -34,36 +56,40 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
               <h2 className="font-bold">Cart Item</h2>
             </DrawerHeader>
             <DrawerBody>
-              <div className="grid grid-cols-2 gap-3">
-                {[...Array(8)].map((_, index) => (
-                  <Card
-                    isFooterBlurred
-                    className="border-none w-fit"
-                    radius="lg"
-                    key={index}
-                  >
-                    <Image
-                      alt="Woman listing to music"
-                      className="object-cover"
-                      height={200}
-                      src="https://heroui.com/images/hero-card.jpeg"
-                      width={200}
-                    />
-                    <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                      <p className="text-tiny text-white/80">Available soon.</p>
-                      <Button
-                        className="text-tiny text-white bg-black/20"
-                        color="default"
-                        radius="lg"
-                        size="sm"
-                        variant="flat"
-                      >
-                        Notify me
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
+              {userCarts.map((p) => (
+                <div className="flex gap-2 items-center" key={p.id}>
+                  <Image src={p.imgUrl} className="w-80" radius="none" />
+                  <div className="w-full">
+                    <p className="cursor-pointer hover:underline">{p.name}</p>
+                    <span className="text-xs w-fit max-w-80 line-clamp-1">
+                      {p.description}
+                    </span>
+                    <div className="flex gap-1 items-center mt-2">
+                      <ButtonGroup className="bg-default-100">
+                        <Button
+                          isIconOnly
+                          aria-label="Add Cart"
+                          variant="flat"
+                          size="sm"
+                          radius="none"
+                        >
+                          <FaMinus />
+                        </Button>
+                        <p className="px-4"> {p.quantity}</p>
+                        <Button
+                          isIconOnly
+                          aria-label="Add Cart"
+                          variant="flat"
+                          size="sm"
+                          radius="none"
+                        >
+                          <FaPlus />
+                        </Button>
+                      </ButtonGroup>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </DrawerBody>
           </>
         )}

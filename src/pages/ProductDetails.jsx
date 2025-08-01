@@ -6,17 +6,21 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import db from "../db/db";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Image, ScrollShadow } from "@heroui/react";
 import { currencyFormat } from "../service/formatter";
 import ProductDetailsSkeleton from "../components/Products/ProductDetailsSekeleton";
 import ProductGridWrapper from "../components/Main/ProductGridWrapper";
+import { getUserCarts } from "../redux/features/cart/manageCartSlice";
+import { AuthContext } from "../context/AuthContext";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
+  const { userLogin } = useContext(AuthContext);
   const { product } = useParams();
   const [loading, setLoading] = useState(true);
   const [productDetails, setProductDetails] = useState([]);
@@ -25,10 +29,13 @@ const ProductDetails = () => {
   const { categories, loadingGetCategory } = useSelector(
     (state) => state.manageCategory
   );
+  const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
 
   const categoryData = categories.find(
     (c) => c.id === productDetails?.category
   );
+
+
   useEffect(() => {
     const getProductDetails = async () => {
       setLoading(true);
@@ -72,6 +79,12 @@ const ProductDetails = () => {
     }
   }, [productDetails]);
 
+  useEffect(() => {
+    if (userLogin?.uid) {
+      dispatch(getUserCarts(userLogin?.uid, product));
+    }
+  }, [userLogin]);
+
   return (
     <>
       {loading ? (
@@ -92,8 +105,7 @@ const ProductDetails = () => {
             <div>
               <h1 className="text-4xl">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-2">
-                Category:{" "}
-                {categories.find((c) => c.id === productDetails.category)?.name}
+                Category: {categoryData?.name}
               </p>
             </div>
 
