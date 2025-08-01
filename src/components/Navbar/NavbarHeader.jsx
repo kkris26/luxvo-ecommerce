@@ -17,12 +17,13 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import MenuSideBar from "../SideBar/MenuSideBar";
 import MainLogo from "../Logo/MainLogo";
 import CartSideBar from "../SideBar/CartSideBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartOpen } from "../../redux/features/cart/manageCartSlice";
 
 export default function NavbarHeader() {
+  const dispatch = useDispatch();
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
   const [isMenuSideOpen, setMenuSideOpen] = useState(false);
   const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
   return (
@@ -63,7 +64,7 @@ export default function NavbarHeader() {
             >
               <IoCartOutline
                 className="text-xl cursor-pointer"
-                onClick={() => setCartOpen(true)}
+                onClick={() => dispatch(setCartOpen(true))}
               />
             </Badge>
           </NavbarItem>
@@ -83,7 +84,7 @@ export default function NavbarHeader() {
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
       <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
-      <CartSideBar isOpen={isCartOpen} onOpenChange={setCartOpen} />
+      <CartSideBar />
     </>
   );
 }

@@ -12,6 +12,7 @@ import { addToast } from "@heroui/react";
 
 const initialState = {
   loadingCart: true,
+  isCartOpen: false,
   userCarts: [],
 };
 
@@ -25,10 +26,14 @@ const manageCartSlice = createSlice({
     setUserCarts: (state, action) => {
       state.userCarts = action.payload;
     },
+    setCartOpen: (state, action) => {
+      state.isCartOpen = action.payload;
+    },
   },
 });
 
-export const { setLoadingCart, setUserCarts } = manageCartSlice.actions;
+export const { setLoadingCart, setUserCarts, setCartOpen } =
+  manageCartSlice.actions;
 
 export const getUserCarts = (userID) => async (dispatch) => {
   dispatch(setLoadingCart(true));
@@ -60,7 +65,8 @@ export const getUserCarts = (userID) => async (dispatch) => {
 };
 export const handleCartUpdate =
   (userID, productID, action = "add") =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
+    const { isCartOpen } = getState().manageCart;
     dispatch(setLoadingCart(true));
     try {
       const docRef = doc(db, "users", userID, "carts", productID);
@@ -78,13 +84,18 @@ export const handleCartUpdate =
           } else {
             await deleteDoc(docRef);
           }
+        } else if (action === "delete") {
+          await deleteDoc(docRef);
         }
       } else {
         if (action === "add") {
           await setDoc(docRef, { quantity: 1 });
         }
       }
-
+      if (!isCartOpen) {
+        console.log("open CArt")
+        dispatch(setCartOpen(true));
+      }
       dispatch(getUserCarts(userID));
 
       addToast({
@@ -95,7 +106,7 @@ export const handleCartUpdate =
         color: "success",
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       dispatch(setLoadingCart(false));
     }

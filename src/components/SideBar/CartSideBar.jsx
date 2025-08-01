@@ -6,18 +6,23 @@ import {
   User,
   ButtonGroup,
 } from "@heroui/react";
+import { MdDelete } from "react-icons/md";
 import { Card, CardFooter, Image, Button } from "@heroui/react";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserCarts,
   handleCartUpdate,
+  setCartOpen,
 } from "../../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../../context/AuthContext";
 import { FaMinus, FaPlus } from "react-icons/fa";
-const CartSideBar = ({ isOpen, onOpenChange }) => {
+
+const CartSideBar = () => {
   const dispatch = useDispatch();
-  const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
+  const { loadingCart, userCarts, isCartOpen } = useSelector(
+    (state) => state.manageCart
+  );
   const { userLogin } = useContext(AuthContext);
 
   useEffect(() => {
@@ -49,8 +54,8 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
         base: "sm:data-[placement=right]:m-2 rounded-none sm:rounded-md",
       }}
       backdrop="blur"
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      isOpen={isCartOpen}
+      onOpenChange={() => dispatch(setCartOpen(false))}
     >
       <DrawerContent>
         {(onCLose) => (
@@ -61,13 +66,17 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
             <DrawerBody>
               {userCarts.map((p) => (
                 <div className="flex gap-3 items-center" key={p.id}>
-                  <Image src={p.imgUrl} className="w-30 bg-default-100 aspect-square object-cover" radius="none" />
+                  <Image
+                    src={p.imgUrl}
+                    className="w-30 bg-default-100 aspect-square object-cover"
+                    radius="none"
+                  />
                   <div className="w-full">
                     <p className="cursor-pointer hover:underline">{p.name}</p>
                     <span className="text-xs w-fit max-w-80 line-clamp-1">
                       {p.description}
                     </span>
-                    <div className="flex gap-1 items-center mt-2">
+                    <div className="flex gap-2 justify-between items-center mt-2">
                       <ButtonGroup className="bg-default-100">
                         <Button
                           // isLoading={loadingCart}
@@ -100,6 +109,19 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
                           <FaPlus />
                         </Button>
                       </ButtonGroup>
+                      <Button
+                        onPress={() =>
+                          dispatch(
+                            handleCartUpdate(userLogin.uid, p.id, "delete")
+                          )
+                        }
+                        radius="none"
+                        color="danger"
+                        variant="flat"
+                        size="sm"
+                        isIconOnly
+                        endContent={<MdDelete className="text-lg" />}
+                      />
                     </div>
                   </div>
                 </div>
