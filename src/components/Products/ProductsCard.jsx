@@ -7,7 +7,7 @@ const ProductsCard = ({ product, chipLabel }) => {
   return (
     <div>
       <div className="relative">
-        <Link to={`product/${product.id}`}>
+        <Link to={`/product/${product.id}`}>
           <Image
             isZoomed
             radius="none"
@@ -26,7 +26,7 @@ const ProductsCard = ({ product, chipLabel }) => {
         )}
       </div>
       <div className="mt-3 flex flex-col">
-        <Link to={`product/${product.id}`}>
+        <Link to={`/product/${product.id}`}>
           <h3 className="text-sm font-light hover:underline cursor-pointer">
             {product.name}
           </h3>

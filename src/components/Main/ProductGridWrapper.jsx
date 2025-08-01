@@ -2,11 +2,11 @@ import React from "react";
 import ProductsCard from "../Products/ProductsCard";
 import ProductCardSkeleton from "../Products/ProductCardSkeleton";
 
-const ProductGridWrapper = ({ loading, products, chipLabel }) => {
+const ProductGridWrapper = ({ loading, products, chipLabel, skeleton = 8 }) => {
   return (
     <div className="grid grid-cols-4 gap-y-8 gap-x-5 w-full">
       {loading ? (
-        [...Array(8)].map((_, i) => <ProductCardSkeleton key={i} />)
+        [...Array(skeleton)].map((_, i) => <ProductCardSkeleton key={i} />)
       ) : products.length ? (
         products.map((p) => (
           <ProductsCard key={p.id} product={p} chipLabel={chipLabel} />

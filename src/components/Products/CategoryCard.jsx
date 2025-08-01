@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const CategoryCard = ({ category }) => {
   return (
     <div>
-      <Link to={`categories/${category.id}`}>
+      <Link to={`/categories/${category.id}`}>
         <Image
           isZoomed
           radius="none"
