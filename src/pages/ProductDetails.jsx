@@ -15,7 +15,10 @@ import { Button, Image, ScrollShadow } from "@heroui/react";
 import { currencyFormat } from "../service/formatter";
 import ProductDetailsSkeleton from "../components/Products/ProductDetailsSekeleton";
 import ProductGridWrapper from "../components/Main/ProductGridWrapper";
-import { getUserCarts } from "../redux/features/cart/manageCartSlice";
+import {
+  getUserCarts,
+  handleCartUpdate,
+} from "../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../context/AuthContext";
 
 const ProductDetails = () => {
@@ -34,7 +37,6 @@ const ProductDetails = () => {
   const categoryData = categories.find(
     (c) => c.id === productDetails?.category
   );
-
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -138,6 +140,10 @@ const ProductDetails = () => {
 
             <div className="pt-4">
               <Button
+                isLoading={loadingCart}
+                onPress={() =>
+                  dispatch(handleCartUpdate(userLogin.uid, product))
+                }
                 isDisabled={parseInt(productDetails.stock) === 0}
                 radius="none"
                 color="primary"

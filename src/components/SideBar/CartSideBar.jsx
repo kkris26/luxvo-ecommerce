@@ -11,7 +11,7 @@ import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserCarts,
-  handleAddCart,
+  handleCartUpdate,
 } from "../../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../../context/AuthContext";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -60,8 +60,8 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
             </DrawerHeader>
             <DrawerBody>
               {userCarts.map((p) => (
-                <div className="flex gap-2 items-center" key={p.id}>
-                  <Image src={p.imgUrl} className="w-80" radius="none" />
+                <div className="flex gap-3 items-center" key={p.id}>
+                  <Image src={p.imgUrl} className="w-30 bg-default-100 aspect-square object-cover" radius="none" />
                   <div className="w-full">
                     <p className="cursor-pointer hover:underline">{p.name}</p>
                     <span className="text-xs w-fit max-w-80 line-clamp-1">
@@ -70,7 +70,12 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
                     <div className="flex gap-1 items-center mt-2">
                       <ButtonGroup className="bg-default-100">
                         <Button
-                          isLoading={loadingCart}
+                          // isLoading={loadingCart}
+                          onPress={() =>
+                            dispatch(
+                              handleCartUpdate(userLogin.uid, p.id, "remove")
+                            )
+                          }
                           isIconOnly
                           aria-label="Add Cart"
                           variant="flat"
@@ -82,11 +87,9 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
                         <p className="px-4"> {p.quantity}</p>
                         <Button
                           isDisabled={p.stock <= p.quantity}
-                          isLoading={loadingCart}
+                          // isLoading={loadingCart}
                           onPress={() =>
-                            dispatch(
-                              handleAddCart(userLogin.uid, p.id, p.stock)
-                            )
+                            dispatch(handleCartUpdate(userLogin.uid, p.id))
                           }
                           isIconOnly
                           aria-label="Add Cart"
