@@ -4,7 +4,7 @@ import {
   handleDeleteProduct,
   setOpenModal,
   setProductToDelete,
-} from "../../../redux/store/product/manageProductSlice";
+} from "../../../redux/features/product/manageProductSlice";
 
 export const ConfirmDelete = () => {
   const dispatch = useDispatch();

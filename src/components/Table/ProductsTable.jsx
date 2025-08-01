@@ -27,7 +27,7 @@ import {
   setOpenModal,
   setProductToDelete,
   setSelectedProduct,
-} from "../../redux/store/product/manageProductSlice";
+} from "../../redux/features/product/manageProductSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export const productColumns = [

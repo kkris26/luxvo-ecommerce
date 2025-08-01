@@ -15,7 +15,7 @@ import {
   setOnEdit,
   setOpenModal,
   setSelectedProduct,
-} from "../../../redux/store/product/manageProductSlice";
+} from "../../../redux/features/product/manageProductSlice";
 import FileUpload from "../../../components/FileUpload/FileUpload";
 const HandleProduct = () => {
   const [errors, setErrors] = useState({});

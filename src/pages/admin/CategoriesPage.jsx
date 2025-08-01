@@ -10,7 +10,7 @@ import {
   setOpenModal,
 } from "../../redux/features/category/manageCategorySlice";
 import CategoryTable from "./Modal/Category/CategoryTable";
-import { getProducts } from "../../redux/store/product/productSlice";
+import { getProducts } from "../../redux/features/product/productSlice";
 import ViewCategory from "./Modal/Category/ViewCategory";
 import { ModalWarning } from "./Modal/Category/ModalWarning";
 
@@ -27,7 +27,6 @@ const CategoriesPage = () => {
       dispatch(getProducts());
     }
   }, []);
-
 
   return (
     <>

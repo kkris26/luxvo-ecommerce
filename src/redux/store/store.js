@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productsReducer } from "./product/productSlice";
-import { manageProductReducer } from "./product/manageProductSlice";
+
 import { manageCategoryReducer } from "../features/category/manageCategorySlice";
+import { productsReducer } from "../features/product/productSlice";
+import { manageProductReducer } from "../features/product/manageProductSlice";
+import { manageCartReducer } from "../features/cart/manageCartSlice";
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
     manageProduct: manageProductReducer,
     manageCategory: manageCategoryReducer,
+    manageCart: manageCartReducer,
   },
 });

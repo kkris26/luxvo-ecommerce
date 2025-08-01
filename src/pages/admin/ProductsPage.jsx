@@ -3,13 +3,13 @@ import ProductsTable from "../../components/Table/ProductsTable";
 import ModalProductDash from "../../components/Modal/ModalProductDash";
 import { ConfirmDelete } from "../admin/Modal/ConfirmDelete";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../redux/store/product/productSlice";
+import { getProducts } from "../../redux/features/product/productSlice";
 import {
   setMode,
   setOpenModal,
   setProductToDelete,
   setSelectedProduct,
-} from "../../redux/store/product/manageProductSlice";
+} from "../../redux/features/product/manageProductSlice";
 import ViewProduct from "./Modal/ViewProduct";
 import HandleProduct from "./Modal/HandleProduct";
 import WarningCloseModal from "./Modal/WarningCloseModal";

@@ -97,11 +97,11 @@ const ProductDetails = () => {
               </p>
             </div>
 
-            <p className="text-base text-gray-600 font-light leading-normal">
-              <ScrollShadow hideScrollBar className="w-full max-h-50">
+            <ScrollShadow hideScrollBar className="w-full max-h-50">
+              <p className="text-sm text-gray-600 font-light leading-normal">
                 {productDetails.description}
-              </ScrollShadow>
-            </p>
+              </p>
+            </ScrollShadow>
 
             <div className="space-y-2">
               <p className="text-3xl font-light ">

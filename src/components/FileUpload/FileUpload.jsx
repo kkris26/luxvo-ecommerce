@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setOnEdit as setOnEditProduct,
   setSelectedProduct,
-} from "../../redux/store/product/manageProductSlice";
+} from "../../redux/features/product/manageProductSlice";
 import db from "../../db/db";
 import { doc, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";

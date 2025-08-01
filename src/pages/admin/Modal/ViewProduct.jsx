@@ -7,7 +7,7 @@ import {
   setOpenModal,
   setProductToDelete,
   setSelectedProduct,
-} from "../../../redux/store/product/manageProductSlice";
+} from "../../../redux/features/product/manageProductSlice";
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 
