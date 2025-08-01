@@ -1,5 +1,6 @@
 import {
   addToast,
+  Badge,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -16,12 +17,14 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import MenuSideBar from "../SideBar/MenuSideBar";
 import MainLogo from "../Logo/MainLogo";
 import CartSideBar from "../SideBar/CartSideBar";
+import { useSelector } from "react-redux";
 
 export default function NavbarHeader() {
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isCartOpen, setCartOpen] = useState(false);
   const [isMenuSideOpen, setMenuSideOpen] = useState(false);
+  const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
   return (
     <>
       <Navbar
@@ -52,10 +55,17 @@ export default function NavbarHeader() {
             <IoSearchOutline className="text-xl" />
           </NavbarItem>
           <NavbarItem>
-            <IoCartOutline
-              className="text-xl cursor-pointer"
-              onClick={() => setCartOpen(true)}
-            />
+            <Badge
+              color="primary"
+              size="sm"
+              hidden={userCarts.length === 0}
+              content={userCarts.length}
+            >
+              <IoCartOutline
+                className="text-xl cursor-pointer"
+                onClick={() => setCartOpen(true)}
+              />
+            </Badge>
           </NavbarItem>
           <NavbarItem>
             {userLogin ? (
