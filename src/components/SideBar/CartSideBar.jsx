@@ -9,7 +9,10 @@ import {
 import { Card, CardFooter, Image, Button } from "@heroui/react";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCarts } from "../../redux/features/cart/manageCartSlice";
+import {
+  getUserCarts,
+  handleAddCart,
+} from "../../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../../context/AuthContext";
 import { FaMinus, FaPlus } from "react-icons/fa";
 const CartSideBar = ({ isOpen, onOpenChange }) => {
@@ -67,6 +70,7 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
                     <div className="flex gap-1 items-center mt-2">
                       <ButtonGroup className="bg-default-100">
                         <Button
+                          isLoading={loadingCart}
                           isIconOnly
                           aria-label="Add Cart"
                           variant="flat"
@@ -77,6 +81,13 @@ const CartSideBar = ({ isOpen, onOpenChange }) => {
                         </Button>
                         <p className="px-4"> {p.quantity}</p>
                         <Button
+                          isDisabled={p.stock <= p.quantity}
+                          isLoading={loadingCart}
+                          onPress={() =>
+                            dispatch(
+                              handleAddCart(userLogin.uid, p.id, p.stock)
+                            )
+                          }
                           isIconOnly
                           aria-label="Add Cart"
                           variant="flat"
