@@ -14,6 +14,9 @@ const initialState = {
   loadingCart: true,
   isCartOpen: false,
   userCarts: [],
+  openModalCart: false,
+  productToRemove: null,
+  loadingUpdateCart: {},
 };
 
 const manageCartSlice = createSlice({
@@ -29,11 +32,26 @@ const manageCartSlice = createSlice({
     setCartOpen: (state, action) => {
       state.isCartOpen = action.payload;
     },
+    setOpenModalCart: (state, action) => {
+      state.openModalCart = action.payload;
+    },
+    setProductToRemove: (state, action) => {
+      state.productToRemove = action.payload;
+    },
+    setLoadingUpdateCart: (state, action) => {
+      state.loadingUpdateCart = action.payload;
+    },
   },
 });
 
-export const { setLoadingCart, setUserCarts, setCartOpen } =
-  manageCartSlice.actions;
+export const {
+  setLoadingCart,
+  setUserCarts,
+  setCartOpen,
+  setOpenModalCart,
+  setProductToRemove,
+  setLoadingUpdateCart,
+} = manageCartSlice.actions;
 
 export const getUserCarts = (userID) => async (dispatch) => {
   dispatch(setLoadingCart(true));
@@ -64,10 +82,11 @@ export const getUserCarts = (userID) => async (dispatch) => {
   }
 };
 export const handleCartUpdate =
-  (userID, productID, action = "add") =>
+  (userID, productID, action = "add", productName) =>
   async (dispatch, getState) => {
-    const { isCartOpen } = getState().manageCart;
+    const { isCartOpen, loadingCart } = getState().manageCart;
     dispatch(setLoadingCart(true));
+    dispatch(setLoadingUpdateCart({ id: productID }));
     try {
       const docRef = doc(db, "users", userID, "carts", productID);
       const docSnap = await getDoc(docRef);
@@ -82,7 +101,14 @@ export const handleCartUpdate =
           if (currentQty > 1) {
             await setDoc(docRef, { quantity: currentQty - 1 });
           } else {
-            await deleteDoc(docRef);
+            dispatch(setOpenModalCart(true));
+            dispatch(
+              setProductToRemove({
+                userID,
+                productID,
+                productName,
+              })
+            );
           }
         } else if (action === "delete") {
           await deleteDoc(docRef);
@@ -93,22 +119,13 @@ export const handleCartUpdate =
         }
       }
       if (!isCartOpen) {
-        console.log("open CArt")
         dispatch(setCartOpen(true));
       }
       dispatch(getUserCarts(userID));
-
-      addToast({
-        title: action === "add" ? "Added to Cart" : "Removed from Cart",
-        description: `Product has been ${
-          action === "add" ? "added to" : "removed from"
-        } your cart.`,
-        color: "success",
-      });
     } catch (error) {
       console.log(error);
     } finally {
-      dispatch(setLoadingCart(false));
+      dispatch(setLoadingUpdateCart());
     }
   };
 

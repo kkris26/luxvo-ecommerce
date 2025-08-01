@@ -6,7 +6,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import db from "../db/db";
 
@@ -37,6 +37,8 @@ const ProductDetails = () => {
   const categoryData = categories.find(
     (c) => c.id === productDetails?.category
   );
+
+  const productCart = userCarts.find((c) => c.id === product);
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -142,17 +144,31 @@ const ProductDetails = () => {
               <Button
                 isLoading={loadingCart}
                 onPress={() =>
+                  !loadingCart &&
                   dispatch(handleCartUpdate(userLogin.uid, product))
                 }
-                isDisabled={parseInt(productDetails.stock) === 0}
+                isDisabled={
+                  parseInt(productDetails.stock) === 0 ||
+                  productCart?.quantity >= productCart?.stock
+                }
                 radius="none"
                 color="primary"
-                className="px-10"
+                className="w-50"
               >
-                {parseInt(productDetails.stock) > 0
-                  ? "Add to Cart"
-                  : "Out of Stock"}
+                {parseInt(productDetails.stock) === 0
+                  ? "Out of Stock"
+                  : productCart?.quantity >= productCart?.stock
+                  ? "Already Fully in Cart"
+                  : "Add to Cart"}
               </Button>
+
+              {productCart?.quantity > 0 && (
+                <p className="text-xs text-default-500 mt-2">
+                  You have{" "}
+                  <span className="font-semibold">{productCart.quantity}</span>{" "}
+                  in your cart
+                </p>
+              )}
             </div>
           </div>
         </div>
