@@ -5,14 +5,14 @@ import { Link } from "react-router";
 
 const ProductsCard = ({ product, chipLabel }) => {
   return (
-    <div>
-      <div className="relative">
-        <Link to={`/product/${product.id}`}>
+    <div className=" h-full flex flex-col">
+      <div className="relative h-full bg-default-100 ">
+        <Link className="min-h-full flex" to={`/product/${product.id}`}>
           <Image
             isZoomed
             radius="none"
             src={product.imgUrl}
-            className="aspect-3/4 z-1 w-full cursor-pointer object-cover bg-default-100 rounded-none"
+            className="aspect-3/4  z-1 w-full cursor-pointer object-cover  rounded-none"
           />
         </Link>
         {chipLabel && (

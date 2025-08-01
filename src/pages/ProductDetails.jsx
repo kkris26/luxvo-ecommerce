@@ -91,17 +91,17 @@ const ProductDetails = () => {
 
   return (
     <>
-      {loading ? (
+      {loadingGetCategory || loadingProductsCategory || loading ? (
         <ProductDetailsSkeleton />
       ) : (
-        <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
-          <div className="flex justify-center ">
+        <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center ">
+          <div className="flex justify-center w-full aspect-square bg-default-100 ">
             <Image
               isZoomed
               radius="none"
               src={productDetails.imgUrl}
               alt={productDetails.name}
-              className="w-full aspect-square object-cover bg-default-100"
+              className="w-full h-full aspect-square object-cover "
             />
           </div>
 
@@ -177,7 +177,7 @@ const ProductDetails = () => {
         <h2 className="text-2xl font-light">Related Products</h2>
         <ProductGridWrapper
           skeleton={4}
-          loading={loadingGetCategory}
+          loading={loadingGetCategory || loadingProductsCategory || loading}
           products={productsByCategory.filter((pc) => pc.id !== product)}
         />
       </div>

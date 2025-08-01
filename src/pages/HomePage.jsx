@@ -35,7 +35,6 @@ const Homepage = () => {
         }));
 
         setOrderByPrice(allProducts);
-        console.log("fetch shoes product");
       } catch (error) {
         console.log(error);
       } finally {
