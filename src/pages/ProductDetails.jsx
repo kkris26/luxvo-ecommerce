@@ -11,7 +11,7 @@ import { useParams } from "react-router";
 import db from "../db/db";
 
 import { useSelector } from "react-redux";
-import { Button, Image } from "@heroui/react";
+import { Button, Image, ScrollShadow } from "@heroui/react";
 import { currencyFormat } from "../service/formatter";
 import ProductDetailsSkeleton from "../components/Products/ProductDetailsSekeleton";
 import ProductGridWrapper from "../components/Main/ProductGridWrapper";
@@ -44,7 +44,7 @@ const ProductDetails = () => {
       }
     };
     getProductDetails();
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     const getProductByCategory = async () => {
@@ -88,7 +88,7 @@ const ProductDetails = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-start space-y-6">
+          <div className="flex flex-col w-full justify-start space-y-6">
             <div>
               <h1 className="text-4xl">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-2">
@@ -98,7 +98,9 @@ const ProductDetails = () => {
             </div>
 
             <p className="text-base text-gray-600 font-light leading-normal">
-              {productDetails.description}
+              <ScrollShadow hideScrollBar className="w-full max-h-50">
+                {productDetails.description}
+              </ScrollShadow>
             </p>
 
             <div className="space-y-2">
@@ -142,7 +144,7 @@ const ProductDetails = () => {
         <ProductGridWrapper
           skeleton={4}
           loading={loadingGetCategory}
-          products={productsByCategory}
+          products={productsByCategory.filter((pc) => pc.id !== product)}
         />
       </div>
     </>
