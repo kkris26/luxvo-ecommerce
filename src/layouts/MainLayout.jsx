@@ -9,9 +9,11 @@ import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
 import MainBreadcrumbs from "../components/Breadcrumbs/MainBreadcrumbs";
 import { getUserCarts } from "../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../context/AuthContext";
+import { getFavorites } from "../redux/features/favorite/favoriteSlice";
 
 const MainLayout = () => {
   const { userLogin } = useContext(AuthContext);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,10 +24,12 @@ const MainLayout = () => {
   useEffect(() => {
     if (userLogin?.uid) {
       dispatch(getUserCarts(userLogin.uid));
+      dispatch(getFavorites(userLogin.uid));
     }
   }, [userLogin]);
 
   const location = useLocation();
+
 
   return (
     <>

@@ -1,9 +1,21 @@
 import { Chip, Image } from "@heroui/react";
 import { currencyFormat } from "../../service/formatter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
+import { FaRegHeart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { handleFavorite } from "../../redux/features/favorite/favoriteSlice";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProductsCard = ({ product, chipLabel }) => {
+  const dispatch = useDispatch();
+  const { favoriteProduct, loadingFavorite, favorites } = useSelector(
+    (state) => state.favorite
+  );
+  const { userLogin } = useContext(AuthContext);
+
   return (
     <div className=" h-full flex flex-col">
       <div className="relative h-full bg-default-100 ">
@@ -15,6 +27,7 @@ const ProductsCard = ({ product, chipLabel }) => {
             className="aspect-3/4  z-1 w-full cursor-pointer object-cover  rounded-none"
           />
         </Link>
+
         {chipLabel && (
           <Chip
             color="primary"
@@ -26,11 +39,26 @@ const ProductsCard = ({ product, chipLabel }) => {
         )}
       </div>
       <div className="mt-3 flex flex-col">
-        <Link to={`/product/${product.id}`}>
-          <h3 className="text-sm font-light hover:underline cursor-pointer">
-            {product.name}
-          </h3>
-        </Link>
+        <div className="flex justify-between">
+          <Link to={`/product/${product.id}`}>
+            <h3 className="text-sm pr-2  font-light hover:underline cursor-pointer">
+              {product.name}
+            </h3>
+          </Link>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              !loadingFavorite &&
+                dispatch(handleFavorite(product.id, userLogin.uid));
+            }}
+          >
+            {favorites.find((f) => f.productID === product.id) ? (
+              <IoMdHeart className="text-xl font-light" />
+            ) : (
+              <IoMdHeartEmpty className="text-xl font-light" />
+            )}
+          </div>
+        </div>
         <p className="text-sm text-black/60 font-light">
           {currencyFormat(product.price)}
         </p>
