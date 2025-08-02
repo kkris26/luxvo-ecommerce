@@ -1,7 +1,7 @@
-import { Chip, Image } from "@heroui/react";
+import { addToast, Button, Chip, Image } from "@heroui/react";
 import { currencyFormat } from "../../service/formatter";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaRegHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
@@ -15,6 +15,28 @@ const ProductsCard = ({ product, chipLabel }) => {
     (state) => state.favorite
   );
   const { userLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleClickFavorite = (productID, userID) => {
+    dispatch(handleFavorite(productID, userID)).then((success) => {
+      if (success) {
+        addToast({
+          title: "Added to Favorites",
+          color: "success",
+          endContent: (
+            <Button
+              size="sm"
+              variant="flat"
+              color="success"
+              onPress={() => navigate("/user/favorite")}
+            >
+              View
+            </Button>
+          ),
+        });
+      }
+    });
+  };
 
   return (
     <div className=" h-full flex flex-col">
@@ -49,7 +71,7 @@ const ProductsCard = ({ product, chipLabel }) => {
             className="cursor-pointer"
             onClick={() => {
               !loadingFavorite &&
-                dispatch(handleFavorite(product.id, userLogin.uid));
+                handleClickFavorite(product.id, userLogin.uid);
             }}
           >
             {favorites.find((f) => f.productID === product.id) ? (

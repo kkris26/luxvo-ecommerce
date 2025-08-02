@@ -51,23 +51,23 @@ export default function NavbarHeader() {
             </NavbarBrand>
           </Link>
         </NavbarContent>
-        <NavbarContent justify="end">
+        <NavbarContent justify="end" className="items-center">
           <NavbarItem>
             <IoSearchOutline className="text-xl" />
           </NavbarItem>
-          <NavbarItem>
-            <Badge
-              color="primary"
-              size="sm"
-              hidden={userCarts.length === 0}
-              content={userCarts.length}
-            >
+          <Badge
+            color="primary"
+            size="sm"
+            hidden={userCarts.length === 0}
+            content={userCarts.length}
+          >
+            <NavbarItem>
               <IoCartOutline
                 className="text-xl cursor-pointer"
                 onClick={() => dispatch(setCartOpen(true))}
               />
-            </Badge>
-          </NavbarItem>
+            </NavbarItem>
+          </Badge>
           <NavbarItem>
             {userLogin ? (
               <>

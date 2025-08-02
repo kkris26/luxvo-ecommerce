@@ -8,6 +8,8 @@ import {
   setDoc,
 } from "firebase/firestore";
 import db from "../../../db/db";
+import { addToast } from "@heroui/react";
+import { Navigate } from "react-router";
 
 const initialState = {
   favorites: [],
@@ -59,6 +61,7 @@ export const handleFavorite =
       } else {
         dispatch(setFavorites([...favorites, { productID }]));
         await setDoc(docRef, { productID });
+        return true;
       }
     } catch (error) {
       console.log(error);
