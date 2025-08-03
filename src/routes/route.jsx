@@ -9,6 +9,7 @@ import ProductsPage from "../pages/admin/ProductsPage";
 import CategoriesPage from "../pages/admin/CategoriesPage";
 import ProductCategory from "../pages/ProductCategory";
 import ProductDetails from "../pages/ProductDetails";
+import ShopPage from "../pages/ShopPage";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "shop", element: <div>Shop Page</div> },
+      { path: "shop", element: <ShopPage /> },
       {
         path: "categories",
         element: <Outlet />,
