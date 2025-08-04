@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import db from "../db/db";
+import Test from "./Tes";
 
 const ShopPage = () => {
   //   const { products, loading } = useSelector((state) => state.products);
@@ -23,28 +24,32 @@ const ShopPage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("asc");
+  const [field, setField] = useState("name");
+  const [selectKey, setSelectKey] = useState("name-asc");
+  const [selectLabel, setSelectLabel] = useState("Name: Z → A");
   const [openFilter, setOpenFilter] = useState(false);
 
-  const items = [
+  const sortItems = [
+    { key: "name-asc", label: "Name: A → Z", field: "name", direction: "asc" },
     {
-      key: "new",
-      label: "New file",
+      key: "name-desc",
+      label: "Name: Z → A",
+      field: "name",
+      direction: "desc",
     },
     {
-      key: "copy",
-      label: "Copy link",
+      key: "price-asc",
+      label: "Price: Low to High",
+      field: "price",
+      direction: "asc",
     },
     {
-      key: "edit",
-      label: "Edit file",
-    },
-    {
-      key: "delete",
-      label: "Delete file",
+      key: "price-desc",
+      label: "Price: High to Low",
+      field: "price",
+      direction: "desc",
     },
   ];
-
-  console.log(openFilter);
 
   const getProductsCategories = async () => {
     setLoading(true);
@@ -53,7 +58,7 @@ const ShopPage = () => {
       if (filter !== "all") {
         q = query(q, where("category", "==", filter));
       }
-      q = query(q, orderBy("name", sort));
+      q = query(q, orderBy(field, sort));
       const querySnapshot = await getDocs(q);
       const reuslts = querySnapshot.docs.map((doc) => doc.data());
       setFilteredProducts(reuslts);
@@ -63,10 +68,10 @@ const ShopPage = () => {
       setLoading(false);
     }
   };
-
+  console.log(sort, field);
   useEffect(() => {
     getProductsCategories();
-  }, [filter, sort]);
+  }, [filter, sort, field]);
 
   return (
     <div className="flex gap-4">
@@ -80,17 +85,10 @@ const ShopPage = () => {
         >
           <Radio value="all">All</Radio>
           {categories.map((c) => (
-            <Radio value={c.id}>{c.name}</Radio>
+            <Radio value={c.id} key={c.id}>
+              {c.name}
+            </Radio>
           ))}
-        </RadioGroup>
-        <RadioGroup
-          color="default"
-          label="Select Category"
-          defaultValue="asc"
-          onChange={(e) => setSort(e.target.value)}
-        >
-          <Radio value="asc">Low to High</Radio>
-          <Radio value="desc">High to Low</Radio>
         </RadioGroup>
       </div>
       <div className="flex flex-col items-end gap-4 w-full">
@@ -106,18 +104,34 @@ const ShopPage = () => {
             onOpenChange={setOpenFilter}
           >
             <DropdownTrigger>
-              <p variant="flat">Sort By : {sort}</p>
+              <p className="text-xs" variant="flat">
+                Sort By : {selectLabel}
+              </p>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Dynamic Actions" items={items}>
-              {(item) => (
+            <DropdownMenu
+              disallowEmptySelection
+              selectedKeys={[selectKey]}
+              selectionMode="single"
+              aria-label="Dynamic Actions"
+            >
+              {sortItems.map((item) => (
                 <DropdownItem
+                  itemClasses={{
+                    title:"text-xs"
+                  }}
+                  className="text-xs"
                   key={item.key}
-                  className={item.key === "delete" ? "text-danger" : ""}
-                  color={item.key === "delete" ? "danger" : "default"}
+                  value={item.field}
+                  onClick={() => {
+                    setField(item.field),
+                      setSort(item.direction),
+                      setSelectKey(item.key),
+                      setSelectLabel(item.label);
+                  }}
                 >
                   {item.label}
                 </DropdownItem>
-              )}
+              ))}
             </DropdownMenu>
           </Dropdown>
         </div>
@@ -127,6 +141,7 @@ const ShopPage = () => {
           products={filteredProducts}
           skeleton={12}
         />
+        <Test />
       </div>
     </div>
   );
