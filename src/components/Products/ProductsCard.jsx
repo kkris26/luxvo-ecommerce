@@ -39,14 +39,14 @@ const ProductsCard = ({ product, chipLabel }) => {
   };
 
   return (
-    <div className=" h-full flex flex-col">
-      <div className="relative h-full bg-default-100 ">
+    <div className=" flex flex-col">
+      <div className="relative bg-default-100 ">
         <Link className="min-h-full flex" to={`/product/${product.id}`}>
           <Image
             isZoomed
             radius="none"
             src={product.imgUrl}
-            className="aspect-3/4  z-1 w-full cursor-pointer object-cover  rounded-none"
+            className="aspect-3/4 h-80  z-1 w-full cursor-pointer object-cover  rounded-none"
           />
         </Link>
 
