@@ -12,7 +12,6 @@ import {
 } from "@heroui/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import db from "../db/db";
-import Test from "./Tes";
 
 const ShopPage = () => {
   //   const { products, loading } = useSelector((state) => state.products);
@@ -68,7 +67,6 @@ const ShopPage = () => {
       setLoading(false);
     }
   };
-  console.log(sort, field);
   useEffect(() => {
     getProductsCategories();
   }, [filter, sort, field]);
@@ -139,9 +137,8 @@ const ShopPage = () => {
           grid={4}
           loading={loading}
           products={filteredProducts}
-          skeleton={12}
+          skeleton={4}
         />
-        <Test />
       </div>
     </div>
   );
