@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import db from "../db/db";
+import { useSearchParams } from "react-router";
 
 const ShopPage = () => {
   //   const { products, loading } = useSelector((state) => state.products);
@@ -21,12 +22,15 @@ const ShopPage = () => {
   const [loading, setLoading] = useState(false);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [filter, setFilter] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filter, setFilter] = useState(searchParams.get("c"));
   const [sort, setSort] = useState("asc");
   const [field, setField] = useState("name");
   const [selectKey, setSelectKey] = useState("name-asc");
   const [selectLabel, setSelectLabel] = useState("Name: Z → A");
   const [openFilter, setOpenFilter] = useState(false);
+
+  console.log(searchParams.get("c"));
 
   const sortItems = [
     { key: "name-asc", label: "Name: A → Z", field: "name", direction: "asc" },
@@ -69,14 +73,14 @@ const ShopPage = () => {
   };
   useEffect(() => {
     getProductsCategories();
+    setSearchParams(`?c=${filter}`);
   }, [filter, sort, field]);
 
   return (
     <div className="flex gap-4">
-      <div className="w-1/4 h-screen  ">
-        <h2>Filter</h2>
+      <div className="w-1/6 h-screen  ">
         <RadioGroup
-          defaultValue="all"
+          defaultValue={filter}
           color="default"
           label="Select Category"
           onChange={(e) => setFilter(e.target.value)}
@@ -115,7 +119,7 @@ const ShopPage = () => {
               {sortItems.map((item) => (
                 <DropdownItem
                   itemClasses={{
-                    title:"text-xs"
+                    title: "text-xs",
                   }}
                   className="text-xs"
                   key={item.key}
