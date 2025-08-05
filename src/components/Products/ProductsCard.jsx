@@ -46,7 +46,7 @@ const ProductsCard = ({ product, chipLabel }) => {
             isZoomed
             radius="none"
             src={product.imgUrl}
-            className="aspect-3/4 h-80  z-1 w-full cursor-pointer object-cover  rounded-none"
+            className="aspect-3/4 min-h-80  z-1 w-full cursor-pointer object-cover  rounded-none"
           />
         </Link>
 
