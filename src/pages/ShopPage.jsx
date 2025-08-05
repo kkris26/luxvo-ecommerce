@@ -23,14 +23,12 @@ const ShopPage = () => {
 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filter, setFilter] = useState(searchParams.get("c"));
+  const [filter, setFilter] = useState(searchParams.get("c") || "all");
   const [sort, setSort] = useState("asc");
   const [field, setField] = useState("name");
   const [selectKey, setSelectKey] = useState("name-asc");
   const [selectLabel, setSelectLabel] = useState("Name: Z → A");
   const [openFilter, setOpenFilter] = useState(false);
-
-  console.log(searchParams.get("c"));
 
   const sortItems = [
     { key: "name-asc", label: "Name: A → Z", field: "name", direction: "asc" },
@@ -83,6 +81,9 @@ const ShopPage = () => {
           defaultValue={filter}
           color="default"
           label="Select Category"
+          classNames={{
+            label: "text-black text-sm",
+          }}
           onChange={(e) => setFilter(e.target.value)}
         >
           <Radio value="all">All</Radio>
