@@ -7,7 +7,7 @@ import {
   where,
 } from "firebase/firestore";
 import { use, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import db from "../db/db";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +89,7 @@ const ProductDetails = () => {
     }
   }, [userLogin]);
 
+
   return (
     <>
       {loadingGetCategory || loadingProductsCategory || loading ? (
@@ -109,7 +110,7 @@ const ProductDetails = () => {
             <div>
               <h1 className="text-4xl">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-2">
-                Category: {categoryData?.name}
+                Category: <Link to={`/product/${categoryData.id}`} className="hover:underline">{categoryData?.name}</Link>
               </p>
             </div>
 
