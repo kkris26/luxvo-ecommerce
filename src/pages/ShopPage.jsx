@@ -7,6 +7,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Pagination,
   Radio,
   RadioGroup,
 } from "@heroui/react";
@@ -37,7 +38,7 @@ const ShopPage = () => {
   const [selectLabel, setSelectLabel] = useState("Name: Z → A");
   // pagination --
   const [totalPage, setTotalPage] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [initialPage, setInitialPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   // -------------
   const [openFilter, setOpenFilter] = useState(false);
@@ -63,17 +64,17 @@ const ShopPage = () => {
       direction: "desc",
     },
   ];
-  const PAGE_LIMIT = 2; // SNAKE_CASE => READ ONLY
+  const PAGE_LIMIT = 1; // SNAKE_CASE => READ ONLY
 
   // pagination --
   function handlePrevPage() {
-    if (currentPage > 1) {
-      setCurrentPage((prevState) => prevState - 1);
+    if (initialPage > 1) {
+      setInitialPage((prevState) => prevState - 1);
     }
   }
   function handleNextPage() {
-    if (currentPage < totalPage) {
-      setCurrentPage((prevState) => prevState + 1);
+    if (initialPage < totalPage) {
+      setInitialPage((prevState) => prevState + 1);
     }
   }
   // -------------
@@ -92,12 +93,12 @@ const ShopPage = () => {
       setTotalItems(totalItems);
       const currentTotalPage = Math.ceil(totalItems / PAGE_LIMIT);
       setTotalPage(currentTotalPage);
-      if (currentPage > currentTotalPage) {
+      if (initialPage > currentTotalPage) {
         setCurrentPage(1);
       }
       q = query(q, limit(PAGE_LIMIT)); // currentPage = 1 => limit = 2
-      if (currentPage > 1) {
-        q = query(q, limit((currentPage - 1) * PAGE_LIMIT));
+      if (initialPage > 1) {
+        q = query(q, limit((initialPage - 1) * PAGE_LIMIT));
         // currentPage = 2 => limit = 2 => Kacamata Keren => indeks ke-1
         // currentPage = 3 => limit = 4 => Bayi Rubah => indeks ke-3
         const documentSnapshots = await getDocs(q);
@@ -119,7 +120,7 @@ const ShopPage = () => {
   useEffect(() => {
     getProductsCategories();
     setSearchParams(`?c=${filter}`);
-  }, [filter, sort, field, currentPage]);
+  }, [filter, sort, field, initialPage]);
 
   return (
     <div className="flex gap-4">
@@ -196,23 +197,23 @@ const ShopPage = () => {
           products={filteredProducts}
           skeleton={4}
         />
-        <div className="flex gap-4">
-          <Button
-            isDisabled={currentPage === 1}
-            color="primary"
-            onPress={handlePrevPage}
-          >
-            Prev
-          </Button>
-          <p>{currentPage} / {totalPage}</p>
-          <Button
-            isDisabled={currentPage === totalPage || totalPage === 0}
-            color="primary"
-            onPress={handleNextPage}
-          >
-            Next
-          </Button>
-        </div>
+        {totalItems > 0 && (
+          <div className="flex gap-4 w-full justify-center">
+            <Pagination
+              isCompact
+              classNames={{
+                next: "cursor-pointer",
+                prev: "cursor-pointer",
+              }}
+              color="primary"
+              showControls
+              siblings={0}
+              onChange={setInitialPage}
+              initialPage={initialPage}
+              total={totalPage}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
