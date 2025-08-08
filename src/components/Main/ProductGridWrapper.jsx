@@ -9,7 +9,6 @@ const ProductGridWrapper = ({
   skeleton = 8,
   grid = 4,
 }) => {
-  console.log(products);
   return (
     <div
       className={`grid gap-y-8 gap-x-5 w-full ${

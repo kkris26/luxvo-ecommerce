@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import ProductGridWrapper from "../../components/Main/ProductGridWrapper";
 
 const CartPage = () => {
+  
   return (
-    <div>CartPage</div>
-  )
-}
+    <div>
+      <h1 className="text-2xl">Your Cart</h1>
+      <ProductGridWrapper />
+    </div>
+  );
+};
 
-export default CartPage
+export default CartPage;

@@ -94,7 +94,12 @@ export const handleAddproduct = (data) => async (dispatch) => {
 export const handleOnChange = (e) => (dispatch, getState) => {
   const { name, value } = e.target;
   const { onEdit, selectedProduct } = getState().manageProduct;
-  dispatch(setSelectedProduct({ ...selectedProduct, [name]: value }));
+  dispatch(
+    setSelectedProduct({
+      ...selectedProduct,
+      [name]: name === "price" || name === "stock" ? Number(value) : value,
+    })
+  );
   if (!onEdit) {
     dispatch(setOnEdit(true));
   }

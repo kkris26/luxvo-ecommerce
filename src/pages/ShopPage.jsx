@@ -64,7 +64,7 @@ const ShopPage = () => {
       direction: "desc",
     },
   ];
-  const PAGE_LIMIT = 1; // SNAKE_CASE => READ ONLY
+  const PAGE_LIMIT = 8; // SNAKE_CASE => READ ONLY
 
   // pagination --
   function handlePrevPage() {
@@ -94,7 +94,7 @@ const ShopPage = () => {
       const currentTotalPage = Math.ceil(totalItems / PAGE_LIMIT);
       setTotalPage(currentTotalPage);
       if (initialPage > currentTotalPage) {
-        setCurrentPage(1);
+        setInitialPage(1);
       }
       q = query(q, limit(PAGE_LIMIT)); // currentPage = 1 => limit = 2
       if (initialPage > 1) {
@@ -103,13 +103,14 @@ const ShopPage = () => {
         // currentPage = 3 => limit = 4 => Bayi Rubah => indeks ke-3
         const documentSnapshots = await getDocs(q);
         const lastVisible = documentSnapshots.docs.at(-1); // documentSnapshots.docs[documentSnapshots.docs.length - 1]
-
-        console.log(lastVisible.data());
         q = query(q, limit(PAGE_LIMIT), startAfter(lastVisible));
       }
 
       const querySnapshot = await getDocs(q);
-      const reuslts = querySnapshot.docs.map((doc) => doc.data());
+      const reuslts = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
       setFilteredProducts(reuslts);
     } catch (error) {
       console.log(error);
@@ -124,7 +125,7 @@ const ShopPage = () => {
 
   return (
     <div className="flex gap-4">
-      <div className="w-1/6 h-screen  ">
+      <div className="w-1/6 h-full sticky top-20  ">
         <RadioGroup
           defaultValue={filter}
           color="default"
@@ -198,9 +199,9 @@ const ShopPage = () => {
           skeleton={4}
         />
         {totalItems > 0 && (
-          <div className="flex gap-4 w-full justify-center">
+          <div className="flex gap-4 mt-5 w-full justify-center">
             <Pagination
-              isCompact
+              // isCompact
               classNames={{
                 next: "cursor-pointer",
                 prev: "cursor-pointer",
@@ -209,8 +210,8 @@ const ShopPage = () => {
               showControls
               siblings={0}
               onChange={setInitialPage}
-              initialPage={initialPage}
               total={totalPage}
+              page={initialPage}
             />
           </div>
         )}

@@ -71,7 +71,7 @@ export default function UserProfile() {
           )}
           <DropdownItem key="settings" textValue="settings">
             <LinkWrapper className="w-full flex" path={"/user"}>
-              Settings
+              Profile
             </LinkWrapper>
           </DropdownItem>
           <DropdownItem key="new_project" textValue="new_project">
