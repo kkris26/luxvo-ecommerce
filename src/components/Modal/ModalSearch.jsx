@@ -21,7 +21,7 @@ const ModalSearch = ({ children }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleCloseModal();
+    dispatch(setOpenSearch(false));
     navigate("/shop");
     dispatch(setSearchQuery(query));
   };
@@ -46,7 +46,7 @@ const ModalSearch = ({ children }) => {
                   value={query}
                   onChange={(e) => dispatch(setQuery(e.target.value))}
                 />
-                <Button color="primary">Search</Button>
+                <Button type="submit" color="primary">Search</Button>
               </form>
             </div>
           </ModalBody>

@@ -143,7 +143,7 @@ const ProductDetails = () => {
 
           <div className="flex mt-2 sm:mt-0 flex-col w-full justify-start space-y-4 sm:space-y-6">
             <div>
-              <h1 className="text-2xl sm:text-4xl">{productDetails.name}</h1>
+              <h1 className="text-2xl sm:text-4xl font-light">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-1 sm:mt-2">
                 Category:{" "}
                 <Link
@@ -183,7 +183,7 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex gap-2">
-              <div className="w-full">
+              <div className="w-full sm:w-max">
                 <Button
                   endContent={<MdOutlineShoppingCartCheckout />}
                   isLoading={loadingCart}
