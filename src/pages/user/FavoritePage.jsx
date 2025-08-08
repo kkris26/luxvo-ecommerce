@@ -35,12 +35,18 @@ const FavoritePage = () => {
   useEffect(() => {
     if (favorites && favorites.length > 0) {
       getFavoriteProducts(favorites);
+    } else {
+      setFavoriteProducts([]);
     }
   }, [favorites]);
 
   return (
     <div>
-      <ProductGridWrapper variant={"favorite"} loading={loading} products={favoriteProducts} />
+      <ProductGridWrapper
+        variant={"favorite"}
+        loading={loading}
+        products={favoriteProducts}
+      />
       <ModalWarningFav />
     </div>
   );
