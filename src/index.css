@@ -9,9 +9,9 @@
 .text-primary-foreground {
   color: white;
 }
-.text-default-foreground {
+/* .text-default-foreground {
   color: black;
-}
+} */
 .bg-default,
 .bg-primary {
   background-color: black;
@@ -38,4 +38,8 @@
 
 button {
   cursor: pointer;
+}
+
+html {
+  scroll-behavior: smooth;
 }

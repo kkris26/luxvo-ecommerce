@@ -15,7 +15,7 @@ import {
   setOnEdit,
   setOpenModal,
   setSelectedProduct,
-} from "../../../redux/store/product/manageProductSlice";
+} from "../../../redux/features/product/manageProductSlice";
 import FileUpload from "../../../components/FileUpload/FileUpload";
 const HandleProduct = () => {
   const [errors, setErrors] = useState({});
@@ -24,7 +24,6 @@ const HandleProduct = () => {
     (state) => state.manageProduct
   );
   const { categories } = useSelector((state) => state.manageCategory);
-
 
   const productFields = [
     {
@@ -35,7 +34,7 @@ const HandleProduct = () => {
     },
     { name: "price", label: "Price", valueKey: "price", type: "number" },
     { name: "stock", label: "Stock", valueKey: "stock", type: "number" },
-    { name: "imgUrl", label: "Image Url", valueKey: "imgUrl", type: "link" },
+    { name: "imgUrl", label: "Image Url", valueKey: "imgUrl", type: "url" },
   ];
   const statusOptions = [
     { name: "Publish", id: "publish" },
@@ -58,7 +57,6 @@ const HandleProduct = () => {
     },
   ];
 
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (mode === "add") {
@@ -77,32 +75,30 @@ const HandleProduct = () => {
     >
       <div className=" grid sm:grid-cols-2 w-full gap-6">
         {productFields.map((f) => (
-          <div className="flex items-center gap-2" key={f.valueKey}>
-            <Input
-              isRequired
-              errorMessage={({ validationDetails }) => {
-                if (validationDetails.valueMissing) {
-                  return "Please fill out this field.";
-                }
-
-                return errors.name;
-              }}
-              label={`Product ${f.label}`}
-              labelPlacement="outside"
-              name={f.name}
-              // isDisabled={f.name === "imgUrl"}
-              type={f.type}
-              key={f.valueKey}
-              placeholder={`${
-                f.name === "imgUrl" ? "Enter or upload" : "Enter product"
-              } 
+          <Input
+            isRequired
+            errorMessage={({ validationDetails }) => {
+              if (validationDetails.valueMissing) {
+                return "Please fill out this field.";
+              }
+              if (f.valueKey === "imgUrl" && validationDetails?.typeMismatch) {
+                return "Please enter a valid URL.";
+              }
+            }}
+            label={`Product ${f.label}`}
+            labelPlacement="outside"
+            name={f.name}
+            type={f.type}
+            key={f.valueKey}
+            placeholder={`${
+              f.name === "imgUrl" ? "Enter or upload" : "Enter product"
+            } 
  ${f.label.toLowerCase()}`}
-              variant="underlined"
-              value={selectedProduct?.[f.name] || ""}
-              onChange={(e) => dispatch(handleOnChange(e))}
-            />
-            {f.name === "imgUrl" && <FileUpload />}
-          </div>
+            variant="underlined"
+            value={selectedProduct?.[f.name] || ""}
+            onChange={(e) => dispatch(handleOnChange(e))}
+            endContent={f.name === "imgUrl" && <FileUpload />}
+          />
         ))}
 
         {selectFields.map((f) => (

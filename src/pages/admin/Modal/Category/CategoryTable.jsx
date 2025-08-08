@@ -20,7 +20,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { setOpenModal } from "../../../../redux/features/category/manageCategorySlice";
+import {
+  setCategory,
+  setCategoryToDelete,
+  setMode,
+  setOpenModal,
+} from "../../../../redux/features/category/manageCategorySlice";
 
 export const productColumns = [
   { name: "Category Name", uid: "name", sortable: true },
@@ -212,7 +217,7 @@ export default function CategoryTable() {
               radius: "lg",
               src: category.imgUrl,
               classNames: {
-                base: "hidden sm:block",
+                base: "hidden sm:block bg-default-100",
               },
             }}
             description={category.description}
@@ -220,8 +225,7 @@ export default function CategoryTable() {
               <span
                 onClick={() => {
                   dispatch(setOpenModal(true));
-                  dispatch(setMode("view")),
-                    dispatch(setSelectedProduct(category));
+                  dispatch(setMode("view")), dispatch(setCategory(category));
                 }}
                 className="cursor-pointer hover:underline"
               >
@@ -255,7 +259,7 @@ export default function CategoryTable() {
                   onPress={() => {
                     dispatch(setOpenModal(true)),
                       dispatch(setMode("view")),
-                      dispatch(setSelectedProduct(category));
+                      dispatch(setCategory(category));
                   }}
                   key="view"
                 >
@@ -265,7 +269,7 @@ export default function CategoryTable() {
                   key="edit"
                   onPress={() => {
                     dispatch(setOpenModal(true)), dispatch(setMode("edit"));
-                    dispatch(setSelectedProduct(category));
+                    dispatch(setCategory(category));
                   }}
                 >
                   Edit
@@ -275,14 +279,14 @@ export default function CategoryTable() {
                   color="danger"
                   key="delete"
                   onPress={() => {
-                    dispatch(confirmDelete());
-
                     dispatch(
-                      setProductToDelete({
+                      setCategoryToDelete({
                         id: category.id,
                         name: category.name,
                       })
-                    );
+                    ),
+                      dispatch(setOpenModal(true));
+                    dispatch(setMode("delete"));
                   }}
                 >
                   Delete
@@ -370,6 +374,7 @@ export default function CategoryTable() {
               endContent={<PlusIcon />}
               onPress={() => {
                 dispatch(setOpenModal(true));
+                dispatch(setMode("add"));
               }}
             >
               Add New

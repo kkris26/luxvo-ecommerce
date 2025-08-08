@@ -1,13 +1,48 @@
+import { useDispatch, useSelector } from "react-redux";
 import NavbarHeader from "../components/Navbar/NavbarHeader";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
+import { useContext, useEffect } from "react";
+import { getProducts } from "../redux/features/product/productSlice";
+import { getAllCategories } from "../redux/features/category/manageCategorySlice";
+import MainFooter from "../components/Footer/MainFooter";
+import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
+import MainBreadcrumbs from "../components/Breadcrumbs/MainBreadcrumbs";
+import { getUserCarts } from "../redux/features/cart/manageCartSlice";
+import { AuthContext } from "../context/AuthContext";
+import { getFavorites } from "../redux/features/favorite/favoriteSlice";
 
 const MainLayout = () => {
+  const { userLogin } = useContext(AuthContext);
+
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getAllCategories());
+  }, []);
+
+  useEffect(() => {
+    if (userLogin?.uid) {
+      dispatch(getUserCarts(userLogin.uid));
+      dispatch(getFavorites(userLogin.uid));
+    }
+  }, [userLogin]);
+
+  const location = useLocation();
+
+
   return (
     <>
       <NavbarHeader />
-      <div className="px-4 max-w-7xl  mx-auto">
+      <div className="px-4 max-w-7xl  mx-auto pb-20">
+        {location.pathname !== "/" && (
+          <div className="pb-4">
+            <MainBreadcrumbs pathname={location.pathname} />
+          </div>
+        )}
         <Outlet />
       </div>
+      <MainFooter />
     </>
   );
 };

@@ -6,14 +6,26 @@ import {
   addToast,
 } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenModal } from "../../../../redux/features/category/manageCategorySlice";
+import {
+  setCategory,
+  setMode,
+  setOpenModal,
+} from "../../../../redux/features/category/manageCategorySlice";
 
 export default function ModalHandleCategory({ children }) {
   const dispatch = useDispatch();
-  const { openModal } = useSelector((state) => state.manageCategory);
+  const { openModal, onEdit } = useSelector((state) => state.manageCategory);
 
   const handleCloseModal = () => {
+    if (onEdit) {
+      dispatch(setMode("warning"));
+      return;
+    }
     dispatch(setOpenModal(false));
+    setTimeout(() => {
+      dispatch(setMode(null));
+      dispatch(setCategory(null));
+    }, 350);
   };
 
   return (

@@ -27,7 +27,7 @@ import {
   setOpenModal,
   setProductToDelete,
   setSelectedProduct,
-} from "../../redux/store/product/manageProductSlice";
+} from "../../redux/features/product/manageProductSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export const productColumns = [
@@ -184,10 +184,7 @@ export default function ProductsTable() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "name",
-    direction: "ascending",
-  });
+  const [sortDescriptor, setSortDescriptor] = React.useState({});
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -268,7 +265,7 @@ export default function ProductsTable() {
               radius: "lg",
               src: product.imgUrl,
               classNames: {
-                base: "hidden sm:block",
+                base: "hidden sm:block bg-default-100",
               },
             }}
             description={product.description}

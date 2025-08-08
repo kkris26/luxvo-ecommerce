@@ -1,5 +1,6 @@
 import {
   addToast,
+  Badge,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -16,12 +17,17 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import MenuSideBar from "../SideBar/MenuSideBar";
 import MainLogo from "../Logo/MainLogo";
 import CartSideBar from "../SideBar/CartSideBar";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartOpen } from "../../redux/features/cart/manageCartSlice";
+import ModalSearch from "../Modal/ModalSearch";
+import { setOpenSearch } from "../../redux/features/search/searchSlice";
 
 export default function NavbarHeader() {
+  const dispatch = useDispatch();
   const { userLogin, loadUserLogin } = useContext(AuthContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
   const [isMenuSideOpen, setMenuSideOpen] = useState(false);
+  const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
   return (
     <>
       <Navbar
@@ -40,23 +46,37 @@ export default function NavbarHeader() {
             <p className="text-xs font-light tracking-widest">MENU</p>
           </NavbarItem>
         </NavbarContent>
-        <NavbarContent justify="center">
+        <NavbarContent justify="center" className="gap-2">
+          <NavbarItem
+            onClick={() => setMenuSideOpen(true)}
+            className="flex items-center gap-2 cursor-pointer sm:hidden"
+          >
+            <TbMenu strokeWidth={1} className="cursor-pointer font-light text-3xl" />
+          </NavbarItem>
+
           <Link to={"/"}>
             <NavbarBrand>
               <MainLogo />
             </NavbarBrand>
           </Link>
         </NavbarContent>
-        <NavbarContent justify="end">
-          <NavbarItem>
-            <IoSearchOutline className="text-xl" />
+        <NavbarContent justify="end" className="items-center">
+          <NavbarItem onClick={() => dispatch(setOpenSearch(true))}>
+            <IoSearchOutline className="text-xl cursor-pointer" />
           </NavbarItem>
-          <NavbarItem>
-            <IoCartOutline
-              className="text-xl cursor-pointer"
-              onClick={() => setCartOpen(true)}
-            />
-          </NavbarItem>
+          <Badge
+            color="primary"
+            size="sm"
+            hidden={userCarts.length === 0}
+            content={userCarts.length}
+          >
+            <NavbarItem>
+              <IoCartOutline
+                className="text-xl cursor-pointer"
+                onClick={() => dispatch(setCartOpen(true))}
+              />
+            </NavbarItem>
+          </Badge>
           <NavbarItem>
             {userLogin ? (
               <>
@@ -73,7 +93,8 @@ export default function NavbarHeader() {
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
       <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
-      <CartSideBar isOpen={isCartOpen} onOpenChange={setCartOpen} />
+      <ModalSearch />
+      <CartSideBar />
     </>
   );
 }

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   handleCloseModal,
   setSafeToClose,
-} from "../../../redux/store/product/manageProductSlice";
+} from "../../../redux/features/product/manageProductSlice";
 
 const WarningCloseModal = () => {
   const dispatch = useDispatch();

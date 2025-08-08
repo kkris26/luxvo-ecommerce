@@ -3,6 +3,10 @@ import { addToast } from "@heroui/react";
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect } from "react";
 import DashboardLayout from "./DashboardLayout";
+import { useDispatch } from "react-redux";
+import { getUserCarts } from "../redux/features/cart/manageCartSlice";
+import { getFavorites } from "../redux/features/favorite/favoriteSlice";
+
 
 const UserLayout = () => {
   const navigate = useNavigate();
@@ -10,6 +14,9 @@ const UserLayout = () => {
     useContext(AuthContext);
 
   useEffect(() => {
+    if (!loadUserLogin && !userLogin) {
+      navigate("/?auth=signin");
+    }
     if (!loadUserLogin && !loadUserProfile && userFullName) {
       if (!userLogin) {
         navigate("/?auth=signin");
@@ -40,6 +47,13 @@ const UserLayout = () => {
     { key: "favorite", name: "Favorite", path: "/user/favorite" },
     { key: "contact", name: "Contact", path: "/user/contact" },
   ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userLogin?.uid) {
+      dispatch(getUserCarts(userLogin.uid));
+      dispatch(getFavorites(userLogin.uid));
+    }
+  }, [userLogin]);
 
   return (
     !loadUserLogin &&

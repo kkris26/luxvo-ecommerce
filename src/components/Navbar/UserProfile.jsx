@@ -58,7 +58,7 @@ export default function UserProfile() {
                 name: "text-default-600",
                 description: "text-default-500",
               }}
-              description={userLogin.email}
+              description={userLogin?.email}
               name={<span className="capitalize">{userFullName}</span>}
             />
           </DropdownItem>
@@ -71,7 +71,7 @@ export default function UserProfile() {
           )}
           <DropdownItem key="settings" textValue="settings">
             <LinkWrapper className="w-full flex" path={"/user"}>
-              Settings
+              Profile
             </LinkWrapper>
           </DropdownItem>
           <DropdownItem key="new_project" textValue="new_project">

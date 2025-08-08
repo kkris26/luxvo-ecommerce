@@ -10,7 +10,7 @@ import {
   setMode,
   setOpenModal,
   setSafeToClose,
-} from "../../redux/store/product/manageProductSlice";
+} from "../../redux/features/product/manageProductSlice";
 
 export default function ModalProductDash({ size = "3xl", children }) {
   const dispatch = useDispatch();
