@@ -7,7 +7,7 @@ import {
   where,
 } from "firebase/firestore";
 import { use, useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import db from "../db/db";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +39,14 @@ const ProductDetails = () => {
   );
 
   const productCart = userCarts.find((c) => c.id === product);
+  const navigate = useNavigate();
+
+  const handleAddCart = () => {
+    if (!userLogin) {
+      return navigate("?auth=signin");
+    }
+    dispatch(handleCartUpdate(userLogin.uid, product));
+  };
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -88,7 +96,6 @@ const ProductDetails = () => {
       dispatch(getUserCarts(userLogin?.uid, product));
     }
   }, [userLogin]);
-
 
   return (
     <>
@@ -150,10 +157,7 @@ const ProductDetails = () => {
             <div className="pt-4">
               <Button
                 isLoading={loadingCart}
-                onPress={() =>
-                  !loadingCart &&
-                  dispatch(handleCartUpdate(userLogin.uid, product))
-                }
+                onPress={() => !loadingCart && handleAddCart()}
                 isDisabled={
                   parseInt(productDetails.stock) === 0 ||
                   productCart?.quantity >= productCart?.stock

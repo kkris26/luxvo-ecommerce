@@ -42,6 +42,7 @@ const ShopPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   // -------------
   const [openFilter, setOpenFilter] = useState(false);
+  const [search, setSearch] = useState("adidas");
 
   const sortItems = [
     { key: "name-asc", label: "Name: A → Z", field: "name", direction: "asc" },
@@ -86,6 +87,7 @@ const ShopPage = () => {
       if (filter !== "all") {
         q = query(q, where("category", "==", filter));
       }
+      q = query(q, where("name", "==", search));
       q = query(q, orderBy(field, sort));
       // setup pagination
       const totalItems = (await getDocs(q)).size;
@@ -121,7 +123,7 @@ const ShopPage = () => {
   useEffect(() => {
     getProductsCategories();
     setSearchParams(`?c=${filter}`);
-  }, [filter, sort, field, initialPage]);
+  }, [filter, sort, field, initialPage, search]);
 
   return (
     <div className="flex gap-4">

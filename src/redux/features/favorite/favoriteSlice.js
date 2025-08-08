@@ -8,13 +8,13 @@ import {
   setDoc,
 } from "firebase/firestore";
 import db from "../../../db/db";
-import { addToast } from "@heroui/react";
-import { Navigate } from "react-router";
 
 const initialState = {
   favorites: [],
   loadingFavorite: false,
   favoriteProduct: null,
+  openModalFavorite: false,
+  favoriteToRemove: null,
 };
 
 const favoriteSlice = createSlice({
@@ -30,11 +30,22 @@ const favoriteSlice = createSlice({
     setFavoriteProduct: (state, actions) => {
       state.favoriteProduct = actions.payload;
     },
+    setOpenModalFavorite: (state, actions) => {
+      state.openModalFavorite = actions.payload;
+    },
+    setFavoriteToRemove: (state, actions) => {
+      state.favoriteToRemove = actions.payload;
+    },
   },
 });
 
-export const { setFavoriteProduct, setFavorites, setLoadingFavorite } =
-  favoriteSlice.actions;
+export const {
+  setFavoriteProduct,
+  setFavorites,
+  setLoadingFavorite,
+  setOpenModalFavorite,
+  setFavoriteToRemove,
+} = favoriteSlice.actions;
 
 export const getFavorites = (userID) => async (dispatch) => {
   const querySnapshot = await getDocs(
@@ -58,6 +69,7 @@ export const handleFavorite =
         const newFavorites = favorites.filter((f) => f.productID !== productID);
         dispatch(setFavorites(newFavorites));
         await deleteDoc(docRef);
+        getFavorites(userID);
       } else {
         dispatch(setFavorites([...favorites, { productID }]));
         await setDoc(docRef, { productID });

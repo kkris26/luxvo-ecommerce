@@ -8,6 +8,7 @@ const ProductGridWrapper = ({
   chipLabel,
   skeleton = 8,
   grid = 4,
+  variant,
 }) => {
   return (
     <div
@@ -27,7 +28,12 @@ const ProductGridWrapper = ({
         [...Array(skeleton)].map((_, i) => <ProductCardSkeleton key={i} />)
       ) : products.length ? (
         products.map((p) => (
-          <ProductsCard key={p.id} product={p} chipLabel={chipLabel} />
+          <ProductsCard
+            variant={variant}
+            key={p.id}
+            product={p}
+            chipLabel={chipLabel}
+          />
         ))
       ) : (
         <div

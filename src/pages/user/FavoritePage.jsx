@@ -3,11 +3,12 @@ import ProductGridWrapper from "../../components/Main/ProductGridWrapper";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import db from "../../db/db";
+import ModalWarningFav from "../../components/Main/ModalWarningFav";
 
 const FavoritePage = () => {
   const { loadingFavorite, favorites } = useSelector((state) => state.favorite);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getFavoriteProducts = async (favorites) => {
     setLoading(true);
@@ -39,7 +40,8 @@ const FavoritePage = () => {
 
   return (
     <div>
-      <ProductGridWrapper loading={loading} products={favoriteProducts} />
+      <ProductGridWrapper variant={"favorite"} loading={loading} products={favoriteProducts} />
+      <ModalWarningFav />
     </div>
   );
 };

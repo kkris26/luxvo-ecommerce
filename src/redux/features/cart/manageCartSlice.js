@@ -11,7 +11,7 @@ import {
 import { addToast } from "@heroui/react";
 
 const initialState = {
-  loadingCart: true,
+  loadingCart: false,
   isCartOpen: false,
   userCarts: [],
   openModalCart: false,
@@ -54,7 +54,7 @@ export const {
 } = manageCartSlice.actions;
 
 export const getUserCarts = (userID) => async (dispatch) => {
-  dispatch(setLoadingCart(true));
+  // dispatch(setLoadingCart(true));
   try {
     const querySnapshot = await getDocs(
       collection(db, "users", userID, "carts")
@@ -85,7 +85,7 @@ export const handleCartUpdate =
   (userID, productID, action = "add", productName) =>
   async (dispatch, getState) => {
     const { isCartOpen, loadingCart } = getState().manageCart;
-    dispatch(setLoadingCart(true));
+    // dispatch(setLoadingCart(true));
     dispatch(setLoadingUpdateCart({ id: productID }));
     try {
       const docRef = doc(db, "users", userID, "carts", productID);
