@@ -144,7 +144,7 @@ const ProductDetails = () => {
           <div className="flex mt-2 sm:mt-0 flex-col w-full justify-start space-y-4 sm:space-y-6">
             <div>
               <h1 className="text-2xl sm:text-4xl font-light">{productDetails.name}</h1>
-              <p className="text-sm font-light text-gray-400 mt-1 sm:mt-2">
+              <p className="text-sm font-light text-gray-800 mt-1 sm:mt-2">
                 Category:{" "}
                 <Link
                   to={`/categories/${categoryData.id}`}
@@ -156,7 +156,7 @@ const ProductDetails = () => {
             </div>
 
             <ScrollShadow hideScrollBar className="w-full max-h-50">
-              <p className="text-sm text-gray-600 font-light leading-normal">
+              <p className="text-sm text-gray-800 font-light leading-normal">
                 {productDetails.description}
               </p>
             </ScrollShadow>
