@@ -148,7 +148,7 @@ const ProductDetails = () => {
                 Category:{" "}
                 <Link
                   to={`/categories/${categoryData.id}`}
-                  className="hover:underline"
+                  className="underline"
                 >
                   {categoryData?.name}
                 </Link>

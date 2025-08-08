@@ -5,13 +5,19 @@ import {
 } from "../../redux/features/search/searchSlice";
 import { Button, Radio, RadioGroup } from "@heroui/react";
 
-const CategoryFilterSidebar = ({ filter, setFilter, categories }) => {
+const CategoryFilterSidebar = ({
+  filter,
+  setFilter,
+  categories,
+  setModalFilter,
+}) => {
   const dispatch = useDispatch();
 
   const handleClear = () => {
     setFilter("all");
     dispatch(setSearchQuery(""));
     dispatch(setQuery(""));
+    setModalFilter(false);
   };
   return (
     <>
@@ -23,7 +29,9 @@ const CategoryFilterSidebar = ({ filter, setFilter, categories }) => {
           label: "text-black text-sm",
         }}
         value={filter}
-        onChange={(e) => setFilter(e.target.value)}
+        onChange={(e) => {
+          setFilter(e.target.value), setModalFilter && setModalFilter(false);
+        }}
       >
         <Radio size="sm" value="all">
           All
@@ -35,7 +43,7 @@ const CategoryFilterSidebar = ({ filter, setFilter, categories }) => {
         ))}
       </RadioGroup>
 
-      <Button size="sm" onPress={handleClear} color="primary">
+      <Button onPress={handleClear} color="primary">
         Clear Filter
       </Button>
     </>

@@ -150,7 +150,10 @@ const ShopPage = () => {
       <div className="flex flex-col items-end gap-4 w-full">
         <div className="flex  w-full justify-between">
           <div className="flex gap-1 items-center">
-            <VscSettings className="text-lg sm:hidden block" onClick={() => setModalFilter(true)} />
+            <VscSettings
+              className="text-lg sm:hidden block"
+              onClick={() => setModalFilter(true)}
+            />
             <p className="text-xs sm:text-sm">
               Showing {totalItems} products{" "}
               {searchQuery && `result for  '${searchQuery}'`}
@@ -233,6 +236,7 @@ const ShopPage = () => {
                   filter={filter}
                   setFilter={setFilter}
                   categories={categories}
+                  setModalFilter={setModalFilter}
                 />
               </ModalBody>
             </>
