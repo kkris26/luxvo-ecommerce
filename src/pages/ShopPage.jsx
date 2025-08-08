@@ -43,7 +43,7 @@ const ShopPage = () => {
   const [sort, setSort] = useState("asc");
   const [field, setField] = useState("name");
   const [selectKey, setSelectKey] = useState("name-asc");
-  const [selectLabel, setSelectLabel] = useState("Name: Z → A");
+  const [selectLabel, setSelectLabel] = useState("Name: A → Z");
   // pagination --
   const [totalPage, setTotalPage] = useState(0);
   const [initialPage, setInitialPage] = useState(1);
