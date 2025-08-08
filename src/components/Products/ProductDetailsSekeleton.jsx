@@ -24,8 +24,9 @@ const ProductDetailsSkeleton = () => {
           <Skeleton className="h-4 w-2/5 rounded-md bg-default-300" />
         </div>
 
-        <div className="pt-4">
+        <div className="pt-4 gap-2 flex">
           <Skeleton className="h-10 w-40 rounded-none bg-default-300" />
+          <Skeleton className="h-10 w-10 rounded-none bg-default-300" />
         </div>
       </div>
     </div>

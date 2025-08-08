@@ -11,7 +11,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import db from "../db/db";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Image, ScrollShadow } from "@heroui/react";
+import { addToast, Button, Image, ScrollShadow } from "@heroui/react";
 import { currencyFormat } from "../service/formatter";
 import ProductDetailsSkeleton from "../components/Products/ProductDetailsSekeleton";
 import ProductGridWrapper from "../components/Main/ProductGridWrapper";
@@ -21,6 +21,8 @@ import {
 } from "../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../context/AuthContext";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { handleFavorite } from "../redux/features/favorite/favoriteSlice";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ const ProductDetails = () => {
     (state) => state.manageCategory
   );
   const { loadingCart, userCarts } = useSelector((state) => state.manageCart);
+  const { loadingFavorite, favorites } = useSelector((state) => state.favorite);
 
   const categoryData = categories.find(
     (c) => c.id === productDetails?.category
@@ -47,6 +50,30 @@ const ProductDetails = () => {
       return navigate("?auth=signin");
     }
     dispatch(handleCartUpdate(userLogin.uid, product));
+  };
+
+  const handleClickFavorite = (productID) => {
+    if (!userLogin) {
+      return navigate("?auth=signin");
+    }
+    dispatch(handleFavorite(productID, userLogin.uid)).then((success) => {
+      if (success) {
+        addToast({
+          title: "Added to Favorites",
+          color: "success",
+          endContent: (
+            <Button
+              size="sm"
+              variant="flat"
+              color="success"
+              onPress={() => navigate("/user/favorite")}
+            >
+              View
+            </Button>
+          ),
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -117,7 +144,7 @@ const ProductDetails = () => {
           <div className="flex mt-2 sm:mt-0 flex-col w-full justify-start space-y-4 sm:space-y-6">
             <div>
               <h1 className="text-2xl sm:text-4xl">{productDetails.name}</h1>
-              <p className="text-sm font-light text-gray-400 mt-2">
+              <p className="text-sm font-light text-gray-400 mt-1 sm:mt-2">
                 Category:{" "}
                 <Link
                   to={`/categories/${categoryData.id}`}
@@ -134,7 +161,7 @@ const ProductDetails = () => {
               </p>
             </ScrollShadow>
 
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <p className="text-2xl sm:text-3xl font-light ">
                 {currencyFormat(productDetails.price)}
               </p>
@@ -155,33 +182,64 @@ const ProductDetails = () => {
               </p>
             </div>
 
-            <div className="">
-              <Button
-                endContent={<MdOutlineShoppingCartCheckout />}
-                isLoading={loadingCart}
-                onPress={() => !loadingCart && handleAddCart()}
-                isDisabled={
-                  parseInt(productDetails.stock) === 0 ||
-                  productCart?.quantity >= productCart?.stock
-                }
-                radius="none"
-                color="primary"
-                className="w-full sm:w-50"
-              >
-                {parseInt(productDetails.stock) === 0
-                  ? "Out of Stock"
-                  : productCart?.quantity >= productCart?.stock
-                  ? "Already Fully in Cart"
-                  : "Add to Cart"}
-              </Button>
+            <div className="flex gap-2">
+              <div className="w-full">
+                <Button
+                  endContent={<MdOutlineShoppingCartCheckout />}
+                  isLoading={loadingCart}
+                  onPress={() => !loadingCart && handleAddCart()}
+                  isDisabled={
+                    parseInt(productDetails.stock) === 0 ||
+                    productCart?.quantity >= productCart?.stock
+                  }
+                  radius="none"
+                  color="primary"
+                  className="w-full sm:w-50"
+                >
+                  {parseInt(productDetails.stock) === 0
+                    ? "Out of Stock"
+                    : productCart?.quantity >= productCart?.stock
+                    ? "Already Fully in Cart"
+                    : "Add to Cart"}
+                </Button>
 
-              {productCart?.quantity > 0 && (
-                <p className="text-xs text-default-500 mt-2">
-                  You have{" "}
-                  <span className="font-semibold">{productCart.quantity}</span>{" "}
-                  in your cart
-                </p>
-              )}
+                {productCart?.quantity > 0 && (
+                  <p className="text-xs text-default-500 mt-2">
+                    You have{" "}
+                    <span className="font-semibold">
+                      {productCart.quantity}
+                    </span>{" "}
+                    in your cart
+                  </p>
+                )}
+              </div>
+              <div className="cursor-pointer">
+                {favorites.find((f) => f.productID === productDetails.id) ? (
+                  <Button
+                    onPress={() => {
+                      !loadingFavorite &&
+                        handleClickFavorite(productDetails.id);
+                    }}
+                    radius="none"
+                    isIconOnly
+                    variant="flat"
+                  >
+                    <IoMdHeart className="text-xl font-light text-danger" />
+                  </Button>
+                ) : (
+                  <Button
+                    onPress={() => {
+                      !loadingFavorite &&
+                        handleClickFavorite(productDetails.id);
+                    }}
+                    radius="none"
+                    isIconOnly
+                    variant="flat"
+                  >
+                    <IoMdHeartEmpty className="text-xl font-light" />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>
