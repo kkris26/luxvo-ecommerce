@@ -10,6 +10,7 @@ import CategoriesPage from "../pages/admin/CategoriesPage";
 import ProductCategory from "../pages/ProductCategory";
 import ProductDetails from "../pages/ProductDetails";
 import ShopPage from "../pages/ShopPage";
+import FavoritePage from "../pages/user/FavoritePage";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +50,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <ProfilePage /> },
       { path: "cart", element: <CartPage /> },
-      { path: "favorite", element: <div>Favorite Page</div> },
+      { path: "favorite", element: <FavoritePage /> },
       { path: "contact", element: <div>Contact Page</div> },
     ],
   },
