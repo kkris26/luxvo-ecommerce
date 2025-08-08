@@ -17,7 +17,9 @@ const CategoryFilterSidebar = ({
     setFilter("all");
     dispatch(setSearchQuery(""));
     dispatch(setQuery(""));
-    setModalFilter(false);
+    if (setModalFilter) {
+      setModalFilter(false);
+    }
   };
   return (
     <>

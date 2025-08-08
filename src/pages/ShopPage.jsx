@@ -155,13 +155,14 @@ const ShopPage = () => {
               onClick={() => setModalFilter(true)}
             />
             <p className="text-xs sm:text-sm">
-              Showing {totalItems} products{" "}
-              {searchQuery && `result for  '${searchQuery}'`}
+              {totalItems} products found{" "}
+              {searchQuery && ` for  '${searchQuery}'`}
             </p>
           </div>
           <div
             onMouseEnter={() => setOpenFilter(true)}
             onMouseLeave={() => setOpenFilter(false)}
+            className="w-max"
           >
             <Dropdown
               classNames={{
@@ -171,7 +172,7 @@ const ShopPage = () => {
               onOpenChange={setOpenFilter}
             >
               <DropdownTrigger>
-                <p className="text-xs" variant="flat">
+                <p className="text-xs w-max" variant="flat">
                   Sort By : {selectLabel}
                 </p>
               </DropdownTrigger>
