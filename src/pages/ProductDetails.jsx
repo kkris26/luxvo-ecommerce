@@ -20,6 +20,7 @@ import {
   handleCartUpdate,
 } from "../redux/features/cart/manageCartSlice";
 import { AuthContext } from "../context/AuthContext";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ const ProductDetails = () => {
             />
           </div>
 
-          <div className="flex flex-col w-full justify-start space-y-3 sm:space-y-6">
+          <div className="flex mt-2 sm:mt-0 flex-col w-full justify-start space-y-4 sm:space-y-6">
             <div>
               <h1 className="text-2xl sm:text-4xl">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-2">
@@ -134,7 +135,7 @@ const ProductDetails = () => {
             </ScrollShadow>
 
             <div className="space-y-2">
-              <p className="text-3xl font-light ">
+              <p className="text-2xl sm:text-3xl font-light ">
                 {currencyFormat(productDetails.price)}
               </p>
               <p className="text-sm font-light text-gray-500">
@@ -154,8 +155,9 @@ const ProductDetails = () => {
               </p>
             </div>
 
-            <div className="pt-4">
+            <div className="">
               <Button
+                endContent={<MdOutlineShoppingCartCheckout />}
                 isLoading={loadingCart}
                 onPress={() => !loadingCart && handleAddCart()}
                 isDisabled={

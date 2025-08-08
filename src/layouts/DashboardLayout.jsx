@@ -20,7 +20,7 @@ const DashboardLayout = ({ userFullName, tabMenus, children }) => {
 
 
   return (
-    <div className="h-screen px-6 py-4 flex gap-3 flex-col bg-default-200">
+    <div className="h-screen px-4 py-4 flex gap-3 flex-col bg-default-200">
       <Navbar
         maxWidth="full"
         position="static"

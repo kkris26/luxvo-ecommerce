@@ -26,7 +26,6 @@ const ModalSearch = ({ children }) => {
     dispatch(setSearchQuery(query));
   };
 
-
   return (
     <>
       <Modal
@@ -38,10 +37,8 @@ const ModalSearch = ({ children }) => {
         <ModalContent>
           <ModalBody>
             <div className="flex gap-5 flex-col  w-full">
-              <h2 className="text-xl font-bold">
-                Find What You’re Looking For
-              </h2>
-              <form action="" onSubmit={onSubmit} className="flex gap-2">
+              <h2 className="text-xl ">Find What You’re Looking For</h2>
+              <form action="" onSubmit={onSubmit} className="flex gap-3">
                 <Input
                   placeholder="Search something..."
                   type="text"

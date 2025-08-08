@@ -2,23 +2,29 @@ import { Button } from "@heroui/react";
 import ModalWarningCart from "../../components/Main/ModalWarningCart";
 import ProductGridWrapper from "../../components/Main/ProductGridWrapper";
 import { useSelector } from "react-redux";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 const CartPage = () => {
   const { loadingCart, userCarts, isCartOpen, loadingUpdateCart } = useSelector(
     (state) => state.manageCart
   );
 
-  console.log(userCarts);
-
   return (
-    <div className="flex flex-col justify-between min-h-full">
+    <div className="flex flex-col items-end justify-between min-h-full">
       <ProductGridWrapper
         variant={"cart"}
         loading={loadingCart}
         products={userCarts}
-
       />
-      <Button color="primary" className="mt-6">Checkout</Button>
+      {userCarts.length > 0 && (
+        <Button
+          endContent={<MdOutlineShoppingCartCheckout />}
+          color="primary"
+          className="mt-6 w-full sm:w-max"
+        >
+          Checkout
+        </Button>
+      )}
       <ModalWarningCart />
     </div>
   );

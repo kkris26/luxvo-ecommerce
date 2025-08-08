@@ -25,15 +25,17 @@ const CategoryFilterSidebar = ({ filter, setFilter, categories }) => {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
       >
-        <Radio value="all">All</Radio>
+        <Radio size="sm" value="all">
+          All
+        </Radio>
         {categories.map((c) => (
-          <Radio value={c.id} key={c.id}>
+          <Radio size="sm" value={c.id} key={c.id}>
             {c.name}
           </Radio>
         ))}
       </RadioGroup>
 
-      <Button onPress={handleClear} color="primary">
+      <Button size="sm" onPress={handleClear} color="primary">
         Clear Filter
       </Button>
     </>

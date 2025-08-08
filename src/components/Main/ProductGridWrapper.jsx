@@ -47,10 +47,28 @@ const ProductGridWrapper = ({
               : "col-span-4"
           }`}
         >
-          <h3 className="text-xl">No Products Found</h3>
-          <p className="text-sm font-light text-gray-500">
-            Try adjusting your filters or browse a different category.
-          </p>
+          {variant === "cart" ? (
+            <>
+              <h3 className="text-xl font-medium">Your cart is empty</h3>
+              <p className="text-sm mt-1">
+                Looks like you haven’t added anything yet.
+              </p>
+            </>
+          ) : variant === "favorite" ? (
+            <>
+              <h3 className="text-xl font-medium">No favorite products yet</h3>
+              <p className="text-sm mt-1">
+                Mark products you like so you can find them more easily later.
+              </p>
+            </>
+          ) : (
+            <>
+              <h3 className="text-xl font-medium">No products found</h3>
+              <p className="text-sm mt-1">
+                Try adjusting your filters or explore a different category.
+              </p>
+            </>
+          )}
         </div>
       )}
     </div>

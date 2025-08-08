@@ -7,7 +7,7 @@ import {
   ButtonGroup,
   DrawerFooter,
 } from "@heroui/react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { Card, CardFooter, Image, Button } from "@heroui/react";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +62,7 @@ const CartSideBar = () => {
             <DrawerBody className="py-6">
               {userCarts.length === 0 ? (
                 <div className=" text-center h-full flex flex-col justify-center">
-                  <p className="text-base font-medium">Your cart is empty</p>
+                  <h3 className="text-base font-medium">Your cart is empty</h3>
                   <p className="text-sm mt-1">
                     Looks like you haven’t added anything yet.
                   </p>
@@ -148,7 +148,11 @@ const CartSideBar = () => {
             </DrawerBody>
             {userCarts.length !== 0 && (
               <DrawerFooter>
-                <Button className="w-full" color="primary">
+                <Button
+                  endContent={<MdOutlineShoppingCartCheckout />}
+                  className="w-full"
+                  color="primary"
+                >
                   Check Out
                 </Button>
               </DrawerFooter>

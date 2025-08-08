@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 import ProductGridWrapper from "./ProductGridWrapper";
 
 const ProductGrid = ({ label, title, products, loading, link, chipLabel }) => (
-  <div className="flex flex-col gap-15 py-20 items-center">
+  <div className="flex flex-col pt-12 gap-7 sm:gap-15 sm:pt-20 items-center">
     <SectionTitle label={label} title={title} />
     <ProductGridWrapper
       loading={loading}

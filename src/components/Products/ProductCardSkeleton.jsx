@@ -5,7 +5,7 @@ const ProductCardSkeleton = () => {
   return (
     <div className=" space-y-4" radius="none">
       <Skeleton>
-        <div className="w-full h-80 aspect-3/4 rounded-lg bg-default-300" />
+        <div className="w-full h-60 sm:h-80 aspect-3/4 rounded-lg bg-default-300" />
       </Skeleton>
       <div className="space-y-2">
         <Skeleton className="w-4/5 rounded-lg">

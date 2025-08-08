@@ -139,7 +139,7 @@ const ShopPage = () => {
   }, [filter, sort, field, initialPage, searchQuery]);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-6 min-h-screen">
       <div className="w-1/6 hidden sm:flex h-full flex-col gap-5 sticky top-20  ">
         <CategoryFilterSidebar
           filter={filter}

@@ -39,9 +39,7 @@ const ProductCategory = () => {
     <>
       {loadingGetCategory ? (
         <div className="relative w-full h-100 rounded-none overflow-hidden">
-          <div className="absolute inset-0 bg-default-100 w-full h-full">
-         
-          </div>
+          <div className="absolute inset-0 bg-default-100 w-full h-full"></div>
           <div className="relative z-10 flex flex-col justify-center items-center h-full px-4 text-center space-y-3">
             <Skeleton className="w-2/6 rounded-lg">
               <div className="h-8 w-2/3 bg-default-200 rounded-lg" />
@@ -55,15 +53,16 @@ const ProductCategory = () => {
           </div>
         </div>
       ) : (
-        <div className="h-100 relative gap-3 flex flex-col items-center justify-center text-white">
+        <div className="h-100 relative gap-3 flex flex-col p-4 items-center justify-center text-white">
           <img
             src={categoryData?.imgUrl}
             className="absolute h-full  bg-default-500 w-full object-cover -z-1 inset-0 "
           />
+          <div className="absolute inset-0 bg-black/20 -z-1"></div>
           <h1 className="text-4xl tracking-wider font-extralight uppercase">
             {categoryData?.name}
           </h1>
-          <p className="text-sm font-extralight">
+          <p className="text-sm font-extralight text-center">
             {" "}
             {categoryData?.description}
           </p>
@@ -79,7 +78,7 @@ const ProductCategory = () => {
           </Link>
         </div>
       )}
-      <div className="py-20" id="content">
+      <div className="pt-12 sm:pt-20 " id="content">
         <ProductGridWrapper loading={loading} products={productsByCategory} />
       </div>
     </>
