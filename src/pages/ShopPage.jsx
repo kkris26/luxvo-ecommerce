@@ -204,7 +204,7 @@ const ShopPage = () => {
           grid={4}
           loading={loading}
           products={filteredProducts}
-          skeleton={4}
+          skeleton={8}
         />
         {totalItems > 0 && (
           <div className="flex gap-4 mt-5 w-full justify-center">

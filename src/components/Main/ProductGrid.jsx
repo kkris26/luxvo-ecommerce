@@ -10,6 +10,7 @@ const ProductGrid = ({ label, title, products, loading, link, chipLabel }) => (
       loading={loading}
       products={products}
       chipLabel={chipLabel}
+      skeleton={4}
     />
     <Button
       color="black"
