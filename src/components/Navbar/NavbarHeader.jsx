@@ -51,7 +51,7 @@ export default function NavbarHeader() {
             onClick={() => setMenuSideOpen(true)}
             className="flex items-center gap-2 cursor-pointer sm:hidden"
           >
-            <TbMenu strokeWidth={1} className="cursor-pointer text-4xl" />
+            <TbMenu strokeWidth={1} className="cursor-pointer font-light text-3xl" />
           </NavbarItem>
 
           <Link to={"/"}>

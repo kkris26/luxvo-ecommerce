@@ -25,7 +25,7 @@ const MainFooter = () => {
           <div>
             <MainLogo />
             <p className="text-sm mt-2 font-light leading-relaxed">
-              ACME Industries Ltd.
+              LUXVO Industries Ltd.
               <br />
               Providing reliable tech since 1992
             </p>

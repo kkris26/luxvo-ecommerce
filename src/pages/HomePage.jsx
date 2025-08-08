@@ -53,7 +53,7 @@ const Homepage = () => {
 
       <SectionWrapper>
         <SectionTitle label="Category" title="Featured Categories" />
-        <div className="grid grid-cols-4 gap-4 ">
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 ">
           {loadingGetCategory
             ? [...Array(4)].map((_, i) => <CategoryCardSkeleton key={i} />)
             : categories.map((c) => <CategoryCard key={c.id} category={c} />)}
