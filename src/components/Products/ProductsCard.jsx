@@ -119,7 +119,7 @@ const ProductsCard = ({ product, chipLabel, variant }) => {
       <div className="mt-3 flex flex-col">
         <div className="flex justify-between">
           <Link to={`/product/${product.id}`}>
-            <h3 className="text-sm pr-2  font-light hover:underline cursor-pointer">
+            <h3 className="text-xs sm:text-sm pr-2  font-light hover:underline cursor-pointer">
               {product.name}
             </h3>
           </Link>

@@ -102,7 +102,7 @@ const ProductDetails = () => {
       {loadingGetCategory || loadingProductsCategory || loading ? (
         <ProductDetailsSkeleton />
       ) : (
-        <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center ">
+        <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-10 place-items-center ">
           <div className="flex justify-center w-full aspect-square bg-default-100 ">
             <Image
               isZoomed
@@ -113,9 +113,9 @@ const ProductDetails = () => {
             />
           </div>
 
-          <div className="flex flex-col w-full justify-start space-y-6">
+          <div className="flex flex-col w-full justify-start space-y-3 sm:space-y-6">
             <div>
-              <h1 className="text-4xl">{productDetails.name}</h1>
+              <h1 className="text-2xl sm:text-4xl">{productDetails.name}</h1>
               <p className="text-sm font-light text-gray-400 mt-2">
                 Category:{" "}
                 <Link
@@ -164,7 +164,7 @@ const ProductDetails = () => {
                 }
                 radius="none"
                 color="primary"
-                className="w-50"
+                className="w-full sm:w-50"
               >
                 {parseInt(productDetails.stock) === 0
                   ? "Out of Stock"
@@ -184,8 +184,8 @@ const ProductDetails = () => {
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-4 pb-20">
-        <h2 className="text-2xl font-light">Related Products</h2>
+      <div className="flex flex-col gap-4 ">
+        <h2 className="text-xl sm:text-2xl font-light">Related Products</h2>
         <ProductGridWrapper
           skeleton={4}
           loading={loadingGetCategory || loadingProductsCategory || loading}

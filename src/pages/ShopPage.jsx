@@ -7,6 +7,11 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Pagination,
   Radio,
   RadioGroup,
@@ -23,6 +28,8 @@ import {
 import db from "../db/db";
 import { useSearchParams } from "react-router";
 import { setQuery, setSearchQuery } from "../redux/features/search/searchSlice";
+import CategoryFilterSidebar from "../components/Filter/CategoryFilterSidebar";
+import { VscSettings } from "react-icons/vsc";
 
 const ShopPage = () => {
   const { categories, loadingGetCategory } = useSelector(
@@ -43,6 +50,7 @@ const ShopPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   // -------------
   const [openFilter, setOpenFilter] = useState(false);
+  const [openModalFilter, setModalFilter] = useState(false);
   const { searchQuery, openSearch } = useSelector((state) => state.search);
 
   const dispatch = useDispatch();
@@ -132,38 +140,18 @@ const ShopPage = () => {
 
   return (
     <div className="flex gap-4">
-      <div className="w-1/6 h-full flex flex-col gap-5 sticky top-20  ">
-        <RadioGroup
-          defaultValue={filter}
-          color="default"
-          label="Select Category"
-          classNames={{
-            label: "text-black text-sm",
-          }}
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        >
-          <Radio value="all">All</Radio>
-          {categories.map((c) => (
-            <Radio value={c.id} key={c.id}>
-              {c.name}
-            </Radio>
-          ))}
-        </RadioGroup>
-        <Button
-          onPress={() => {
-            setFilter("all"),
-              dispatch(setSearchQuery(""), dispatch(setQuery("")));
-          }}
-          color="primary"
-        >
-          Clear Filter
-        </Button>
+      <div className="w-1/6 hidden sm:flex h-full flex-col gap-5 sticky top-20  ">
+        <CategoryFilterSidebar
+          filter={filter}
+          setFilter={setFilter}
+          categories={categories}
+        />
       </div>
       <div className="flex flex-col items-end gap-4 w-full">
         <div className="flex  w-full justify-between">
-          <div>
-            <p className="text-sm">
+          <div className="flex gap-1 items-center">
+            <VscSettings className="text-lg sm:hidden block" onClick={() => setModalFilter(true)} />
+            <p className="text-xs sm:text-sm">
               Showing {totalItems} products{" "}
               {searchQuery && `result for  '${searchQuery}'`}
             </p>
@@ -236,6 +224,21 @@ const ShopPage = () => {
           </div>
         )}
       </div>
+      <Modal isOpen={openModalFilter} onOpenChange={setModalFilter}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalBody className="py-4">
+                <CategoryFilterSidebar
+                  filter={filter}
+                  setFilter={setFilter}
+                  categories={categories}
+                />
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

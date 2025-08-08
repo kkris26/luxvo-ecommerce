@@ -36,7 +36,7 @@ const MainLayout = () => {
       <NavbarHeader />
       <div className="px-4 max-w-7xl  mx-auto pb-20">
         {location.pathname !== "/" && (
-          <div className="py-4">
+          <div className="pb-4">
             <MainBreadcrumbs pathname={location.pathname} />
           </div>
         )}

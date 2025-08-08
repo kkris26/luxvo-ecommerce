@@ -21,7 +21,7 @@ const ProductGridWrapper = ({
           ? "grid-cols-3"
           : grid === 5
           ? "grid-cols-5"
-          : "grid-cols-4"
+          : "sm:grid-cols-4 grid-cols-2"
       }`}
     >
       {loading ? (

@@ -46,7 +46,14 @@ export default function NavbarHeader() {
             <p className="text-xs font-light tracking-widest">MENU</p>
           </NavbarItem>
         </NavbarContent>
-        <NavbarContent justify="center">
+        <NavbarContent justify="center" className="gap-2">
+          <NavbarItem
+            onClick={() => setMenuSideOpen(true)}
+            className="flex items-center gap-2 cursor-pointer sm:hidden"
+          >
+            <TbMenu strokeWidth={1} className="cursor-pointer text-4xl" />
+          </NavbarItem>
+
           <Link to={"/"}>
             <NavbarBrand>
               <MainLogo />
