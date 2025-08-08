@@ -19,6 +19,8 @@ import MainLogo from "../Logo/MainLogo";
 import CartSideBar from "../SideBar/CartSideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartOpen } from "../../redux/features/cart/manageCartSlice";
+import ModalSearch from "../Modal/ModalSearch";
+import { setOpenSearch } from "../../redux/features/search/searchSlice";
 
 export default function NavbarHeader() {
   const dispatch = useDispatch();
@@ -52,8 +54,8 @@ export default function NavbarHeader() {
           </Link>
         </NavbarContent>
         <NavbarContent justify="end" className="items-center">
-          <NavbarItem>
-            <IoSearchOutline className="text-xl" />
+          <NavbarItem onClick={() => dispatch(setOpenSearch(true))}>
+            <IoSearchOutline className="text-xl cursor-pointer" />
           </NavbarItem>
           <Badge
             color="primary"
@@ -84,6 +86,7 @@ export default function NavbarHeader() {
       </Navbar>
       <RightSideBar isOpen={isSidebarOpen} onOpenChange={setSidebarOpen} />
       <MenuSideBar isOpen={isMenuSideOpen} onOpenChange={setMenuSideOpen} />
+      <ModalSearch />
       <CartSideBar />
     </>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductGridWrapper from "../components/Main/ProductGridWrapper";
 import {
   Button,
@@ -22,6 +22,7 @@ import {
 } from "firebase/firestore";
 import db from "../db/db";
 import { useSearchParams } from "react-router";
+import { setQuery, setSearchQuery } from "../redux/features/search/searchSlice";
 
 const ShopPage = () => {
   const { categories, loadingGetCategory } = useSelector(
@@ -42,7 +43,9 @@ const ShopPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   // -------------
   const [openFilter, setOpenFilter] = useState(false);
-  const [search, setSearch] = useState("adidas");
+  const { searchQuery, openSearch } = useSelector((state) => state.search);
+
+  const dispatch = useDispatch();
 
   const sortItems = [
     { key: "name-asc", label: "Name: A → Z", field: "name", direction: "asc" },
@@ -87,7 +90,9 @@ const ShopPage = () => {
       if (filter !== "all") {
         q = query(q, where("category", "==", filter));
       }
-      q = query(q, where("name", "==", search));
+      if (searchQuery) {
+        q = query(q, where("name", "==", searchQuery));
+      }
       q = query(q, orderBy(field, sort));
       // setup pagination
       const totalItems = (await getDocs(q)).size;
@@ -123,11 +128,11 @@ const ShopPage = () => {
   useEffect(() => {
     getProductsCategories();
     setSearchParams(`?c=${filter}`);
-  }, [filter, sort, field, initialPage, search]);
+  }, [filter, sort, field, initialPage, searchQuery]);
 
   return (
     <div className="flex gap-4">
-      <div className="w-1/6 h-full sticky top-20  ">
+      <div className="w-1/6 h-full flex flex-col gap-5 sticky top-20  ">
         <RadioGroup
           defaultValue={filter}
           color="default"
@@ -135,6 +140,7 @@ const ShopPage = () => {
           classNames={{
             label: "text-black text-sm",
           }}
+          value={filter}
           onChange={(e) => setFilter(e.target.value)}
         >
           <Radio value="all">All</Radio>
@@ -144,11 +150,23 @@ const ShopPage = () => {
             </Radio>
           ))}
         </RadioGroup>
+        <Button
+          onPress={() => {
+            setFilter("all"),
+              dispatch(setSearchQuery(""), dispatch(setQuery("")));
+          }}
+          color="primary"
+        >
+          Clear Filter
+        </Button>
       </div>
       <div className="flex flex-col items-end gap-4 w-full">
         <div className="flex  w-full justify-between">
           <div>
-            <p className="text-sm">Showing {totalItems} products</p>
+            <p className="text-sm">
+              Showing {totalItems} products{" "}
+              {searchQuery && `result for  '${searchQuery}'`}
+            </p>
           </div>
           <div
             onMouseEnter={() => setOpenFilter(true)}
