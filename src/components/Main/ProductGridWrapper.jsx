@@ -37,7 +37,7 @@ const ProductGridWrapper = ({
         ))
       ) : (
         <div
-          className={`h-50 flex items-center justify-center flex-col gap-1 place-items-center ${
+          className={`h-30 sm:h-50 flex items-center justify-center flex-col gap-1 place-items-center ${
             grid === 1
               ? "col-span-1"
               : grid === 2
@@ -49,22 +49,28 @@ const ProductGridWrapper = ({
         >
           {variant === "cart" ? (
             <>
-              <h3 className="text-xl font-medium">Your cart is empty</h3>
-              <p className="text-sm mt-1">
+              <h3 className="text-xl font-medium text-center">
+                Your cart is empty
+              </h3>
+              <p className="text-sm mt-1 text-center">
                 Looks like you haven’t added anything yet.
               </p>
             </>
           ) : variant === "favorite" ? (
             <>
-              <h3 className="text-xl font-medium">No favorite products yet</h3>
-              <p className="text-sm mt-1">
+              <h3 className="text-xl font-medium text-center">
+                No favorite products yet
+              </h3>
+              <p className="text-sm mt-1 text-center">
                 Mark products you like so you can find them more easily later.
               </p>
             </>
           ) : (
             <>
-              <h3 className="text-xl font-medium">No products found</h3>
-              <p className="text-sm mt-1">
+              <h3 className="text-xl font-medium text-center">
+                No products found
+              </h3>
+              <p className="text-sm mt-1 text-center">
                 Try adjusting your filters or explore a different category.
               </p>
             </>
